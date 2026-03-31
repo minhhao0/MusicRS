@@ -6,7 +6,15 @@ html,
 body {
   height: 100%;
 }
-
+.custom-blur-bg {
+            background: linear-gradient(180deg, rgba(17, 33, 23, 0.8) 0%, rgba(17, 33, 23, 1) 100%), 
+                        url('https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+#bg-background-image{
+  background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuARonBCcwRZrOfA1tQ-T8VkAsnTu0XsL9jHoXsY2Xc_K21eG-O1osWOJLND5P9EgbINbUkZjmwwKnJF__ck_QBDmNE0joiFjzhukObzFQHkFNfn7n9V03lkneB77lWDVqvSOMoInWj8cvZXL7h54ilwWxR84tDInEAEB6zwwARS1RPoSR5SyF6XqmJ_tQr5_tmb6axjMrPGOh1K6GhuNvclUpeARI4M0us153cvaVueQ0pdBMmUJdivkOHzyPonXa3oBl6YJ54vyzU");
+}
 /* Prevent layout shift while layout.js injects sidebar/header */
 #app-sidebar {
   width: 16rem; /* 64 */

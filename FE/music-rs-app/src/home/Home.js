@@ -1,10 +1,12 @@
 import AppHeader from "../appheader/Header";
+import Sidebar from "../appsidebar/Sidebar";
 
 export default function Home(){
     return (
         
         <div className="flex h-screen overflow-hidden">
-    <div id="app-sidebar"></div>
+            <Sidebar/>
+    {/* <div id="app-sidebar"></div> */}
     {/* !-- Main Content -- */}
     <main className="flex-1 flex flex-col bg-background-light dark:bg-background-dark overflow-y-auto custom-scrollbar relative">
     {/* <header id="app-header"><AppHeader/></header> */}
