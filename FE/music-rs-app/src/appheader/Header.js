@@ -18,7 +18,7 @@ export default function AppHeader(){
           <span className="absolute top-2 right-2.5 w-2 h-2 bg-primary rounded-full"></span>
         </button>
 
-        <a className="h-10 w-10 rounded-full bg-slate-300 dark:bg-slate-700 overflow-hidden border-2 border-transparent hover:border-white/20 transition-all" href="${pageBase}user.html" aria-label="Profile">
+        <a className="h-10 w-10 rounded-full bg-slate-300 dark:bg-slate-700 overflow-hidden border-2 border-transparent hover:border-white/20 transition-all" href="/user" aria-label="Profile">
           <img
             className="w-full h-full object-cover"
             alt="User avatar"

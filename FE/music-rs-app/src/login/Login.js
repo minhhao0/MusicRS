@@ -1,9 +1,11 @@
+import Sidebar from "../appsidebar/Sidebar";
+import AppHeader from "../appheader/Header";
 export default function Login(){
     return (<>
 {/* <header id="app-header"></header> */}
 <div className="flex min-h-screen w-full">
 {/* !-- Left Side: Visual Branding (Hidden on mobile) -- */}
-<div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-primary/10">
+{/* <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-primary/10">
 <div className="flex flex-col h-full w-full bg-black">
 <div className="p-8">
 <div className="flex items-center gap-3 mb-12">
@@ -17,11 +19,11 @@ export default function Login(){
 <span className="material-symbols-outlined">home</span>
 <span className="font-semibold">Home</span>
 </a>
-<a className="flex items-center gap-4 text-slate-400 hover:text-white px-4 py-3 transition-colors" href="./playlist.html">
+<a className="flex items-center gap-4 text-slate-400 hover:text-white px-4 py-3 transition-colors" href="./playlist">
 <span className="material-symbols-outlined">library_music</span>
 <span className="font-semibold">Your Playlist</span>
 </a>
-<a className="flex items-center gap-4 text-slate-400 hover:text-white px-4 py-3 transition-colors" href="./ask_user.html">
+<a className="flex items-center gap-4 text-slate-400 hover:text-white px-4 py-3 transition-colors" href="/ask_user">
 <span className="material-symbols-outlined">tune</span>
 <span className="font-semibold">Personalize</span>
 </a>
@@ -33,9 +35,12 @@ export default function Login(){
 <a className="hover:text-primary transition-colors" href="#">Privacy Policy</a>
 </div>
 </div>
-</div></div>
-{/* !-- Right Side: Form Content -- */}
-<div className="w-full lg:w-1/2 flex flex-col bg-background-dark min-h-screen"><div className="w-full flex justify-between items-center p-6 mb-8">
+</div>
+</div> */}
+<Sidebar/>
+{/* !-- Right Side: Form Content -- lg:w-1/2*/}
+<div className="w-full  flex flex-col bg-background-dark min-h-screen ">
+{/* <div className="w-full flex justify-between items-center p-6 mb-8">
 <div className="relative flex-1 max-w-md">
 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
 <input className="w-full bg-slate-800/50 border-none rounded-full py-2 pl-12 pr-4 text-sm text-white focus:ring-1 focus:ring-primary" placeholder="Search for songs, artists..." type="text"/>
@@ -49,8 +54,9 @@ export default function Login(){
 <img alt="User" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkxUG3-vM_4BzL4nymkeTsD1ukZJeUAJ6j9Bk11_xThkfR_TiNeBcn5FWCJ6pLKAR_E9VXzCk26-urm4RK-gVrCcjShyOxp0ZpNyo5OyP6JLyXh-uS4lHTk7WB4OrSVnKaxYjgEiH9rMHYSjeuDxeU0-CanIxXor3qP0XA61_2qUQhn9g4nTzUJhcOKpkqnZQZHrt0SCi3c9FuNiNsa2Y1RHytGPM02l1twT665kbsfB7k4eOOiBbaVQWgSlZMmbDz7lKJFYAdPUI"/>
 </div>
 </div>
-</div>
-<div className="w-full max-w-md mx-auto">
+</div> */}
+<AppHeader/>
+<div className="w-full max-w-md mx-auto ">
 {/* !-- Mobile Logo -- */}
 <div className="flex lg:hidden items-center gap-3 mb-10 justify-center">
 <div className="bg-primary p-2 rounded-lg">
@@ -79,8 +85,8 @@ export default function Login(){
 </button>
 </div>
 <div className="relative flex items-center justify-center mb-8">
-<div className="w-full border-t border-slate-200 dark:border-primary/10"></div>
-<span className="absolute bg-background-light dark:bg-background-dark px-4 text-xs font-semibold text-slate-400 uppercase tracking-widest">or continue with email</span>
+<div className="w-full border-t border-slate-200 dark:border-primary/10 p-4"></div>
+<span className="absolute bg-background-light dark:bg-background-dark px-4 text-xs font-semibold text-slate-400 uppercase tracking-widest ">or continue with email</span>
 </div>
 {/* !-- Login Form -- */}
 <form className="space-y-5">
