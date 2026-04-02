@@ -25,11 +25,11 @@ for file in tqdm(file_list):
   df=df.fillna('empty')
   for index,row in df.iterrows():
     if file['type']=='album':
-      val=(row['id'],row['name'],row['total_track'],row['images'],row['release_date'])
-      sql="INSERT INTO Album (albumid,images,album_name,releasedate,total_track)"
+      val=(row['id'],row['images'],row['name'],row['release_date'],row['total_track'])
+      sql="INSERT INTO Album (albumid,images,album_name,releasedate,total_track) VALUES (%s,%s,%s,%s,%s)"
     elif file['type']=='artist':
       val=(row[''])
-      sql="INSERT INTO Artist (artistid,artist_name,images,artist_genre,followers,popularity,country)"
+      sql="INSERT INTO Artist (artistid,artist_name,images,artist_genre,followers,popularity,country) VALUES (%s,%s,%s,%s,%s,%s,%s)"
 
 sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
 val = ("John", "Highway 21")
