@@ -1,7 +1,12 @@
 import AppHeader from "../appheader/Header";
 import Sidebar from "../appsidebar/Sidebar";
+import { useLocation } from "react-router-dom";
 
 export default function User(){
+    const location = useLocation();
+    const id = new URLSearchParams(location.search).get("id");
+    const displayId = id ? id.replace(/-/g, " ") : null;
+
     return (
     <>
 <div className="flex h-screen overflow-hidden">
@@ -24,7 +29,7 @@ export default function User(){
 <div className="flex flex-col gap-4 flex-1 items-center md:items-start text-center md:text-left">
 <div className="flex flex-col">
 <p className="text-primary text-sm font-bold uppercase tracking-[0.2em] mb-1">Profile</p>
-<h1 className="text-slate-900 dark:text-white text-4xl md:text-6xl font-black leading-tight tracking-tight">Alex Rivers</h1>
+<h1 className="text-slate-900 dark:text-white text-4xl md:text-6xl font-black leading-tight tracking-tight">{displayId || "Alex Rivers"}</h1>
 <p className="text-slate-500 dark:text-slate-400 text-lg font-medium mt-1">Experimental Jazz &amp; Lo-fi Enthusiast</p>
 </div>
 <div className="flex flex-wrap gap-6 mt-2">

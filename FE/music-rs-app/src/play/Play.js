@@ -1,7 +1,12 @@
 import AppHeader from "../appheader/Header";
 import Sidebar from "../appsidebar/Sidebar";
+import { useLocation } from "react-router-dom";
 
 export default function Play(){
+    const location = useLocation();
+    const id = new URLSearchParams(location.search).get("id");
+    const displayId = id ? id.replace(/-/g, " ") : null;
+
     return (
     <>
 <div className="relative flex h-screen w-full overflow-hidden bg-background-dark">
@@ -23,6 +28,7 @@ export default function Play(){
 <div className="flex flex-col gap-2 text-center">
 <h1 className="text-4xl xl:text-5xl font-bold tracking-tight text-white">Midnight City Echoes</h1>
 <p className="text-xl text-primary font-medium">Neon Synthesis • Electric Dreams (2024)</p>
+{id && <p className="text-sm text-white/70 mt-2">Selected: {displayId}</p>}
 <div className="flex gap-4 mt-4 justify-center">
 <button className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors text-sm font-medium">
 <span className="material-symbols-outlined text-lg">add_circle</span> Save to Library
