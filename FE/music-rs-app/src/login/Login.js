@@ -71,7 +71,7 @@ export default function Login(){
 {/* !-- Tabs -- */}
 <div className="flex border-b border-white/10 mb-8">
 <button className="flex-1 pb-4 text-sm font-bold border-b-2 border-primary text-primary transition-all">Sign In</button>
-<button className="flex-1 pb-4 text-sm font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-all">Create Account</button>
+<a className="flex-1 pb-4 text-sm font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-all text-center" href="/create_account">Create Account</a>
 </div>
 {/* !-- Social Logins -- */}
 <div className="grid grid-cols-2 gap-4 mb-8">
@@ -122,7 +122,7 @@ export default function Login(){
 <div className="mt-10 text-center">
 <p className="text-slate-600 dark:text-slate-400 text-sm">
                         Don't have an account? 
-                        <a className="text-primary font-bold hover:underline ml-1" href="#">Create an account for free</a>
+                        <a className="text-primary font-bold hover:underline ml-1" href="/create_account">Create an account for free</a>
 </p>
 </div>
 </div>

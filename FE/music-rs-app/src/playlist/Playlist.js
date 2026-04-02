@@ -1,8 +1,13 @@
 import AppHeader from "../appheader/Header";
 import Sidebar from "../appsidebar/Sidebar";
 import Playing from "./SongPlay";
+import { useLocation } from "react-router-dom";
 
 export default function PlayList(){
+    const location = useLocation();
+    const id = new URLSearchParams(location.search).get("id");
+    const displayId = id ? id.replace(/-/g, " ") : null;
+
     return (
     <>
 <div className="flex h-screen overflow-hidden">
@@ -22,6 +27,7 @@ export default function PlayList(){
 <h2 className="text-2xl font-bold tracking-tight">Bài hát thịnh hành</h2>
 <a className="text-sm font-bold text-primary hover:underline" href="#">Show all</a>
 </div>
+{displayId && <p className="text-sm text-slate-400 mb-6">Selected album: {displayId}</p>}
 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
 {/* <!-- Liked Card --> */}
 <div className="group relative bg-card-bg p-4 rounded-xl hover:bg-white/5 transition-all cursor-pointer">
