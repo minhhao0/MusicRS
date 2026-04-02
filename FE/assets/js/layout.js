@@ -18,12 +18,12 @@ function computePageBase() {
 
 function currentPageKey() {
   const p = normalizePathname(window.location.pathname).toLowerCase();
-  if (p.endsWith("/home.html")) return "home";
-  if (p.endsWith("/playlist.html")) return "playlist";
-  if (p.endsWith("/play.html")) return "play";
-  if (p.endsWith("/user.html")) return "user";
-  if (p.endsWith("/ask_user.html")) return "ask_user";
-  if (p.endsWith("/login.html")) return "login";
+  if (p.endsWith("/")) return "home";
+  if (p.endsWith("/playlist")) return "playlist";
+  if (p.endsWith("/play")) return "play";
+  if (p.endsWith("/user")) return "user";
+  if (p.endsWith("/ask_user")) return "ask_user";
+  if (p.endsWith("/login")) return "login";
   return "";
 }
 
