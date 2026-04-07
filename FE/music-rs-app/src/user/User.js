@@ -1,12 +1,16 @@
+import { useContext } from "react";
 import AppHeader from "../appheader/Header";
 import Sidebar from "../appsidebar/Sidebar";
 import { useLocation } from "react-router-dom";
+import AuthContext from "../AuthProvider";
 
 export default function User(){
     const location = useLocation();
     const id = new URLSearchParams(location.search).get("id");
     const displayId = id ? id.replace(/-/g, " ") : null;
-
+    const {currentUser,setcurrentUser}=useContext(AuthContext);
+    //const currentUser=useContext(AuthContext);
+    console.log(currentUser)
     return (
     <>
 <div className="flex h-screen overflow-hidden">
@@ -22,14 +26,15 @@ export default function User(){
 <div className="flex flex-col md:flex-row gap-8 items-center md:items-end">
 <div className="relative group">
 <div className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-40 md:size-52 border-4 border-primary shadow-2xl shadow-primary/20" data-alt="Large circular user profile picture" id="bg-background-image"></div>
-<button className="absolute bottom-2 right-2 bg-primary text-slate-900 rounded-full p-2 border-4 border-background-light dark:border-background-dark flex items-center justify-center hover:scale-110 transition-transform">
+<button  className="absolute bottom-2 right-2 bg-primary text-slate-900 rounded-full p-2 border-4 border-background-light dark:border-background-dark flex items-center justify-center hover:scale-110 transition-transform">
 <span className="material-symbols-outlined text-sm font-bold">edit</span>
 </button>
 </div>
 <div className="flex flex-col gap-4 flex-1 items-center md:items-start text-center md:text-left">
 <div className="flex flex-col">
 <p className="text-primary text-sm font-bold uppercase tracking-[0.2em] mb-1">Profile</p>
-<h1 className="text-slate-900 dark:text-white text-4xl md:text-6xl font-black leading-tight tracking-tight">{displayId || "Alex Rivers"}</h1>
+<h1 className="text-slate-900 dark:text-white text-4xl md:text-6xl font-black leading-tight tracking-tight">
+    {displayId || currentUser && currentUser.user_name }</h1>
 <p className="text-slate-500 dark:text-slate-400 text-lg font-medium mt-1">Experimental Jazz &amp; Lo-fi Enthusiast</p>
 </div>
 <div className="flex flex-wrap gap-6 mt-2">

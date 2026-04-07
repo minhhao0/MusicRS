@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./home/Home";
 import Login from "./login/Login";
@@ -7,10 +7,10 @@ import Play from "./play/Play";
 import User from "./user/User";
 import AskUser from "./askuser/AskUser";
 import CreateAccount from "./createaccount/CreateAccount";
-
+import AuthContext from "./AuthProvider";
 function EntityNavigation() {
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     const handler = (e) => {
       const target = e.target;
@@ -41,7 +41,9 @@ function EntityNavigation() {
 }
 
 export default function AppLayout() {
+  const [currentUser,setcurrentUser]=useState();
   return (
+    <AuthContext.Provider value={{currentUser,setcurrentUser}}>
     <BrowserRouter>
       <EntityNavigation />
       <Routes>
@@ -55,5 +57,6 @@ export default function AppLayout() {
         <Route path="/creataccount" element={<CreateAccount />} />
       </Routes>
     </BrowserRouter>
+    </AuthContext.Provider>
   );
 }

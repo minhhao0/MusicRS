@@ -1,33 +1,20 @@
-import {connection,mysql} from '../config/db.js'
-const getTotalTrack = async()=>{
-    const query=`
-    SELECT count(*) as total from track 
-    `
-    const result = await connection.getConnection()
-  .then((conn) => {
-    const res = conn.query(query);
-    conn.release();
-    return res;
-   })
-  .catch((err) => {
-    console.log("An error occur when connect to mysql server "+ err);
-  });
-  return result
-}
-const getTrack= async()=>
-{
-  const query=`SELECT * FROM track`
-  const result= await connection.getConnection()
-  .then((conn)=>{
-    const res=conn.query(query);
-    conn.release();
-    return res;
-  })
-  .catch((err)=>{
-    console.log("An error occur when connect to mysql server")
-  })
-}
-
-export {
-  getTotalTrack,getTrack
+class Track{
+    constructor(track_id,track_name,image){
+    this.popularity=0;
+    this.year=0;
+    this.genre='';
+  this.danceability=0;
+  this.energy=0;
+  this.track_key=0;
+  this.loudness=0;
+  this.track_mode=0;
+  this.speechiness=0;
+  this.acousticness=0;
+  this.instrumentalness=0;
+  this.liveness=0;
+  this.valence=0;
+  this.tempo=0;
+  duration_ms,
+  time_signature ,
+  }
 }

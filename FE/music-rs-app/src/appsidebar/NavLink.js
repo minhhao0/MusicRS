@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function  NavLink({ href, icon, label, key })
  {
   function normalizePathname(pathname) {
@@ -21,10 +23,10 @@ export default function  NavLink({ href, icon, label, key })
     : `${base} hover:bg-slate-200 dark:hover:bg-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white`;
 
   return (<>
-  <a className={klass} href={href} data-nav-key={key}>
+  <Link  className={klass} to={href}>
       <span className={`material-symbols-outlined ${active ? "fill-1" : ""}`}>{icon}</span>
       <span className="font-semibold text-sm">{label}</span>
-    </a>
+    </Link>
   </>)
     
 }

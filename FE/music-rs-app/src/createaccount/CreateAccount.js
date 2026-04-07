@@ -7,7 +7,8 @@ export default function CreateAccount() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+  const [user,setUser]=useState();
+  const [notify,setNotify]=useState("");
   const canSubmit = useMemo(() => {
     return (
       fullName.trim().length > 1 &&
@@ -16,14 +17,30 @@ export default function CreateAccount() {
       confirmPassword === password
     );
   }, [fullName, email, password, confirmPassword]);
-
+  const submit= async(data)=>{
+    const user=JSON.stringify(data);
+    const fetchOption ={
+      method:'post',
+      headers:{
+        'Accept':'application/json',
+        'Content-Type':'application/json',
+      },
+      body:user,
+    }
+    try{
+      const response= await fetch('http://localhost:8080/user/signup',fetchOption);
+      if(response.ok) setNotify("You have signup successfully. Now you can login");
+    } catch (error){
+      console.error("Error when creating new user",error);
+      setNotify("Can not sign up. Please try again.");
+    }
+  }
   return (
     <>
       <div className="flex min-h-screen w-full">
         <Sidebar />
         <div className="w-full flex flex-col bg-background-dark min-h-screen">
           <AppHeader />
-
           <div className="w-full max-w-md mx-auto px-4 pb-10 pt-6">
             <div className="flex lg:hidden items-center gap-3 mb-6 justify-center">
               <div className="bg-primary p-2 rounded-lg">
@@ -62,9 +79,14 @@ export default function CreateAccount() {
               onSubmit={(e) => {
                 e.preventDefault();
                 if (!canSubmit) return;
-                // TODO: call backend API to create account
-                // eslint-disable-next-line no-console
-                console.log({ fullName, email });
+                const data={
+                  'user_name':fullName,
+                  'email':email,
+                  'password':password
+                }
+                setUser(data);
+                submit(user);
+                alert(notify);
               }}
             >
               <div>

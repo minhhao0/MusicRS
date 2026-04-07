@@ -15,23 +15,25 @@ const getTotalUser = async()=>{
   });
   return result
 }
-const getUser =async(data)=>{
-    const {user_name,password}=data;
-    const query=`SELECT * from user where username = ? and password= ?`
+const getUser =async (data)=>{
+    const {email,password}=data;
+    const query=`SELECT * from user where email = ? and password= ?`
     const result= await connection.getConnection().then((conn)=>{
-        const res=conn.query(query,[user_name,password]);
+        const res=conn.query(query,[email,password]);
         conn.release();
         return res;
     }).catch((err)=>{
       console.log("An error occur when connect to mysql server"+ err);
     })
-    const user= new User(result[0][0]['username'],result[0][0]['password']);
+    const tmp=result[0][0];
+    const user= new User(tmp['userid'],tmp['username'],tmp['email'],tmp['password']);
     return user;
 }
 const createUser= async (data)=>{
-  const {user_name,password} =data;
-  const query=`INSERT INTO USER(username,password) values(?,?)`
-  const result= await connection.getConnection().then((conn)=>{const res=conn.query(query,[user_name,password]);
+  console.log(data);
+  const {user_name,email,password} =data;
+  const query=`INSERT INTO USER(username,password,email) values(?,?,?)`
+  const result= await connection.getConnection().then((conn)=>{const res=conn.query(query,[user_name,password,email]);
     conn.release();
     return res;
   }).catch((err)=>{
@@ -52,10 +54,13 @@ const updateUser= async (data)=>{
   })
   return result;
 }
-const data={
-    'user_name':'hao',
-    'password':'234'
+// const data={
+//     'user_name':'hao',
+//     'password':'234'
 
+// }
+// const result=await getUser(data)
+// console.log(result)
+export {
+  getTotalUser,getUser,updateUser,createUser
 }
-const result=await getUser(data)
-console.log(result)
