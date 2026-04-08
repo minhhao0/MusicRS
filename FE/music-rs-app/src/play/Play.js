@@ -3,9 +3,13 @@ import AppHeader from "../appheader/Header";
 import Sidebar from "../appsidebar/Sidebar";
 import { useLocation, useNavigate } from "react-router-dom";
 import AuthContext from "../AuthProvider";
+import { useLocation } from "react-router-dom";
+import AddSongButton from "../components/AddSongButton";
+import { usePlaylist } from "../context/PlaylistContext";
 
 export default function Play(){
     const location = useLocation();
+    const { openAddToPlaylist } = usePlaylist();
     const id = new URLSearchParams(location.search).get("id");
     const displayId = id ? id.replace(/-/g, " ") : null;
     const {currentUser,setcurrentUser}=useContext(AuthContext);
@@ -15,6 +19,8 @@ export default function Play(){
             navigate('/login')
         }
     })
+    const songIdForAdd = id || "midnight-city";
+
     return (
     <>
 <div className="relative flex h-screen w-full overflow-hidden bg-background-dark">
@@ -37,8 +43,8 @@ export default function Play(){
 <h1 className="text-4xl xl:text-5xl font-bold tracking-tight text-white">Midnight City Echoes</h1>
 <p className="text-xl text-primary font-medium">Neon Synthesis • Electric Dreams (2024)</p>
 {id && <p className="text-sm text-white/70 mt-2">Selected: {displayId}</p>}
-<div className="flex gap-4 mt-4 justify-center">
-<button className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors text-sm font-medium">
+<div className="flex gap-4 mt-4 justify-center items-center flex-wrap">
+<button type="button" onClick={() => openAddToPlaylist(songIdForAdd)} className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors text-sm font-medium text-white">
 <span className="material-symbols-outlined text-lg">add_circle</span> Save to Library
                         </button>
 <button className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors text-sm font-medium">
@@ -57,6 +63,7 @@ export default function Play(){
 <button className="opacity-0 group-hover:opacity-100 transition-opacity size-8 rounded-full bg-primary text-black flex items-center justify-center" type="button" data-nav-type="song" data-id="ultraviolet-horizon" aria-label="Play song">
 <span className="material-symbols-outlined fill-1 text-lg">play_arrow</span>
 </button>
+<AddSongButton songId="ultraviolet-horizon" layout="inline" />
 <span className="text-xs text-slate-500">3:42</span>
 </div>
 <div className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 transition-colors group">
@@ -65,6 +72,7 @@ export default function Play(){
 <p className="text-sm font-semibold truncate text-slate-100">Digital Pulse</p>
 <p className="text-xs text-slate-400 truncate">Byte Beat</p>
 </div>
+<AddSongButton songId="digital-pulse" layout="inline" />
 <span className="text-xs text-slate-500">4:15</span>
 </div>
 </div>
@@ -97,7 +105,7 @@ export default function Play(){
 <button className="material-symbols-outlined text-2xl text-white">skip_next</button>
 <button className="material-symbols-outlined text-slate-400 hover:text-white">repeat</button>
 </div>
-<div className="flex items-center justify-end gap-4 w-1/4">
+<div className="flex items-center justify-end gap-3 w-1/4">
 <button className="material-symbols-outlined text-slate-400 hover:text-white">lyrics</button>
 <button className="material-symbols-outlined text-slate-400 hover:text-white">queue_music</button>
 <div className="flex items-center gap-2 w-24">

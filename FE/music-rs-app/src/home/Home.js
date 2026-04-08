@@ -3,6 +3,7 @@ import AppHeader from "../appheader/Header";
 import Sidebar from "../appsidebar/Sidebar";
 import AuthContext from "../AuthProvider";
 import { useNavigate } from "react-router-dom";
+import AddSongButton from "../components/AddSongButton";
 
 export default function Home(){
     const {currentUser,setcurrentUser}=useContext(AuthContext);
@@ -26,8 +27,8 @@ export default function Home(){
     {/* !-- Trending Songs Section -- */}
     <section>
     <div className="flex items-center justify-between mb-6">
-    <h2 className="text-2xl font-bold tracking-tight" >Bài hát thịnh hành</h2>
-    <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="#">Show all</a>
+    <h2 className="text-2xl font-bold tracking-tight" >Trending songs</h2>
+    <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="/show_all?section=trending">Show all</a>
     </div>
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
     {/* !-- Song Card 1 -- */}
@@ -40,6 +41,7 @@ export default function Home(){
     <button className="absolute top-2 left-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="song" data-id="midnight-city" aria-label="Play song">
     <span className="material-symbols-outlined fill-1" >favorite</span>
     </button>
+    <AddSongButton songId="midnight-city" />
     </div>
     <h3 className="font-bold truncate" >Midnight City</h3>
     <p className="text-sm text-slate-500 dark:text-slate-400 truncate" >M83</p>
@@ -51,6 +53,7 @@ export default function Home(){
     <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="song" data-id="starboy" aria-label="Play song">
     <span className="material-symbols-outlined fill-1" >play_arrow</span>
     </button>
+    <AddSongButton songId="starboy" />
     </div>
     <h3 className="font-bold truncate" >Starboy</h3>
     <p className="text-sm text-slate-500 dark:text-slate-400 truncate" >The Weeknd</p>
@@ -62,6 +65,7 @@ export default function Home(){
     <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center"  data-nav-type="song" data-id="blinding-lights" aria-label="Play song">
     <span className="material-symbols-outlined fill-1">play_arrow</span>
     </button>
+    <AddSongButton songId="blinding-lights" />
     </div>
     <h3 className="font-bold truncate" >Blinding Lights</h3>
     <p className="text-sm text-slate-500 dark:text-slate-400 truncate">The Weeknd</p>
@@ -73,6 +77,7 @@ export default function Home(){
     <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="song" data-id="levitating" aria-label="Play song">
     <span className="material-symbols-outlined fill-1">play_arrow</span>
     </button>
+    <AddSongButton songId="levitating" />
     </div>
     <h3 className="font-bold truncate">Levitating</h3>
     <p className="text-sm text-slate-500 dark:text-slate-400 truncate">Dua Lipa</p>
@@ -84,6 +89,7 @@ export default function Home(){
     <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="song" data-id="as-it-was" aria-label="Play song">
     <span className="material-symbols-outlined fill-1">play_arrow</span>
     </button>
+    <AddSongButton songId="as-it-was" />
     </div>
     <h3 className="font-bold truncate" >As It Was</h3>
     <p className="text-sm text-slate-500 dark:text-slate-400 truncate">Harry Styles</p>
@@ -93,8 +99,8 @@ export default function Home(){
     {/* !-- Popular Artists Section -- */}
     <section>
     <div className="flex items-center justify-between mb-6">
-    <h2 className="text-2xl font-bold tracking-tight" >Nghệ sỹ thịnh hành</h2>
-    <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="#" >Show all</a>
+    <h2 className="text-2xl font-bold tracking-tight" >Popular artists</h2>
+    <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="/show_all?section=artists">Show all</a>
     </div>
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
     {/* !-- Artist Card 1 -- */}
@@ -155,8 +161,8 @@ export default function Home(){
     </div>
     </section><section>
     <div className="flex items-center justify-between mb-6">
-    <h2 className="text-2xl font-bold tracking-tight">Bài hát bạn có thể thích</h2>
-    <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="#">Show all</a>
+    <h2 className="text-2xl font-bold tracking-tight">Songs you might like</h2>
+    <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="/show_all?section=for_you">Show all</a>
     </div>
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
     <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
@@ -165,6 +171,7 @@ export default function Home(){
     <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center"  data-nav-type="song" data-id="save-your-tears" aria-label="Play song">
     <span className="material-symbols-outlined fill-1">play_arrow</span>
     </button>
+    <AddSongButton songId="save-your-tears" />
     </div>
     <h3 className="font-bold truncate" >Save Your Tears</h3>
     <p className="text-sm text-slate-500 dark:text-slate-400 truncate">The Weeknd</p>
@@ -175,6 +182,7 @@ export default function Home(){
     <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="song" data-id="watermelon-sugar" aria-label="Play song">
     <span className="material-symbols-outlined fill-1">play_arrow</span>
     </button>
+    <AddSongButton songId="watermelon-sugar" />
     </div>
     <h3 className="font-bold truncate">Watermelon Sugar</h3>
     <p className="text-sm text-slate-500 dark:text-slate-400 truncate">Harry Styles</p>
@@ -185,6 +193,7 @@ export default function Home(){
     <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="song" data-id="dont-start-now" aria-label="Play song">
     <span className="material-symbols-outlined fill-1">play_arrow</span>
     </button>
+    <AddSongButton songId="dont-start-now" />
     </div>
     <h3 className="font-bold truncate" >Don't Start Now</h3>
     <p className="text-sm text-slate-500 dark:text-slate-400 truncate" >Dua Lipa</p>
@@ -192,8 +201,8 @@ export default function Home(){
     </div>
     </section><section>
     <div className="flex items-center justify-between mb-6">
-    <h2 className="text-2xl font-bold tracking-tight">Nghệ sỹ bạn có thể thích</h2>
-    <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="#">Show all</a>
+    <h2 className="text-2xl font-bold tracking-tight">Artists you might like</h2>
+    <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="/show_all?section=artists_suggested">Show all</a>
     </div>
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
     <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer text-center">
@@ -219,8 +228,8 @@ export default function Home(){
     </div>
     </section><section>
     <div className="flex items-center justify-between mb-6">
-    <h2 className="text-2xl font-bold tracking-tight">Album bạn có thể thích</h2>
-    <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="#" >Show all</a>
+    <h2 className="text-2xl font-bold tracking-tight">Albums you might like</h2>
+    <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="/show_all?section=albums">Show all</a>
     </div>
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
     <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
@@ -246,8 +255,8 @@ export default function Home(){
     </div>
     </section><section>
     <div className="flex items-center justify-between mb-6">
-    <h2 className="text-2xl font-bold tracking-tight" >Đề xuất cho bạn</h2>
-    <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="#" >Show all</a>
+    <h2 className="text-2xl font-bold tracking-tight" >Recommended for you</h2>
+    <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="/show_all?section=recommended">Show all</a>
     </div>
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
     <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
@@ -256,6 +265,7 @@ export default function Home(){
     <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center"  data-nav-type="album" data-id="chill-vibes" aria-label="Open playlist">
     <span className="material-symbols-outlined fill-1" >play_arrow</span>
     </button>
+    <AddSongButton songId="chill-vibes" />
     </div>
     <h3 className="font-bold truncate">Chill Vibes</h3>
     <p className="text-sm text-slate-500 dark:text-slate-400 truncate">Playlist</p>
