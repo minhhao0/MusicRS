@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./home/Home";
+import HomeV2 from "./home/HomeV2";
 import Login from "./login/Login";
 import PlayList from "./playlist/Playlist";
 import Play from "./play/Play";
