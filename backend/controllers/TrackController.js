@@ -7,7 +7,7 @@ const track_home_trend_method = async (req, res) => {
        const trackHomeTrend = await getTrackHomeTrend();
        if (trackHomeTrend){
         res.status(200).send(trackHomeTrend);
-        console.log(trackHomeTrend)
+        // console.log(trackHomeTrend)
        }
     }
     catch(err){

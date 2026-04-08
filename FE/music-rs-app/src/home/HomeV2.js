@@ -8,6 +8,8 @@ export default function HomeV2(){
     const [dataArtistHomeTrend, setDataAHT] = useState([]);
     const [dataTrackHomeRecommend, setDataTHR] = useState([]);
     const [dataArtistHomeRecommend, setDataAHR] = useState([]);
+    const [dataAlbumRecommend, setDataAR] = useState([]);
+    const [dataPlaylistRecommend, setDataPLR] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -45,10 +47,30 @@ export default function HomeV2(){
                 console.error('Error fetching data:', error);
             }
         };
+        const fetchDataAR = async () => {
+            try {
+                const response = await fetch('http://localhost:8080/album/album-home');
+                const result = await response.json();
+                setDataAR(result);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        const fetchDataPLR = async () => {
+            try {
+                const response = await fetch('http://localhost:8080/playlist/playlist-home');
+                const result = await response.json();
+                setDataPLR(result);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
         fetchData();
         fetchDataAHT();
         fetchDataTHR();
         fetchDataAHR();
+        fetchDataAR();
+        fetchDataPLR();
     }, []);
 
     return(
@@ -146,41 +168,36 @@ export default function HomeV2(){
                             ))}
                         </div>
                     </section>
-                    
+                    {/* Album bạn có thể thích */}
                     <section>
                         <div className="flex items-center justify-between mb-6">
                             <h2 className="text-2xl font-bold tracking-tight">Album bạn có thể thích</h2>
                             <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="#" >Show all</a>
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                            <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
+                            {dataAlbumRecommend.map((it)=>(
+                                <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
                                 <div className="relative aspect-square mb-4 shadow-xl">
                                     <img className="rounded-lg w-full h-full object-cover" data-alt="Album cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJGfkb4-IzZX5_o22Ki9ZkYcD25P3BvsB84O20Pe8gn3CuyQPO84eH5t_sLSdNfUNNInNprst8rYfPs5N-ZvGkM3HlipCA4EB2nAs0SgRjzryuCZu9Zf7nFXpbRpBkyZO4CR98pjwXXG_VgmrOGI1auWD8ZVH_6WcRXqT4UJwBL2Zoa05M7qNjVVUJ2PagKlEdr62Gni1x-sk7wHU2aAzpfxPOCA74omFTtFXBWavgijXgS8uIZotVO86yKaIC1190pfaSdqvzUxk" />
                                     <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="album" data-id="after-hours" aria-label="Open album">
                                         <span className="material-symbols-outlined fill-1">play_arrow</span>
                                     </button>
                                 </div>
-                                <h3 className="font-bold truncate">After Hours</h3>
-                                <p className="text-sm text-slate-500 dark:text-slate-400 truncate">Album • The Weeknd</p>
+                                <h3 className="font-bold truncate">{it.album_name}</h3>
+                                <p className="text-sm text-slate-500 dark:text-slate-400 truncate">Album • {it.artist_name}</p>
                             </div>
-                            <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
-                                <div className="relative aspect-square mb-4 shadow-xl">
-                                    <img className="rounded-lg w-full h-full object-cover" data-alt="Album cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_znynijA7cdnulMOZICn5F7uGfOFHfJLhYOoctlceq5jHyUx-rjmB8toM4ENB-noY33IKx5ZLACq3Xuz7XuCx6BP3IRrX8315dKy9-OAI75R92PoJa8Rvju38g9Jwj8ISxlT8lZDxHX7_l0CwPU8aD19JxoGEikYNp_Q0yRd8uNWRnoNsUEeDC5OMUV1E1ki_Zg0jCkiEpAnZF7Ri2dYNrdFL85z0mkG8PK4lOEaX1iOzELMZ8gncbx-zyn53lhV85T5upAuqlWs" />
-                                    <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="album" data-id="hollywoods-bleeding" aria-label="Open album">
-                                        <span className="material-symbols-outlined fill-1" >play_arrow</span>
-                                    </button>
-                                </div>
-                                <h3 className="font-bold truncate" >Hollywood's Bleeding</h3>
-                                <p className="text-sm text-slate-500 dark:text-slate-400 truncate" >Album • Post Malone</p>
-                            </div>
+                            ))}
                         </div>
-                    </section><section>
+                    </section>
+                    {/* Playlist bạn có thể thích */}
+                    <section>
                         <div className="flex items-center justify-between mb-6">
                             <h2 className="text-2xl font-bold tracking-tight" >Đề xuất cho bạn</h2>
                             <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="#" >Show all</a>
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                            <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
+                            {dataPlaylistRecommend.map((it)=>(
+                                <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
                                 <div className="relative aspect-square mb-4 shadow-xl">
                                     <img className="rounded-lg w-full h-full object-cover" data-alt="Recommendation cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCw4oZwtGKxRHRrk99OCvAZIqla4Bb5yLqxsQTmbF2nlocrXKrmwzVpUXo_8csF-rVF6i2mpOx3RwtPCV5Bu_eY9W_limRvRhPR1HCcmqB-rzsx2WVuSyabrRjfMRnB10-xZ3UbnEhYYMcpHfjJeBF6kqu_VOqxvb20ZcCXJ0POYaL9Jyknst97GtIe6ztd8dBl2C5cGYOouN7YeVjyFwoem9YSVDvoBwR4aLo6s8bBGYC8Qxn6Hli5TAwO5USQshkq3cu4y1_mZJo" />
                                     <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="album" data-id="chill-vibes" aria-label="Open playlist">
@@ -190,6 +207,7 @@ export default function HomeV2(){
                                 <h3 className="font-bold truncate">Chill Vibes</h3>
                                 <p className="text-sm text-slate-500 dark:text-slate-400 truncate">Playlist</p>
                             </div>
+                            ))}
                         </div>
                     </section>
                 </div>
