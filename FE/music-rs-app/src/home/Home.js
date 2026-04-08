@@ -1,7 +1,18 @@
+import { useContext, useEffect } from "react";
 import AppHeader from "../appheader/Header";
 import Sidebar from "../appsidebar/Sidebar";
+import AuthContext from "../AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 export default function Home(){
+    const {currentUser,setcurrentUser}=useContext(AuthContext);
+    const navigate=useNavigate();
+    useEffect(()=>{
+        if(!currentUser){
+        navigate('/login')
+    }
+    })
+   
     return (
         
         <div className="flex h-screen overflow-hidden">
@@ -25,6 +36,9 @@ export default function Home(){
     <img className="rounded-lg w-full h-full object-cover" data-alt="Abstract album cover art for Midnight City" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCw4oZwtGKxRHRrk99OCvAZIqla4Bb5yLqxsQTmbF2nlocrXKrmwzVpUXo_8csF-rVF6i2mpOx3RwtPCV5Bu_eY9W_limRvRhPR1HCcmqB-rzsx2WVuSyabrRjfMRnB10-xZ3UbnEhYYMcpHfjJeBF6kqu_VOqxvb20ZcCXJ0POYaL9Jyknst97GtIe6ztd8dBl2C5cGYOouN7YeVjyFwoem9YSVDvoBwR4aLo6s8bBGYC8Qxn6Hli5TAwO5USQshkq3cu4y1_mZJo"/>
     <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="song" data-id="midnight-city" aria-label="Play song">
     <span className="material-symbols-outlined fill-1" >play_arrow</span>
+    </button>
+    <button className="absolute top-2 left-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="song" data-id="midnight-city" aria-label="Play song">
+    <span className="material-symbols-outlined fill-1" >favorite</span>
     </button>
     </div>
     <h3 className="font-bold truncate" >Midnight City</h3>

@@ -54,6 +54,66 @@ const updateUser= async (data)=>{
   })
   return result;
 }
+const getUserHistory=async(data)=>{
+  const {user_id}=data;
+  const query=`select * from history where user_id= ?`
+  const result= await connection.getConnection().then((conn)=>{
+    const res=conn.query(query,[user_id]);
+    conn.release();
+    return res;
+  }).catch((err)=>{
+    console.log("Can't get user history. Please check again.");
+  })
+  return result[0];
+}
+const getUserFavorite= async(data)=>{
+  const {user_id}=data;
+  const query=`SELECT * FROM favorite where user_id = ?`
+  const result= await connection.getConnection().then((conn)=>{
+    const res=conn.query(query,[user_id]);
+    conn.release();
+    return res;
+  }).catch((err)=>{
+    console.log("Can't get user favorite. Please check again.");
+  })
+  return result[0];
+}
+const addFavoriteArtist = async(data)=>{
+  const {user_id,artist_id}=data;
+  const query=`INSERT INTO favorite(user_id,artist_id) values(?,?)`;
+  const result= await connection.getConnection().then((conn)=>{
+    const res=conn.query(query,[user_id,artist_id]);
+    conn.release();
+    return res;
+  }).catch((err)=>{
+    console.log("Can't add user favorite artist. Please check again.");
+  })
+  return result;
+}
+const addFavoriteTrack= async(data)=>{
+  const {user_id,track_id}=data;
+  const query=`INSERT INTO favorite(user_id,track_id) values(?,?)`;
+  const result=await connection.getConnection().then((conn)=>{
+    const res=conn.query(query,[user_id,track_id]);
+    conn.release();
+    return res;
+  }).catch((err)=>{
+    console.log("Can't add user favorite track. Please check again.");
+  })
+  return result;
+}
+const addFavoriteAlbum= async(data)=>{
+  const {user_id,album_id}=data;
+  const query=`INSERT INTO favorite(user_id,album_id) values(?,?)`;
+  const result=await connection.getConnection().then((conn)=>{
+    const res=conn.query(query,[user_id,album_id]);
+    conn.release();
+    return res;
+  }).catch((err)=>{
+    console.log("Can't add user favorite album. Please check again.");
+  })
+  return result;
+}
 // const data={
 //     'user_name':'hao',
 //     'password':'234'
@@ -62,5 +122,9 @@ const updateUser= async (data)=>{
 // const result=await getUser(data)
 // console.log(result)
 export {
-  getTotalUser,getUser,updateUser,createUser
+  getTotalUser,getUser,
+  updateUser,createUser,
+  getUserFavorite,getUserHistory,
+  addFavoriteAlbum,addFavoriteArtist,
+  addFavoriteTrack
 }

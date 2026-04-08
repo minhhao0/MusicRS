@@ -1,12 +1,20 @@
+import { useContext, useEffect } from "react";
 import AppHeader from "../appheader/Header";
 import Sidebar from "../appsidebar/Sidebar";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import AuthContext from "../AuthProvider";
 
 export default function Play(){
     const location = useLocation();
     const id = new URLSearchParams(location.search).get("id");
     const displayId = id ? id.replace(/-/g, " ") : null;
-
+    const {currentUser,setcurrentUser}=useContext(AuthContext);
+    const navigate=useNavigate();
+    useEffect(()=>{
+        if(!currentUser){
+            navigate('/login')
+        }
+    })
     return (
     <>
 <div className="relative flex h-screen w-full overflow-hidden bg-background-dark">

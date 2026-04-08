@@ -2,10 +2,11 @@ import Sidebar from "../appsidebar/Sidebar";
 import AppHeader from "../appheader/Header";
 import { useState, useMemo, useContext } from "react";
 import AuthContext from "../AuthProvider";
+import { Link, useNavigate } from "react-router-dom";
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [notify,setNotify]=useState("");
+    const navigate=useNavigate();
     const {currentUser,setcurrentUser}=useContext(AuthContext);
     const canSubmit = useMemo(() => {
         return (
@@ -15,6 +16,7 @@ export default function Login() {
     }, [email, password]);
     const submit= async (data)=>{
         const user=JSON.stringify(data);
+        console.log(user);
         const fetchOption ={
             "method":'post',
             "headers":{
@@ -25,12 +27,17 @@ export default function Login() {
         }
         try{
             const response= await fetch('http://localhost:8080/user/login',fetchOption);
-            const result=await response.json();
+            const result= await response.json();
             setcurrentUser(result);
-            if(response.ok) setNotify(`Welcomeback ${result.user_name}`);
+            if(response.ok) {
+                 alert(`Welcomeback ${result.user_name}`);
+                navigate('/');
+            }  
+            else
+                alert(`Sever responses with status: ${response.status}`)
         } catch(error){
             console.error("Error when log in. Please try again",error);
-            setNotify("Can not log in. Please check your information and try again.");
+            alert("Can not log in. Please check your information and try again.");
         }
     }
     return (<>
@@ -81,9 +88,7 @@ export default function Login() {
                                 'email': email,
                                 'password': password
                             }
-                            console.log(data);
                             submit(data);
-                            alert(notify);
                         }}
                     >
                         <div>
@@ -119,7 +124,7 @@ export default function Login() {
                                 type="checkbox" />
                             <label
                                 className="text-sm text-slate-600 dark:text-slate-400"
-                                for="remember">Keep me logged in</label>
+                                htmlFor="remember">Keep me logged in</label>
                         </div>
                         <button
                             className={
@@ -135,7 +140,7 @@ export default function Login() {
                     <div className="mt-10 text-center">
                         <p className="text-slate-600 dark:text-slate-400 text-sm">
                             Don't have an account?
-                            <a className="text-primary font-bold hover:underline ml-1" href="/create_account">Create an account for free</a>
+                            <Link className="text-primary font-bold hover:underline ml-1" to="/create_account">Create an account for free</Link>
                         </p>
                     </div>
                 </div>

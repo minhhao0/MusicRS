@@ -14,7 +14,7 @@ class Track{
   this.liveness=0;
   this.valence=0;
   this.tempo=0;
-  duration_ms,
-  time_signature ,
+  this.duration_ms=0;
+  this.time_signature=0;
   }
 }

@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import AuthContext from "../AuthProvider";
 
 export default function AppHeader(){
+    const {currentUser,setcurrentUser}=useContext(AuthContext);
     return(
     <header className="sticky top-0 z-10 flex items-center justify-between px-8 py-4 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
       <div className="flex gap-4"></div>
@@ -20,7 +23,7 @@ export default function AppHeader(){
           <span className="absolute top-2 right-2.5 w-2 h-2 bg-primary rounded-full"></span>
         </button>
 
-        <Link className="h-10 w-10 rounded-full bg-slate-300 dark:bg-slate-700 overflow-hidden border-2 border-transparent hover:border-white/20 transition-all" to="/user" aria-label="Profile">
+        <Link className="h-10 w-10 rounded-full bg-slate-300 dark:bg-slate-700 overflow-hidden border-2 border-transparent hover:border-white/20 transition-all" to={currentUser ? "/user" :'/login'} aria-label="Profile">
           <img
             className="w-full h-full object-cover"
             alt="User avatar"

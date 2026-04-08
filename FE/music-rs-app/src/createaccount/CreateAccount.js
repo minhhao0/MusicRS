@@ -1,14 +1,14 @@
 import { useMemo, useState } from "react";
 import AppHeader from "../appheader/Header";
 import Sidebar from "../appsidebar/Sidebar";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function CreateAccount() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [user,setUser]=useState();
-  const [notify,setNotify]=useState("");
+  const navigate=useNavigate();
   const canSubmit = useMemo(() => {
     return (
       fullName.trim().length > 1 &&
@@ -29,10 +29,14 @@ export default function CreateAccount() {
     }
     try{
       const response= await fetch('http://localhost:8080/user/signup',fetchOption);
-      if(response.ok) setNotify("You have signup successfully. Now you can login");
+      if(response.ok) {
+        alert("You have signup successfully. Now you can login");
+        navigate('/login')
+      }
+
     } catch (error){
       console.error("Error when creating new user",error);
-      setNotify("Can not sign up. Please try again.");
+      alert("Can not sign up. Please try again.");
     }
   }
   return (
@@ -84,9 +88,7 @@ export default function CreateAccount() {
                   'email':email,
                   'password':password
                 }
-                setUser(data);
-                submit(user);
-                alert(notify);
+                submit(data);
               }}
             >
               <div>
@@ -160,9 +162,9 @@ export default function CreateAccount() {
             <div className="mt-10 text-center">
               <p className="text-slate-600 dark:text-slate-400 text-sm">
                 Already have an account?{" "}
-                <a className="text-primary font-bold hover:underline ml-1" href="/login">
+                <Link className="text-primary font-bold hover:underline ml-1" to="/login">
                   Sign in
-                </a>
+                </Link>
               </p>
             </div>
           </div>

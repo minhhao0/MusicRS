@@ -1,16 +1,21 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import AppHeader from "../appheader/Header";
 import Sidebar from "../appsidebar/Sidebar";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AuthContext from "../AuthProvider";
 
 export default function User(){
+    
     const location = useLocation();
     const id = new URLSearchParams(location.search).get("id");
     const displayId = id ? id.replace(/-/g, " ") : null;
     const {currentUser,setcurrentUser}=useContext(AuthContext);
-    //const currentUser=useContext(AuthContext);
-    console.log(currentUser)
+    const navigate=useNavigate();
+    useEffect(()=>{
+        if(!currentUser){
+            navigate('/login');
+        }
+    })
     return (
     <>
 <div className="flex h-screen overflow-hidden">
