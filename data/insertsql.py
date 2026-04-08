@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import os
 from tqdm import tqdm
 import mysql.connector
@@ -30,6 +31,19 @@ for file in tqdm(file_list):
     elif file['type']=='artist':
       val=(row[''])
       sql="INSERT INTO Artist (artistid,artist_name,images,artist_genre,followers,popularity,country) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+=======
+import mysql.connector
+import dotenv
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="myusername",
+  password="mypassword",
+  database="mydatabase"
+)
+
+mycursor = mydb.cursor()
+>>>>>>> 087da693de656cce31813e6161776ef078d04587
 
 sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
 val = ("John", "Highway 21")
