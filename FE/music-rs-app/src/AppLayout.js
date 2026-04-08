@@ -7,6 +7,9 @@ import Play from "./play/Play";
 import User from "./user/User";
 import AskUser from "./askuser/AskUser";
 import CreateAccount from "./createaccount/CreateAccount";
+import ShowAll from "./showall/ShowAll";
+import AddSongsToPlaylistModal from "./components/AddSongsToPlaylistModal";
+import { usePlaylist } from "./context/PlaylistContext";
 
 function EntityNavigation() {
   const navigate = useNavigate();
@@ -29,7 +32,6 @@ function EntityNavigation() {
       if (type === "artist") nextPath = "/user";
       if (!nextPath) return;
 
-      // Keep query param so destination page can display which item was clicked.
       navigate(`${nextPath}?id=${encodeURIComponent(id)}`);
     };
 
@@ -40,9 +42,10 @@ function EntityNavigation() {
   return null;
 }
 
-export default function AppLayout() {
+function AppRoutes() {
+  const { addModalOpen, closeAddToPlaylist, addModalPrefillIds } = usePlaylist();
   return (
-    <BrowserRouter>
+    <>
       <EntityNavigation />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -53,7 +56,21 @@ export default function AppLayout() {
         <Route path="/ask_user" element={<AskUser />} />
         <Route path="/create_account" element={<CreateAccount />} />
         <Route path="/creataccount" element={<CreateAccount />} />
+        <Route path="/show_all" element={<ShowAll />} />
       </Routes>
+      <AddSongsToPlaylistModal
+        open={addModalOpen}
+        onClose={closeAddToPlaylist}
+        prefillIds={addModalPrefillIds}
+      />
+    </>
+  );
+}
+
+export default function AppLayout() {
+  return (
+    <BrowserRouter>
+      <AppRoutes />
     </BrowserRouter>
   );
 }

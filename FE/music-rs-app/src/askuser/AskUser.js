@@ -1,94 +1,53 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { Link } from "react-router-dom";
 import AppHeader from "../appheader/Header";
 import Sidebar from "../appsidebar/Sidebar";
+import { usePersonalize } from "../context/PersonalizeContext";
+import { ARTISTS, GENRES, SONGS } from "../data/catalog";
 
 export default function AskUser(){
-    const [selectedGenres, setSelectedGenres] = useState(() => new Set(["all", "hip_hop"]));
-    const [selectedArtists, setSelectedArtists] = useState(() => new Set(["arctic_monkeys", "lana_del_rey"]));
-    const [selectedSongs, setSelectedSongs] = useState(() => new Set(["midnight_city"]));
-
-    const toggleInSet = (setSetter, key) => {
-      setSetter((prev) => {
-        const next = new Set(prev);
-        if (next.has(key)) next.delete(key);
-        else next.add(key);
-        return next;
-      });
-    };
+    const {
+      selectedGenres,
+      selectedArtists,
+      selectedSongs,
+      toggleGenre,
+      toggleArtist,
+      toggleSong,
+    } = usePersonalize();
 
     const canSave = useMemo(() => {
       return selectedGenres.size >= 2 && selectedArtists.size >= 2 && selectedSongs.size >= 2;
     }, [selectedGenres, selectedArtists, selectedSongs]);
 
     const genreOptions = useMemo(
-      () => [
-        { key: "all", label: "All Genres" },
-        { key: "hip_hop", label: "Hip Hop" },
-        { key: "indie_pop", label: "Indie Pop" },
-        { key: "techno", label: "Techno" },
-        { key: "jazz_fusion", label: "Jazz Fusion" },
-        { key: "modern_rock", label: "Modern Rock" },
-      ],
+      () =>
+        Object.keys(GENRES)
+          .slice(0, 6)
+          .map((key) => ({ key, label: GENRES[key] })),
       []
     );
 
     const artistOptions = useMemo(
-      () => [
-        {
-          key: "arctic_monkeys",
-          label: "Arctic Monkeys",
-          img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCHe_Agg4EhbW_nuU3Wi0x3oAO9T7UodyJ51yBMpCTndLPbBjrCo_9TXVt6_9PPkv_6enT5Hpor3-OL0Kh7fxPEAXqeYuKPpIfaiZjBE9ItY7nRr91P2vD5EojGyVyHMlZvAO7oAtgUBdIlOoblw5d7nlSUG1KdMftE0mnVZe0F6cP-u3Arue1MyKD1cc1FOJglhfUx461JahnKHDv7Pa7X2WiqdkMN6OLYSu54rygrRYEDHi57Lw0cGjlBodEiv_3M-s8ujt1sPU8",
-        },
-        {
-          key: "the_weeknd",
-          label: "The Weeknd",
-          img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCPgq9zu2cstmVFwSsCcQRA3s6S_G3d-OPTnHJwX3iN8bcsR0PeHJ49kcfsY2DQCZZOBNFS0Qs0Ezx1sCQukEvLPowlGyVKFOT2STrYM2jgRwusQ7t7qpwdm6O8ZZ3bO_ghSyxnrqJcO3ucRLBGZxUR6v083lHFifvv9M8W3mabZ5gRYVhNpy-wmJKNK8WThXIoMkRDmjUYS1zJs7Y3zVDTy08Q1mv3viU2JpGdCd_NETRZbaMtBdToRs66NHq6uPv4vmpPevzyG68",
-        },
-        {
-          key: "lana_del_rey",
-          label: "Lana Del Rey",
-          img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCd9Lag7U2_vXodOKUTiCxx4B9f-clDmYeicvCcczDJRvmVrJFkwHLUMxFjY76jtqfTUdQWn5jvMxG93FFfJFIyzibNa3C4rChb1wiG8QIhjuVVwOyeZ0SLw3_aOXjz4b8G54FYS9HHfrpWIBUIgEPLj6Oj9o_h4sCvXTQuqPINT3GbPjqcu_WHsLjDMY7iaPxopFRsMfwJFDMtyUeyVwLg08NouHcmgRJ6Imx3BuXzCmEGylnjNxoT1gVsVvGRukp6W6Q_-aKMmIA",
-        },
-        {
-          key: "glass_animals",
-          label: "Glass Animals",
-          img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAsFLUHKyV8l44CxSyiVrLPDpxiwHqXRI54Z8WYSQOsEWxiHEQ1fQdi5_fdbh9Mm6mal0FX_IbCisUHpbRat-FxkBydctt4yO9acZdMtSe2AwE7ujX0hOd9p3wW_PQqHDwJwAyACDTy4DQgBs_mISEunK8Jko-fGzzyxKvcyx8cYZBR5HPx-VxvlNqbUTadrGiy4Hsi37lXbKsfOpUmtS5plHPKzdRLxrb7avWOealI-oj6dTMB_Zg75rCkxplM00AuxPNxtdGSEl0",
-        },
-        {
-          key: "kendrick_lamar",
-          label: "Kendrick Lamar",
-          img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBbD8UipFW5Jg5UmOFQzmalnGaj_t_wSQgtLmB72ak-V_5Myxmv4_8I-j_91AP5DwUU_8BoZkjvZueDcSkF9nCni3Fxc6ACnbFsp7Dd-gCJz1W1Oo2e8G8K--ulY0rBmBUg_qRIr9OVhef1eIHWcIxH1oaNZbudMr9BeK3Mkcr_XgNI85GnTXXd-NoCciq7KwJn6mEpnyHPbT3T-uY6f_kaoqLHGUkLfeSVCT4OD4A_03TNtySnFc4NBiV9al8EsDizo-L5RbX8roI",
-        },
-      ],
+      () =>
+        Object.entries(ARTISTS)
+          .slice(0, 5)
+          .map(([key, a]) => ({ key, label: a.name, img: a.cover })),
       []
     );
 
     const songOptions = useMemo(
-      () => [
-        {
-          key: "midnight_city",
-          title: "Midnight City",
-          sub: "M83 • Hurry Up, We're Dreaming",
-          img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAqEX5ICG28JVjR4kLN6gjqc72rBQ1QyZOczRF3dvEMRZKhw8cgWOccNOHiV1Ej0nqEo3SHNztsT0QzNKNynq1joHNReUyUOhnYoZ8QD_AJUEHpu5bK5-922usQCT6TWezFLW14vjyGpH5vItRzm2yW_1DLNI9mdGuIVolDqpt5Tupr3dhT4mkcDOjy9EHetuSvMiCqAdW5x36rDyDEWCVwy5a8asOn1Uw1TN28DiqNV0dlTO85Iwb36EuafyfOYn3iQCT5Ot5XxnI",
-        },
-        {
-          key: "harder_better_faster_stronger",
-          title: "Harder, Better, Faster, Stronger",
-          sub: "Daft Punk • Discovery",
-          img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCaVNfLjpmDjzUvPJL0mwt4ii4g0Ts1U5LqAkYdtfvhLnPkKyuK3YYxMs5VEecXpZ28VOKe8CgTW1b1zgoTqmy--t9D98zSEHldpchQKQ3Jk7dx83WPhdSaeP2RJouutu0Uf3nlikWYmJkO5Fxb9O_xY4kygkyXGFlYWcrF7u7Xp8ToniHk-KrZU51GfQ9T16NSxbMtVNGTcXEOvI2qaCCWaKNsO5q14SYAK-vQu8by-8pYMjXADYuFW_FBDfWtYqPpWuLjW9R7isg",
-        },
-        {
-          key: "creep",
-          title: "Creep",
-          sub: "Radiohead • Pablo Honey",
-          img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAlWTqUytnE-LozY_RRys5c1y1JA4rHcLZtwgLcnvmjtCbL9VEfvXKwj0KW2sMbiTsTZMbECFq7iZ4hTjZUYHflYUGNqWuxluuTYiMHA74gFKGC8JfbJxhOahxJ8pIWKxG1WS6Vk6_X1LbhxA5pIsuJbPfR_Pwqp8Ckke_JTn2NfdY8KJ9HFaGSIoSvViPSWlcmmffChMsT7Qkh9VF98GnyoO3xDHHJwU2475VSzQwyGvcjgWYDMXEweOWVynPHgtsUq_gPha2BBRU",
-        },
-      ],
+      () =>
+        Object.entries(SONGS)
+          .filter(([, s]) => s.cover)
+          .slice(0, 3)
+          .map(([key, s]) => ({
+            key,
+            title: s.title,
+            sub: s.artist,
+            img: s.cover,
+          })),
       []
     );
-
-    // Cập nhật: file UI cũ có 3 bài trong "Songs you love" (2 bài chưa rõ ràng, 1 bài đang hiển thị check).
-    // Để đảm bảo người dùng "chọn giữa các lựa chọn", mình cho phép toggle chọn cả 3 bài.
 
     return (
     <>
@@ -108,7 +67,7 @@ export default function AskUser(){
 <section className="mb-12">
 <div className="flex items-center justify-between mb-4">
 <h3 className="text-xl font-bold">Favorite Genres</h3>
-<button className="text-primary text-sm font-semibold hover:underline">View all</button>
+<Link to="/show_all?section=personalize_genres" className="text-primary text-sm font-semibold hover:underline">Show all</Link>
 </div>
 <div className="flex flex-wrap gap-3">
 {genreOptions.map((opt) => {
@@ -117,7 +76,7 @@ export default function AskUser(){
     <button
       key={opt.key}
       type="button"
-      onClick={() => toggleInSet(setSelectedGenres, opt.key)}
+      onClick={() => toggleGenre(opt.key)}
       className={
         isSelected
           ? "px-6 py-2 rounded-full bg-primary text-background-dark font-bold text-sm shadow-lg shadow-primary/20 flex items-center gap-2"
@@ -135,7 +94,7 @@ export default function AskUser(){
 <section className="mb-12">
 <div className="flex items-center justify-between mb-4">
 <h3 className="text-xl font-bold">Who are your favorite artists?</h3>
-<button className="text-primary text-sm font-semibold hover:underline">View all</button>
+<Link to="/show_all?section=personalize_artists" className="text-primary text-sm font-semibold hover:underline">Show all</Link>
 </div>
 <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 sm:gap-6">
 {artistOptions.map((opt) => {
@@ -144,7 +103,7 @@ export default function AskUser(){
     <button
       key={opt.key}
       type="button"
-      onClick={() => toggleInSet(setSelectedArtists, opt.key)}
+      onClick={() => toggleArtist(opt.key)}
       className="group flex flex-col items-center gap-2"
     >
       <div
@@ -185,7 +144,7 @@ export default function AskUser(){
 <section className="mb-10">
 <div className="flex items-center justify-between mb-4">
 <h3 className="text-xl font-bold">Songs you love</h3>
-<button className="text-primary text-sm font-semibold hover:underline">View all</button>
+<Link to="/show_all?section=personalize_songs" className="text-primary text-sm font-semibold hover:underline">Show all</Link>
 </div>
 <div className="space-y-2">
   {songOptions.map((opt) => {
@@ -194,7 +153,7 @@ export default function AskUser(){
       <button
         key={opt.key}
         type="button"
-        onClick={() => toggleInSet(setSelectedSongs, opt.key)}
+        onClick={() => toggleSong(opt.key)}
         className={
           isSelected
             ? "flex items-center justify-between p-3 rounded-xl bg-primary/10 border border-primary/30 group cursor-pointer w-full"
