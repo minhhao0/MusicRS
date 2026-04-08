@@ -1,8 +1,4 @@
-/**
- * backend/recommendController.js
- */
-
-const { recommendForHome, recommendBySeeds } = require('./albumRecommender');
+import { recommendForHome,recommendBySeeds } from "../services/albumRecommender.js";
 
 // GET /api/recommend/home?limit=20&maxPerArtist=3
 async function getHomeRecommendations(req, res) {
@@ -33,4 +29,4 @@ async function getAlbumRecommendations(req, res) {
   }
 }
 
-module.exports = { getHomeRecommendations, getAlbumRecommendations };
+export { getHomeRecommendations, getAlbumRecommendations };

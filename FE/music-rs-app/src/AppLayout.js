@@ -8,6 +8,7 @@ import User from "./user/User";
 import AskUser from "./askuser/AskUser";
 import CreateAccount from "./createaccount/CreateAccount";
 import AuthContext from "./AuthProvider";
+import ShowAll from "./showall/ShowAll";
 function EntityNavigation() {
   const navigate = useNavigate();
   
@@ -55,6 +56,7 @@ export default function AppLayout() {
         <Route path="/ask_user" element={<AskUser />} />
         <Route path="/create_account" element={<CreateAccount />} />
         <Route path="/creataccount" element={<CreateAccount />} />
+        <Route path="/show_all" element={<ShowAll/>}/>
       </Routes>
     </BrowserRouter>
     </AuthContext.Provider>

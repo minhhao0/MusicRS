@@ -5,7 +5,11 @@ import { PlaylistProvider } from './context/PlaylistContext';
 
 function App() {
   return (
-    <AppLayout/>
+      <PlaylistProvider>
+      <PersonalizeProvider>
+        <AppLayout />
+      </PersonalizeProvider>
+    </PlaylistProvider>
        
   );
 }

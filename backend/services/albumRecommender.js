@@ -9,7 +9,7 @@
  * Tầng 3 — Diversity Filter: giới hạn album mỗi artist
  */
 
-const { connection } = require('./config/db');
+import { connection } from "../config/db.js";
 
 const WEIGHTS = { content: 0.60, popularity: 0.25, recency: 0.15 };
 

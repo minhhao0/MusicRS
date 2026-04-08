@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import AppHeader from "../appheader/Header";
 import Sidebar from "../appsidebar/Sidebar";
 import AuthContext from "../AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AddSongButton from "../components/AddSongButton";
 
 export default function Home(){
@@ -13,7 +13,6 @@ export default function Home(){
         navigate('/login')
     }
     })
-   
     return (
         
         <div className="flex h-screen overflow-hidden">
@@ -28,14 +27,20 @@ export default function Home(){
     <section>
     <div className="flex items-center justify-between mb-6">
     <h2 className="text-2xl font-bold tracking-tight" >Trending songs</h2>
-    <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="/show_all?section=trending">Show all</a>
+    <Link className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" to="/show_all?section=trending">Show all</Link>
     </div>
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
     {/* !-- Song Card 1 -- */}
     <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
     <div className="relative aspect-square mb-4 shadow-xl">
-    <img className="rounded-lg w-full h-full object-cover" data-alt="Abstract album cover art for Midnight City" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCw4oZwtGKxRHRrk99OCvAZIqla4Bb5yLqxsQTmbF2nlocrXKrmwzVpUXo_8csF-rVF6i2mpOx3RwtPCV5Bu_eY9W_limRvRhPR1HCcmqB-rzsx2WVuSyabrRjfMRnB10-xZ3UbnEhYYMcpHfjJeBF6kqu_VOqxvb20ZcCXJ0POYaL9Jyknst97GtIe6ztd8dBl2C5cGYOouN7YeVjyFwoem9YSVDvoBwR4aLo6s8bBGYC8Qxn6Hli5TAwO5USQshkq3cu4y1_mZJo"/>
-    <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="song" data-id="midnight-city" aria-label="Play song">
+    <img className="rounded-lg w-full h-full object-cover" 
+    data-alt="Abstract album cover art for Midnight City" 
+    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCw4oZwtGKxRHRrk99OCvAZIqla4Bb5yLqxsQTmbF2nlocrXKrmwzVpUXo_8csF-rVF6i2mpOx3RwtPCV5Bu_eY9W_limRvRhPR1HCcmqB-rzsx2WVuSyabrRjfMRnB10-xZ3UbnEhYYMcpHfjJeBF6kqu_VOqxvb20ZcCXJ0POYaL9Jyknst97GtIe6ztd8dBl2C5cGYOouN7YeVjyFwoem9YSVDvoBwR4aLo6s8bBGYC8Qxn6Hli5TAwO5USQshkq3cu4y1_mZJo"/>
+    <button 
+    className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" 
+    data-nav-type="song" 
+    data-id="midnight-city" 
+    aria-label="Play song">
     <span className="material-symbols-outlined fill-1" >play_arrow</span>
     </button>
     <button className="absolute top-2 left-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="song" data-id="midnight-city" aria-label="Play song">
@@ -100,7 +105,7 @@ export default function Home(){
     <section>
     <div className="flex items-center justify-between mb-6">
     <h2 className="text-2xl font-bold tracking-tight" >Popular artists</h2>
-    <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="/show_all?section=artists">Show all</a>
+    <Link className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" to="/show_all?section=artists">Show all</Link>
     </div>
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
     {/* !-- Artist Card 1 -- */}
@@ -162,7 +167,7 @@ export default function Home(){
     </section><section>
     <div className="flex items-center justify-between mb-6">
     <h2 className="text-2xl font-bold tracking-tight">Songs you might like</h2>
-    <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="/show_all?section=for_you">Show all</a>
+    <Link className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" to="/show_all?section=for_you">Show all</Link>
     </div>
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
     <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
@@ -202,7 +207,7 @@ export default function Home(){
     </section><section>
     <div className="flex items-center justify-between mb-6">
     <h2 className="text-2xl font-bold tracking-tight">Artists you might like</h2>
-    <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="/show_all?section=artists_suggested">Show all</a>
+    <Link className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" to="/show_all?section=artists_suggested">Show all</Link>
     </div>
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
     <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer text-center">
@@ -229,7 +234,7 @@ export default function Home(){
     </section><section>
     <div className="flex items-center justify-between mb-6">
     <h2 className="text-2xl font-bold tracking-tight">Albums you might like</h2>
-    <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="/show_all?section=albums">Show all</a>
+    <Link className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" to="/show_all?section=albums">Show all</Link>
     </div>
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
     <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
@@ -256,7 +261,7 @@ export default function Home(){
     </section><section>
     <div className="flex items-center justify-between mb-6">
     <h2 className="text-2xl font-bold tracking-tight" >Recommended for you</h2>
-    <a className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" href="/show_all?section=recommended">Show all</a>
+    <Link className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" to="/show_all?section=recommended">Show all</Link>
     </div>
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
     <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">

@@ -3,7 +3,6 @@ import AppHeader from "../appheader/Header";
 import Sidebar from "../appsidebar/Sidebar";
 import { useLocation, useNavigate } from "react-router-dom";
 import AuthContext from "../AuthProvider";
-import { useLocation } from "react-router-dom";
 import AddSongButton from "../components/AddSongButton";
 import { usePlaylist } from "../context/PlaylistContext";
 
