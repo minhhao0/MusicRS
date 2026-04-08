@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
-import HomeV2 from "./home/Home";
+import Home from "./home/Home";
 import Login from "./login/Login";
 import PlayList from "./playlist/Playlist";
 import Play from "./play/Play";
@@ -47,7 +47,7 @@ export default function AppLayout() {
     <BrowserRouter>
       <EntityNavigation />
       <Routes>
-        <Route path="/" element={<HomeV2 />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/playlist" element={<PlayList />} />
         <Route path="/play" element={<Play />} />
