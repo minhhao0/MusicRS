@@ -1,33 +1,78 @@
 import { useContext, useEffect } from "react";
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import AppHeader from "../appheader/Header";
 import Sidebar from "../appsidebar/Sidebar";
 import Playing from "./SongPlay";
-import { useLocation, useNavigate } from "react-router-dom";
-import { usePlaylist } from "../context/PlaylistContext";
+import { useNavigate } from "react-router-dom";
 import CreatePlaylistModal from "../components/CreatePlaylistModal";
-import { SONGS } from "../data/catalog";
 import AuthContext from "../AuthProvider";
 
 export default function PlayList() {
-  const location = useLocation();
+  const params=useParams()
   const navigate = useNavigate();
-  const id = new URLSearchParams(location.search).get("id");
-  const { playlists } = usePlaylist();
+  const [selectedPlaylist,setSelectedPlaylist]=useState(null)
+  const [playlists,setPlaylists]=useState([])
   const [createOpen, setCreateOpen] = useState(false);
-
-  const selectedPlaylist = useMemo(
-    () => (id ? playlists.find((p) => p.id === id) : null),
-    [id, playlists]
-  );
-    const {currentUser,setcurrentUser}=useContext(AuthContext);
-    useEffect(()=>{
-        if(!currentUser){
+  const {currentUser,setcurrentUser}=useContext(AuthContext);
+  const [tracks,setTracks]=useState([]);
+  const id=params.id
+  useEffect(()=>{
+    if(!currentUser){
             navigate('/login');
         }
-    })
+    const fetchData=async ()=>{
+      if(currentUser){
+        const data={
+          'userid':currentUser.user_id,
+        }
+         const dt=JSON.stringify(data);
+        const fetchOption={
+          method:"post",
+          headers:{
+            'Accept':'application/json',
+            'Content-Type':'application/json',
+          },
+          body:dt,
+        }
+        try{
+        const response=await fetch('http://localhost:8080/playlist/playlist-by-user',fetchOption)
+        if(response.ok){
+          console.log("Get playlist for this user successfully!");
+        }
+        const result=await response.json()
+        setPlaylists(result)
 
+      } catch(error){
+        console.error("Error when getting playlist by user",error);
+      }
+      }
+      
+    }
+    fetchData();
+  },[])
+  const searchTrack= async (data)=>{
+      const playlist=JSON.stringify(data);
+      const fetchOption={
+        method:'post',
+        headers:{
+          'Accept':'application/json',
+          'Content-Type':'application/json',
+        },
+        body:playlist,
+      }
+      try{
+        const response=await fetch('http://localhost:8080/playlist/track-by-playlist',fetchOption)
+        if(response.ok){
+          console.log("Get tracks for this playlist successfully!");
+        }
+        const result=await response.json()
+        setTracks(result)
+
+      } catch(error){
+        console.error("Error when getting tracks for this playlist",error);
+      }
+    }
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
@@ -40,7 +85,7 @@ export default function PlayList() {
                 <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
                   Playlists
                 </h2>
-                {!selectedPlaylist && (
+                {!selectedPlaylist && playlists && (
                   <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
                     {playlists.length} playlist{playlists.length !== 1 ? "s" : ""}
                   </p>
@@ -67,17 +112,22 @@ export default function PlayList() {
                 ) : (
                   playlists.map((pl) => (
                     <div
-                      key={pl.id}
+                      key={pl.playlistid}
                       role="button"
                       tabIndex={0}
                       onClick={() =>
-                        navigate(`/playlist?id=${encodeURIComponent(pl.id)}`)
+                        {setSelectedPlaylist(pl);
+                          const playlist={
+                                  'playlistid':pl.playlistid,
+                          };
+                          searchTrack(playlist)
+                        navigate(`/playlist?id=${encodeURIComponent(pl.playlistid)}`)}
                       }
                       onKeyDown={(e) => {
                         if (e.key === "Enter" || e.key === " ") {
                           e.preventDefault();
                           navigate(
-                            `/playlist?id=${encodeURIComponent(pl.id)}`
+                            `/playlist?id=${encodeURIComponent(pl.playlistid)}`
                           );
                         }
                       }}
@@ -92,7 +142,7 @@ export default function PlayList() {
                         {pl.name}
                       </h3>
                       <p className="text-slate-400 text-xs">
-                        {pl.songIds.length} tracks
+                        {pl.total_tracks } tracks
                       </p>
                     </div>
                   ))
@@ -107,6 +157,11 @@ export default function PlayList() {
                 <Link
                   to="/playlist"
                   className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline"
+                  onClick={
+                    (e)=>{
+                      setSelectedPlaylist(null)
+                    }
+                  }
                 >
                   <span className="material-symbols-outlined text-lg">
                     arrow_back
@@ -128,13 +183,13 @@ export default function PlayList() {
                     {selectedPlaylist.name}
                   </h2>
                   <div className="flex items-center gap-2 mt-4 text-sm font-medium text-slate-600 dark:text-slate-400">
-                    <span>{selectedPlaylist.songIds.length} tracks</span>
+                    <span>{tracks.length} tracks</span>
                   </div>
                 </div>
               </div>
 
               <div className="bg-background-light dark:bg-background-dark/50 rounded-xl overflow-hidden border border-primary/5">
-                {selectedPlaylist.songIds.length === 0 ? (
+                {tracks.length === 0 ? (
                   <p className="p-8 text-center text-slate-500 dark:text-slate-400 text-sm">
                     No tracks yet. Add songs from <strong className="text-primary">Home</strong> or use <strong className="text-primary">Save to Library</strong> on Now Playing.
                   </p>
@@ -155,11 +210,11 @@ export default function PlayList() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-primary/5">
-                      {selectedPlaylist.songIds.filter((sid) => SONGS[sid]).map((sid, index) => {
-                        const meta = SONGS[sid];
+                      {tracks.map((it,index) => {
+
                         return (
                           <tr
-                            key={`${sid}-${index}`}
+                            key={`${it.trackid}`}
                             className="group hover:bg-white/5 transition-colors cursor-pointer"
                           >
                             <td className="px-6 py-3 text-center text-sm text-slate-500 group-hover:text-primary">
@@ -167,7 +222,7 @@ export default function PlayList() {
                                 className="hidden group-hover:inline-flex items-center justify-center size-8 rounded-full bg-primary text-background-dark"
                                 type="button"
                                 data-nav-type="song"
-                                data-id={sid}
+                                data-id={it.trackid}
                                 aria-label="Play song"
                               >
                                 <span className="material-symbols-outlined fill-1 text-lg">
@@ -181,11 +236,11 @@ export default function PlayList() {
                             <td className="px-4 py-3">
                               <div className="flex items-center gap-3">
                                 <div className="size-10 rounded bg-slate-200 dark:bg-slate-800 shrink-0 overflow-hidden">
-                                  {meta.cover ? (
+                                  {it.image ? (
                                     <img
                                       className="object-cover size-full"
                                       alt=""
-                                      src={meta.cover}
+                                      src={it.image}
                                     />
                                   ) : (
                                     <div className="size-full bg-slate-700" />
@@ -193,13 +248,13 @@ export default function PlayList() {
                                 </div>
                                 <div className="flex flex-col min-w-0">
                                   <span className="text-sm font-bold truncate group-hover:text-primary text-slate-900 dark:text-white">
-                                    {meta.title}
+                                    {it.track_name}
                                   </span>
                                 </div>
                               </div>
                             </td>
                             <td className="px-4 py-3 text-sm text-slate-500 dark:text-slate-400">
-                              {meta.artist}
+                              {it.track_name}
                             </td>
                             <td className="px-4 py-3 text-sm text-slate-500 text-right pr-12">
                               —

@@ -1,5 +1,5 @@
-<<<<<<< HEAD
-import { getTotalGenre } from "../services/TrackService.js"
+import {getTotalTrack,getTrack,getTrackHomeRecommend,getTrackHomeTrend,getTotalGenre} from "../services/TrackService.js";
+
 
 const get_genre_method= async(req,res)=>{
     try{
@@ -13,9 +13,7 @@ const get_genre_method= async(req,res)=>{
         res.status(501).send("Server Error");
     }
     
-=======
-import {getTotalTrack,getTrack,getTrackHomeRecommend,getTrackHomeTrend} from "../services/TrackService.js";
-
+}
 const track_home_trend_method = async (req, res) => {
     try{
        const data=req.body;
@@ -47,6 +45,5 @@ const track_home_recommend_method = async (res) => {
 
 
 export {
-    track_home_trend_method, track_home_recommend_method
->>>>>>> dat
+    track_home_trend_method, track_home_recommend_method,get_genre_method
 }

@@ -33,7 +33,8 @@ const createUser= async (data)=>{
   console.log(data);
   const {user_name,email,password} =data;
   const query=`INSERT INTO USER(username,password,email) values(?,?,?)`
-  const result= await connection.getConnection().then((conn)=>{const res=conn.query(query,[user_name,password,email]);
+  const result= await connection.getConnection().then((conn)=>{
+    const res=conn.query(query,[user_name,password,email]);
     conn.release();
     return res;
   }).catch((err)=>{

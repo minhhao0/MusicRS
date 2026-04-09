@@ -15,10 +15,12 @@ mydb = mysql.connector.connect(
   database=database
 )
 mycursor = mydb.cursor()
-file_list=[{'name':'artist_1_.csv','type':'artist'},
+file_list=[
+         {'name':'artisttrack_.csv','type':'artisttrack'},
+          {'name':'artist_1_.csv','type':'artist'},
            {'name':'album.csv','type':'album'},
            {'name':'artistalbum.csv','type':'artistalbum'},
-           {'name':'artisttrack.csv','type':'artisttrack'},
+
            {'name':'trackinalbum.csv','type':'trackinalbum'}]
 for file in tqdm(file_list):
   df=pd.read_csv(file['name'])
@@ -52,6 +54,7 @@ for file in tqdm(file_list):
         err+=1
   print(f'total error item: {err}/{df.shape[0]}')
   print(f'Total success item: {success}/{df.shape[0]}')
+  break
 mydb.commit()
 
 print(mycursor.rowcount, "record inserted.")

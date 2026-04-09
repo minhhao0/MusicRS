@@ -1,4 +1,5 @@
-import { usePlaylist } from "../context/PlaylistContext";
+import { useState } from "react";
+
 
 const subtleIconBtn =
   "flex size-7 shrink-0 items-center justify-center rounded-full border border-white/20 bg-black/35 text-emerald-200/90 shadow-sm backdrop-blur-[2px] transition-all duration-200 hover:border-emerald-400/50 hover:bg-emerald-500/12 hover:text-white active:scale-[0.96]";
@@ -10,10 +11,8 @@ const layoutClasses = {
 };
 
 /** Stops propagation so global [data-nav-type] navigation does not fire. */
-export default function AddSongButton({ songId, className, layout = "card" }) {
-  const { openAddToPlaylist } = usePlaylist();
+export default function AddSongButton({ song,setSong,setisOpen, className, layout = "card" }) {
   const merged = className || layoutClasses[layout] || layoutClasses.card;
-
   return (
     <button
       type="button"
@@ -23,7 +22,8 @@ export default function AddSongButton({ songId, className, layout = "card" }) {
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        openAddToPlaylist(songId);
+        setisOpen(true);
+        setSong(song)
       }}
     >
       <span

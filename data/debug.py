@@ -41,14 +41,36 @@ mydb = mysql.connector.connect(
   database=database
 )
 mycursor = mydb.cursor()
-sql='SELECT * FROM trackinalbum'
+# artist=pd.read_csv('join_artist.csv')
+# success=0
+# err=0
+# for index,row in tqdm(artist.iterrows()):
+#     sql='UPDATE  artist SET followers = %s, popularity = %s WHERE artistid = %s'
+#     val=(row['followers_y'],row['popularity_y'],row['spotify_id'])
+#     try:
+#         mycursor.execute(sql, val)
+#         success+=1
+#     except:
+#         err+=1
+# mydb.commit()
+# print(f'total error item: {err}/{artist.shape[0]}')
+# print(f'Total success item: {success}/{artist.shape[0]}')
+# sql='''
+# select album.albumid,album.album_name,artist.artist_name,artist.popularity from artistalbum,album,artist
+# where artistalbum.albumid=album.albumid and album.images not like 'https%'
+# and artistalbum.artistid=artist.artistid order by artist.popularity desc
+# '''
+sql='''
+select * from trackinalbum
+'''
 mycursor.execute(sql)
 result=mycursor.fetchall()
 trackids=[]
 albumids=[]
-for it in result:
-    trackids.append(result[0][0])
-    albumids.append(result[0][1])
+
+for it in tqdm(result):
+    trackids.append(it[0])
+    albumids.append(it[1])
 pd.DataFrame({
     'track_id':trackids,
     'album_id':albumids

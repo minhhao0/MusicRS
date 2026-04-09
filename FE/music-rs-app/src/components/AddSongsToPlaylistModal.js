@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
-import { usePlaylist } from "../context/PlaylistContext";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { SONGS } from "../data/catalog";
+import AuthContext from "../AuthProvider";
 
 /** Emerald shades only — matches green + black app chrome */
 const ROW_TINTS = [
@@ -11,24 +11,63 @@ const ROW_TINTS = [
   "from-emerald-500 to-teal-900",
 ];
 
-export default function AddSongsToPlaylistModal({ open, onClose, prefillIds = [] }) {
-  const { playlists, addSongsToPlaylist } = usePlaylist();
-  const [targetId, setTargetId] = useState("");
-
-  const validPrefill = useMemo(
-    () => (prefillIds || []).filter((id) => SONGS[id]),
-    [prefillIds]
-  );
-
-  useEffect(() => {
+export default function AddSongsToPlaylistModal({ open, onClose, track }) {
+  const [target, setTarget] = useState({});
+  const [playlists,setPlaylists]=useState([])
+  const {currentUser,setcurrentUser}=useContext(AuthContext);
+  useEffect(()=>{
     if (!open) return;
-    setTargetId(playlists[0]?.id ?? "");
-  }, [open, playlists]);
+    const fetchData=async ()=>{
+      if(currentUser){
+        const data={
+          'userid':currentUser.user_id,
+        }
+         const dt=JSON.stringify(data);
+        const fetchOption={
+          method:"post",
+          headers:{
+            'Accept':'application/json',
+            'Content-Type':'application/json',
+          },
+          body:dt,
+        }
+        try{
+        const response=await fetch('http://localhost:8080/playlist/playlist-by-user',fetchOption)
+        if(response.ok){
+          console.log("Get playlist for this user successfully!");
+        }
+        const result=await response.json()
+        setPlaylists(result)
 
+      } catch(error){
+        console.error("Error when getting playlist by user",error);
+      }
+      }
+      
+    }
+    fetchData();
+  },[open])
   if (!open) return null;
-
-  const canAdd = Boolean(targetId && validPrefill.length);
-
+  const canAdd = Boolean(target && track);
+  const insert=async(data_)=>{
+    const _data=JSON.stringify(data_);
+    const fetchOption={
+      method:'post',
+      headers:{
+        'Accept':'application/json',
+        'Content-Type':'application/json',
+      },
+      body:_data,
+    }
+    try{
+      const response=await fetch("http://localhost:8080/playlist/add-track-to-playlist",fetchOption);
+      if (response.ok){
+        console.log("Add track to playlist successfully");
+      } 
+    } catch(err){
+      console.log("An error occur when add track to playlist",err)
+    }
+  }
   return (
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
@@ -44,15 +83,9 @@ export default function AddSongsToPlaylistModal({ open, onClose, prefillIds = []
           >
             Add to playlist
           </h2>
-          {validPrefill.length > 0 ? (
+          { track ? (
             <p className="text-sm text-emerald-200/70 mt-1.5">
-              <span className="text-primary font-semibold">{validPrefill.length}</span>{" "}
-              track{validPrefill.length !== 1 ? "s" : ""}
-              {validPrefill.length <= 4 && (
-                <span className="block text-xs text-emerald-500/80 mt-1 leading-snug">
-                  {validPrefill.map((id) => SONGS[id].title).join(" · ")}
-                </span>
-              )}
+              <span className="text-primary font-semibold">{track.track_name}</span>{" "}
             </p>
           ) : (
             <p className="text-sm text-emerald-400/90 mt-1.5">
@@ -72,12 +105,12 @@ export default function AddSongsToPlaylistModal({ open, onClose, prefillIds = []
           ) : (
             playlists.map((pl, i) => {
               const grad = ROW_TINTS[i % ROW_TINTS.length];
-              const selected = targetId === pl.id;
+              const selected = target.playlistid === pl.playlistid;
               return (
                 <button
-                  key={pl.id}
+                  key={pl.playlistid}
                   type="button"
-                  onClick={() => setTargetId(pl.id)}
+                  onClick={() => setTarget(pl)}
                   className={
                     selected
                       ? `w-full text-left rounded-xl px-4 py-3.5 bg-gradient-to-r ${grad} text-white shadow-lg shadow-black/40 ring-2 ring-primary transition-all`
@@ -86,7 +119,7 @@ export default function AddSongsToPlaylistModal({ open, onClose, prefillIds = []
                 >
                   <span className="block font-bold truncate">{pl.name}</span>
                   <span className="text-xs text-emerald-200/80 font-medium">
-                    {pl.songIds.length} tracks
+                    {pl.total_tracks} tracks
                   </span>
                 </button>
               );
@@ -98,7 +131,9 @@ export default function AddSongsToPlaylistModal({ open, onClose, prefillIds = []
           <button
             type="button"
             className="rounded-full px-4 py-2 text-sm font-semibold text-primary hover:bg-emerald-500/10 border border-transparent hover:border-emerald-500/30"
-            onClick={onClose}
+            onClick={()=>{
+              onClose(false)
+            }}
           >
             Cancel
           </button>
@@ -108,8 +143,14 @@ export default function AddSongsToPlaylistModal({ open, onClose, prefillIds = []
             className="rounded-full px-5 py-2 text-sm font-bold bg-primary text-background-dark hover:bg-primary/90 shadow-md shadow-emerald-900/50 disabled:opacity-30 disabled:shadow-none"
             onClick={() => {
               if (!canAdd) return;
-              addSongsToPlaylist(targetId, validPrefill);
-              onClose();
+              //addSongsToPlaylist(targetId, validPrefill);
+              const dt={
+                'trackid':track.trackid,
+                'playlistid':target.playlistid,
+                'total_tracks': target.total_tracks+1
+              }
+              insert(dt);
+              onClose(false);
             }}
           >
             Add

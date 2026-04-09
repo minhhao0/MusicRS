@@ -16,7 +16,6 @@ export default function Login() {
     }, [email, password]);
     const submit= async (data)=>{
         const user=JSON.stringify(data);
-        console.log(user);
         const fetchOption ={
             "method":'post',
             "headers":{

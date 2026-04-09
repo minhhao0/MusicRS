@@ -1,8 +1,28 @@
-import { useState } from "react";
-import { usePlaylist } from "../context/PlaylistContext";
+import { useContext, useState } from "react";
+import AuthContext from "../AuthProvider";
 
 export default function CreatePlaylistModal({ open, onClose }) {
-  const { createPlaylist } = usePlaylist();
+  const create= async(data)=>{
+    const playlist=JSON.stringify(data);
+    const fetchOption={
+      method:'post',
+      headers:{
+        'Accept':'application/json',
+        'Content-Type':'application/json',
+      },
+      body:playlist,
+    }
+    try{
+      const response=await fetch('http://localhost:8080/playlist/add-playlist',fetchOption);
+      if (response.ok){
+        alert("You have created playlist successfully!");
+      }
+    } catch(error){
+      console.log('Error when create new playlis',error);
+      alert("Can't create playlist. Please try again.");
+    }
+  }
+  const {currentUser,setCurrentUser}=useContext(AuthContext);
   const [name, setName] = useState("");
 
   if (!open) return null;
@@ -44,7 +64,13 @@ export default function CreatePlaylistModal({ open, onClose }) {
             className="rounded-full px-5 py-2 text-sm font-bold bg-gradient-to-r from-emerald-500 to-primary text-background-dark disabled:opacity-50"
             disabled={!name.trim()}
             onClick={() => {
-              createPlaylist(name.trim());
+              if (currentUser){
+                const data={
+                  'userid':currentUser.user_id,
+                  'playlistname':name.trim()
+                }
+                create(data);
+              }
               setName("");
               onClose();
             }}
