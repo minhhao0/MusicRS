@@ -14,13 +14,13 @@ const getTotalArtist= async()=>
   })
 }
 
-const getArtistHomeTrend = async()=>{
+const getArtistHomeTrend = async(limit)=>{
   const query=`select  * from artist as a
     order by a.popularity desc
-    limit 5`
+    limit ?`
   const result= await connection.getConnection()
   .then((conn)=>{
-    const res=conn.query(query);
+    const res=conn.query(query,[parseInt(limit)]);
     conn.release();
     return res;
   })

@@ -49,7 +49,7 @@ export default function AppLayout() {
     <BrowserRouter>
       <EntityNavigation />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<HomeV2 />} />
         <Route path="/login" element={<Login />} />
         <Route path="/playlist" element={<PlayList />} />
         <Route path="/play" element={<Play />} />

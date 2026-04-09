@@ -1,4 +1,5 @@
 /** Demo catalog: covers + show-all sections (English labels). */
+
 export const SONGS = {
   "midnight-city": {
     title: "Midnight City",

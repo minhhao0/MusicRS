@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { getTotalUser,getUser,createUser,updateUser, getUserHistory, getUserFavorite, addFavoriteArtist, addFavoriteTrack, addFavoriteAlbum } from "../services/UserService.js";
-=======
-import { getTotalUser,getUser,createUser,updateUser } from "../services/UserService.js";
->>>>>>> dat
 
 const login_method = async (req,res) => {
     try{
@@ -29,7 +25,6 @@ const signup_method= async (req,res)=>{
         res.status(400).send("An error occur. Please try again.")
     }
 }
-<<<<<<< HEAD
 const get_user_history= async (req,res)=>{
     try{
         const data=req.body;
@@ -95,14 +90,24 @@ const add_favorite_album=async (req,res)=>{
         res.status(501).send("Server Error.");
     }
 }
+
+const update_user_method = async (req, res)=>{
+        try{
+        const data=req.body;
+        const result=await updateUser(data);
+        if(result){
+            res.status(200).send("update user successfully.");
+        } else{
+            res.status(400).send("An error occur");
+        }
+    } catch(err){
+        res.status(501).send("Server Error.");
+    }
+}
+
 export {
     login_method,signup_method,
     get_user_history,get_user_favorite,
     add_favorite_album,add_favorite_artist,
-    add_favorite_track
-=======
-
-export {
-    login_method,signup_method
->>>>>>> dat
+    add_favorite_track, update_user_method
 }
