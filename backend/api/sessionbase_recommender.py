@@ -96,13 +96,23 @@ def calculate_playlist_score(current_genre, current_year, current_artist, curren
   #country score
   vec.append(cnt(playlist_artist_country,current_artist_country))
   return np.linalg.norm(vec)
-if __name__=="__main__":
+def get_recommend(top_k,uid):
   playlist_ids=[i for i in range(16,1016)]
-  current_genre, current_year, current_artist, current_artist_country=get_user_current_data(6)
+  current_genre, current_year, current_artist, current_artist_country=get_user_current_data(uid)
   scores=[]
   for id in tqdm(playlist_ids):
     score=calculate_playlist_score(current_genre, current_year, current_artist, current_artist_country,id)
     scores.append({'id':id,'score':score})
-  score_sorted=sorted(scores,key=lambda x:x['score'])
-  print(score_sorted)
+  score_sorted=sorted(scores,key=lambda x:x['score'],reverse=True)
+  score_sorted=score_sorted[:top_k]
+  ids=[i['id'] for i in score_sorted]
+  txt=', '.join(['%s'] * len(ids))
+  query=f'''
+  select * from playlist where playlistid in ({txt})
+  '''
+  mycursor.execute(query,ids)
+  result=mycursor.fetchall()
+  result=[{'id':it[0],'name':it[3],'total_track':it[4]} for it in result]
+  return result
+
 

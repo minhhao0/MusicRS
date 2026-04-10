@@ -37,6 +37,7 @@ export default function PlayList() {
         }
         try{
         const response=await fetch('http://localhost:8080/playlist/playlist-by-user',fetchOption)
+        console.log(response)
         if(response.ok){
           console.log("Get playlist for this user successfully!");
         }

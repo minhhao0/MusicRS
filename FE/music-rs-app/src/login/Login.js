@@ -27,6 +27,7 @@ export default function Login() {
         try{
             const response= await fetch('http://localhost:8080/user/login',fetchOption);
             const result= await response.json();
+            console.log(response)
             setcurrentUser(result);
             if(response.ok) {
                  alert(`Welcomeback ${result.user_name}`);
