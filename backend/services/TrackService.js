@@ -30,7 +30,8 @@ const getTrack= async()=>
   return result
 }
 
-const getTrackHomeTrend = async() =>{
+const getTrackHomeTrend = async(limit) =>{
+  console.log("limit", limit)
   const query=`
  SELECT 
     t.trackid, t.track_name, t.image, t.popularity, 
@@ -41,22 +42,23 @@ INNER JOIN artist AS a ON a_t.artistid = a.artistid
 GROUP BY 
     t.trackid
 ORDER BY t.popularity DESC
-LIMIT 5;`
+LIMIT ?`
   const result= await connection.getConnection()
   .then((conn)=>{
-    const res=conn.query(query);
+    const res=conn.query(query,[parseInt(limit)]);
     conn.release();
-    // console.log(res)
+    console.log(res)
     return res;
   })
   .catch((err)=>{
+    // console.log(err)
     console.log("An error occur when connect to mysql server")
   })
   // console.log(result)
   return result[0]
 }
 
-const getTrackHomeRecommend = async() =>{
+const getTrackHomeRecommend = async(limit) =>{
   const query=`
   SELECT 
     t.trackid, t.track_name, t.image, t.popularity, 
@@ -67,23 +69,10 @@ INNER JOIN artist AS a ON a_t.artistid = a.artistid
 GROUP BY 
     t.trackid
 ORDER BY t.popularity DESC
-LIMIT 5;`
+LIMIT ?;`
   const result= await connection.getConnection()
   .then((conn)=>{
-    const res=conn.query(query);
-    conn.release();
-    return res;
-  })
-  .catch((err)=>{
-    console.log("An error occur when connect to mysql server")
-  })
-  return result[0]
-}
-const getTotalGenre = async() =>{
-  const query=`select distinct(genre) as genre from track order by genre asc`
-  const result= await connection.getConnection()
-  .then((conn)=>{
-    const res=conn.query(query);
+    const res=conn.query(query, [parseInt(limit)]);
     conn.release();
     return res;
   })
@@ -94,7 +83,39 @@ const getTotalGenre = async() =>{
 }
 // const result =await getTrackHomeTrend()
 // console.log(result)
+const getTotalGenre = async() =>{
+  const query=`SELECT genre
+FROM track
+GROUP BY genre
+ORDER BY genre ASC;`
+  const result= await connection.getConnection()
+  .then((conn)=>{
+    const res=conn.query(query);
+    conn.release();
+    return res;
+  })
+  .catch((err)=>{
+    console.log("An error occur when connect to mysql server")
+  })
+  return result[0]
+}
+const getGenre = async() =>{
+  const query=`SELECT genre
+FROM track
+GROUP BY genre
+ORDER BY genre ASC limit 10;`
+  const result= await connection.getConnection()
+  .then((conn)=>{
+    const res=conn.query(query);
+    conn.release();
+    return res;
+  })
+  .catch((err)=>{
+    console.log("An error occur when connect to mysql server")
+  })
+  return result[0]
+}
 
 export {
-  getTotalTrack,getTrack, getTrackHomeTrend, getTrackHomeRecommend,getTotalGenre
+  getTotalTrack,getTrack, getTrackHomeTrend, getTrackHomeRecommend, getTotalGenre, getGenre
 }

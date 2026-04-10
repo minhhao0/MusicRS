@@ -3,12 +3,68 @@ import AppHeader from "../appheader/Header";
 import Sidebar from "../appsidebar/Sidebar";
 import { usePersonalize } from "../context/PersonalizeContext";
 import { ARTISTS, GENRES, SHOW_SECTIONS, SONGS } from "../data/catalog";
+import { useContext, useMemo, useState, useEffect } from "react";
 
 export default function PersonalizeShowAll() {
   const [params] = useSearchParams();
   const section = params.get("section") || "personalize_genres";
   const config = SHOW_SECTIONS[section] || SHOW_SECTIONS.personalize_genres;
 
+  const [dataTrackHomeTrend, setDataTHT] = useState([]);
+  const [dataGenre, setDataGenre] = useState();
+  const [dataArtistHomeTrend, setDataAHT] = useState([]);
+  
+    useEffect(() => {
+      const fetchDataGenre = async () => {
+        try {
+          const response = await fetch('http://localhost:8080/track/genre');
+          const result = await response.json();
+
+// const mapped = result.reduce((acc, item) => {
+//         const raw = item.genre;
+
+//         const key = raw.replace(/-/g, "_");
+//         const label = raw
+//           .split("-")
+//           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+//           .join(" ");
+
+//         acc[key] = label;
+//         return acc;
+//       }, {
+//         all: "All Genres"
+//       });
+
+          setDataGenre(result);
+         
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+              const fetchDataAHT = async () => {
+              try {
+                  const response = await fetch('http://localhost:8080/artist/artist-home-trend/20');
+                  const result = await response.json();
+                  setDataAHT(result);
+              } catch (error) {
+                  console.error('Error fetching data:', error);
+              }
+          };
+               const fetchData = async () => {
+              try {
+                  const response = await fetch('http://localhost:8080/track/track-home-trend/20');
+                  const result = await response.json();
+                  setDataTHT(result);
+              } catch (error) {
+                  console.error('Error fetching data:', error);
+              }
+          };
+                  fetchData();
+        fetchDataAHT()
+      fetchDataGenre();
+      
+    }, []);
+  //  console.log("aaaaaaaaaaaaaa",dataGenre)
   const {
     selectedGenres,
     selectedArtists,
@@ -47,7 +103,7 @@ export default function PersonalizeShowAll() {
             Tap items to select or deselect. Your choices sync with the Personalize page.
           </p>
 
-          {config.kind === "genres" && (
+          {/* {config.kind === "genres" && (
             <div className="flex flex-wrap gap-3">
               {config.ids.map((id) => {
                 const label = GENRES[id];
@@ -74,19 +130,48 @@ export default function PersonalizeShowAll() {
                 );
               })}
             </div>
+          )} */}
+
+{config.kind === "genres" && (
+            <div className="flex flex-wrap gap-3">
+              {dataGenre && dataGenre.map((it) => {
+                const label = it.genre;
+                if (!label) return null;
+                const isSelected = selectedGenres.has(it.genre);
+                return (
+                  <button
+                    key={it.genre}
+                    type="button"
+                    onClick={() => toggleGenre(it.genre)}
+                    className={
+                      isSelected
+                        ? "px-6 py-2 rounded-full bg-primary text-background-dark font-bold text-sm shadow-lg shadow-primary/20 flex items-center gap-2"
+                        : "px-6 py-2 rounded-full bg-slate-200 dark:bg-primary/10 border-2 border-transparent hover:border-primary/50 text-slate-700 dark:text-slate-300 font-semibold text-sm transition-all"
+                    }
+                  >
+                    {isSelected && (
+                      <span className="material-symbols-outlined text-sm font-bold">
+                        check
+                      </span>
+                    )}
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
           )}
 
           {config.kind === "artists" && (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
-              {config.ids.map((id) => {
-                const a = ARTISTS[id];
+              {dataArtistHomeTrend && dataArtistHomeTrend.map((it) => {
+                const a = it.artist_name;
                 if (!a) return null;
-                const isSelected = selectedArtists.has(id);
+                const isSelected = selectedArtists.has(it.artist_name);
                 return (
                   <button
-                    key={id}
+                    key={it.artist_name}
                     type="button"
-                    onClick={() => toggleArtist(id)}
+                    onClick={() => toggleArtist(it.artist_name)}
                     className="group flex flex-col items-center gap-2 text-left"
                   >
                     <div
@@ -102,8 +187,8 @@ export default function PersonalizeShowAll() {
                             ? "w-full h-full object-cover"
                             : "w-full h-full object-cover grayscale group-hover:grayscale-0"
                         }
-                        src={a.cover}
-                        alt={a.name}
+                        src={it.images}
+                        alt={it.artist_name}
                       />
                       {isSelected && (
                         <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
@@ -122,7 +207,7 @@ export default function PersonalizeShowAll() {
                           : "font-bold text-sm text-slate-400 group-hover:text-primary transition-colors text-center"
                       }
                     >
-                      {a.name}
+                      {it.artist_name}
                     </span>
                   </button>
                 );
@@ -130,17 +215,17 @@ export default function PersonalizeShowAll() {
             </div>
           )}
 
-          {config.kind === "songs" && (
+          {dataTrackHomeTrend && config.kind === "songs" && (
             <div className="space-y-2 max-w-3xl">
-              {config.ids.map((id) => {
-                const s = SONGS[id];
-                if (!s?.cover) return null;
-                const isSelected = selectedSongs.has(id);
+              {dataTrackHomeTrend.map((it) => {
+                const s = it.trackid;
+                // if (!s?.image) return null;
+                const isSelected = selectedSongs.has(it.trackid);
                 return (
                   <button
-                    key={id}
+                    key={it.trackid}
                     type="button"
-                    onClick={() => toggleSong(id)}
+                    onClick={() => toggleSong(it.trackid)}
                     className={
                       isSelected
                         ? "flex items-center justify-between p-3 rounded-xl bg-primary/10 border border-primary/30 w-full text-left"
@@ -151,7 +236,7 @@ export default function PersonalizeShowAll() {
                       <div className="relative size-12 rounded-lg overflow-hidden shrink-0">
                         <img
                           className="w-full h-full object-cover"
-                          src={s.cover}
+                          src={it.image}
                           alt=""
                         />
                       </div>
@@ -163,9 +248,9 @@ export default function PersonalizeShowAll() {
                               : "font-bold group-hover:text-primary transition-colors truncate"
                           }
                         >
-                          {s.title}
+                          {it.track_name}
                         </p>
-                        <p className="text-xs text-slate-500 truncate">{s.artist}</p>
+                        <p className="text-xs text-slate-500 truncate">{it.artist_name}</p>
                       </div>
                     </div>
                     {isSelected ? (

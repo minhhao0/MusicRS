@@ -2,9 +2,9 @@ import {getAlbumHome} from "../services/AlbumService.js";
 
 const getAlbumHome_method = async (req, res) => {
     try{
-       const data=req.body;
+       const data=req.params;
        console.log(data);
-       const content = await getAlbumHome();
+       const content = await getAlbumHome(data.limit);
        if (content){
         res.status(200).send(content);
         // console.log(artistHomeTrend)

@@ -26,7 +26,7 @@ export default function HomeV2() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:8080/track/track-home-trend');
+                const response = await fetch('http://localhost:8080/track/track-home-trend/5');
                 const result = await response.json();
                 setDataTHT(result);
             } catch (error) {
@@ -35,7 +35,7 @@ export default function HomeV2() {
         };
         const fetchDataAHT = async () => {
             try {
-                const response = await fetch('http://localhost:8080/artist/artist-home-trend');
+                const response = await fetch('http://localhost:8080/artist/artist-home-trend/5');
                 const result = await response.json();
                 setDataAHT(result);
             } catch (error) {
@@ -44,7 +44,7 @@ export default function HomeV2() {
         };
         const fetchDataTHR = async () => {
             try {
-                const response = await fetch('http://localhost:8080/track/track-home-trend');
+                const response = await fetch('http://localhost:8080/track/track-home-trend/5');
                 const result = await response.json();
                 setDataTHR(result);
             } catch (error) {
@@ -53,7 +53,7 @@ export default function HomeV2() {
         };
         const fetchDataAHR = async () => {
             try {
-                const response = await fetch('http://localhost:8080/artist/artist-home-trend');
+                const response = await fetch('http://localhost:8080/artist/artist-home-trend/5');
                 const result = await response.json();
                 setDataAHR(result);
             } catch (error) {
@@ -62,7 +62,7 @@ export default function HomeV2() {
         };
         const fetchDataAR = async () => {
             try {
-                const response = await fetch('http://localhost:8080/album/album-home');
+                const response = await fetch('http://localhost:8080/album/album-home/5');
                 const result = await response.json();
                 setDataAR(result);
             } catch (error) {

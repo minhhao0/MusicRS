@@ -2,9 +2,9 @@ import {getArtistHomeTrend} from "../services/ArtistService.js";
 
 const artist_home_trend_method = async (req, res) => {
     try{
-       const data=req.body;
+       const data=req.params;
        console.log(data);
-       const artistHomeTrend = await getArtistHomeTrend();
+       const artistHomeTrend = await getArtistHomeTrend(data.limit);
        if (artistHomeTrend){
         res.status(200).send(artistHomeTrend);
         // console.log(artistHomeTrend)
