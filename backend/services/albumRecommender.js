@@ -64,7 +64,6 @@ async function fetchAlbumsWithFeatures() {
       a.album_name,
       a.images        AS album_images,
       a.releasedate,
-      a.popularity    AS album_popularity,
       ar.artistid,
       ar.artist_name,
       ar.images       AS artist_images,
@@ -83,7 +82,7 @@ async function fetchAlbumsWithFeatures() {
     JOIN ArtistAlbum aa   ON a.albumid = aa.albumid
     JOIN Artist ar        ON aa.artistid = ar.artistid
     GROUP BY
-      a.albumid, a.album_name, a.images, a.releasedate, a.popularity,
+      a.albumid, a.album_name, a.images, a.releasedate,
       ar.artistid, ar.artist_name, ar.images
   `;
   const conn = await connection.getConnection();
@@ -109,7 +108,6 @@ function hybridScoring(candidates, excludeIds = []) {
   return pool.map((album, i) => ({
     ...album,
     _score_content:    +simNorm[i].toFixed(4),
-    _score_popularity: +popNorm[i].toFixed(4),
     _score_recency:    +recencyNorm[i].toFixed(4),
     _hybrid_score:     +(
       WEIGHTS.content    * simNorm[i] +
@@ -145,7 +143,6 @@ function format(album) {
     album_name:    album.album_name,
     album_images:  album.album_images,
     releasedate:   album.releasedate,
-    popularity:    parseFloat(album.album_popularity || 0),
     artistid:      album.artistid,
     artist_name:   album.artist_name,
     artist_images: album.artist_images,
@@ -185,4 +182,5 @@ async function recommendBySeeds(seedAlbumIds = [], {
   return diversityFilter(scored, limit, maxPerArtist).map(format);
 }
 
-module.exports = { recommendForHome, recommendBySeeds };
+export
+{ recommendForHome, recommendBySeeds };

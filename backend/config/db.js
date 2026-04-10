@@ -10,7 +10,8 @@ const  config = {
     host:process.env.host,
     user:process.env.user,
     password:process.env.password,
-    database:process.env.database
+    database:process.env.database,
+    multipleStatements: true
 }
 const connection=mysql.createPool(config)
 console.log("Connect to mysql server successfully")

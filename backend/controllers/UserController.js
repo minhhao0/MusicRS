@@ -8,6 +8,9 @@ const login_method = async (req,res) => {
        const user= await getUser(data);
        if (user){
         res.status(200).send(user);
+       } else
+       {
+        res.status(400).send("Not Found.")
        }
     }
     catch(err){

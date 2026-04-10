@@ -62,9 +62,9 @@ export default function HomeV2() {
         };
         const fetchDataAR = async () => {
             try {
-                const response = await fetch('http://localhost:8080/album/album-home/5');
+                const response = await fetch('http://localhost:8080/api/recommend/home?limit=5&maxPerArtist=3');
                 const result = await response.json();
-                setDataAR(result);
+                setDataAR(result['data']);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }

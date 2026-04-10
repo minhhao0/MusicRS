@@ -118,9 +118,6 @@ def get_recommend(top_k,uid):
   return result
 
 
-
-
-
 class UploadItem(BaseModel):
     user_id:str
     top_k : int
