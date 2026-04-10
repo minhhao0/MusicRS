@@ -33,16 +33,18 @@ const getTrack= async()=>
 const getTrackHomeTrend = async(limit) =>{
   console.log("limit", limit)
   const query=`
- SELECT 
-    t.trackid, t.track_name, t.image, t.popularity, 
+SELECT 
+    t.trackid, t.track_name, t.image, t.popularity,
     GROUP_CONCAT(DISTINCT a.artist_name ORDER BY a.artist_name SEPARATOR ', ') AS artist
-FROM track AS t
-INNER JOIN artisttrack AS a_t ON t.trackid = a_t.trackid
-INNER JOIN artist AS a ON a_t.artistid = a.artistid
-GROUP BY 
-    t.trackid
-ORDER BY t.popularity DESC
-LIMIT ?`
+FROM (
+    SELECT trackid, track_name, image, popularity 
+    FROM track 
+    ORDER BY popularity DESC 
+    LIMIT ?
+) AS t
+LEFT JOIN artisttrack AS a_t ON t.trackid = a_t.trackid
+LEFT JOIN artist AS a ON a_t.artistid = a.artistid
+GROUP BY t.trackid;`
   const result= await connection.getConnection()
   .then((conn)=>{
     const res=conn.query(query,[parseInt(limit)]);
