@@ -91,7 +91,12 @@ export default function HomeV2() {
             try {
                 const response = await fetch('http://127.0.0.1:8000/recommend/playlist',fetchOption);
                 const result = await response.json();
-                setDataPLR(result);
+                if (response.ok){
+                     setDataPLR(result);
+                } else{
+                    setDataPLR(null);
+                }
+                
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -105,7 +110,6 @@ export default function HomeV2() {
         fetchDataAR();
         fetchDataPLR();
     }, []);
-
     return (
         <div className="flex h-screen overflow-hidden">
             <Sidebar />
@@ -192,7 +196,7 @@ export default function HomeV2() {
                             <Link className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" to="/show_all?section=for_you">Show all</Link>
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                            {dataTrackHomeRecommend.map((it) => (
+                            {dataTrackHomeRecommend && dataTrackHomeRecommend.map((it) => (
                                 <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
                                     <div className="relative aspect-square mb-4 shadow-xl">
                                         <img className="rounded-lg w-full h-full object-cover" data-alt="Album cover" src={it.image} />
@@ -214,7 +218,7 @@ export default function HomeV2() {
                             <Link className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" to="/show_all?section=artists_suggested">Show all</Link>
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                            {dataArtistHomeRecommend.map((it) => (
+                            {dataArtistHomeRecommend && dataArtistHomeRecommend.map((it) => (
                                 <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer text-center">
                                     <div className="relative aspect-square mb-4 shadow-xl mx-auto w-full">
                                         <img className="rounded-full w-full h-full object-cover" data-alt="Artist portrait" src={it.images} />
@@ -257,7 +261,7 @@ export default function HomeV2() {
                             <Link className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" to="/show_all?section=recommended">Show all</Link>
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                            {dataPlaylistRecommend.map((it) => (
+                            {dataPlaylistRecommend && dataPlaylistRecommend.map((it) => (
                                 <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
                                     <div className="relative aspect-square mb-4 shadow-xl">
                                         <img className="rounded-lg w-full h-full object-cover" data-alt="Recommendation cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCw4oZwtGKxRHRrk99OCvAZIqla4Bb5yLqxsQTmbF2nlocrXKrmwzVpUXo_8csF-rVF6i2mpOx3RwtPCV5Bu_eY9W_limRvRhPR1HCcmqB-rzsx2WVuSyabrRjfMRnB10-xZ3UbnEhYYMcpHfjJeBF6kqu_VOqxvb20ZcCXJ0POYaL9Jyknst97GtIe6ztd8dBl2C5cGYOouN7YeVjyFwoem9YSVDvoBwR4aLo6s8bBGYC8Qxn6Hli5TAwO5USQshkq3cu4y1_mZJo" />

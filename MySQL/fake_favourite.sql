@@ -1,98 +1,300 @@
--- SQL Data Export: 500 entries for favorite table
--- user_id (1-50), artist_id (random from list)
-
-INSERT INTO favorite(user_id, artist_id) VALUES 
-(32, '1yR65psqiazQpeM79CcGh8'), (12, '137W8MRPWKqSmrBGDBFSop'), (45, '26VFTg2z8YR0cCuwLzESi2'), (8, '0EFisYRi20PTADoJrifHrz'), (21, '4dpARuHxo51G3z768sgnrY'),
-(15, '7n2wHs1TKAczGzO7Dd2rGr'), (4, '6M2wZ9GZgrQXHCFfjv46we'), (39, '5pKCCKE2ajJHZ9KAiaK11H'), (27, '2YZyLoL8N0Wb9xBt1NhZWg'), (10, '3meJIgRw7YleJrmbpbJK6S'),
-(50, '4V8LLVI7PbaPR0K2TGSxFF'), (2, '6LuN9FCkKOj5PcnpouEgny'), (19, '1i8SpTcr7yvPOmcqrbnVXY'), (33, '04gDigrS5kc9YWfZHwBETP'), (7, '5f7VJjfbwm532GiveGC0ZK'),
-(41, '7pbDxGE6nQSZVfiFdq9lOL'), (25, '3wcj11K77LjEY1PkEazffa'), (14, '28gNT5KBp7IjEOQoevXf9N'), (48, '6TIYQ3jFPwQSRmorSezPxX'), (6, '0QHgL1lAIqAw0HtD7YldmP'),
-(30, '4O15NlyKLIASxsJ0PrXPfz'), (1, '3Nrfpe0tUJi4K4DXYWgMUX'), (22, '1RyvyyTE3xzB2ZywiAwp0i'), (37, '0pePYDrJGk8gqMRbXrLJC8'), (44, '77SW9BnxLY8rJ0RciFqkHh'),
-(11, '43ZHCT0cAZBISjO8DG9PnE'), (29, '5WUlDfRSoLAfcVSX1WnrxN'), (18, '1dfeR4HaWDbWqFHLkxsg1d'), (5, '1URnnhqYAYcrqrcwql10ft'), (36, '2hlmm7s2ICUX0LVIhVFlZQ'),
-(42, '7Ln80lUS6He07XvHI8qqHH'), (9, '0EmeFodog0BfCgMzAIvKQp'), (24, '37230BxxYs9ksS7OkZw3IU'), (47, '6VuMaDnrHyPL1p4EHjYLi7'), (13, '50co4Is1HCEo8bhOyUWKpn'),
-(28, '4LLpKhyESsyAXpc4laK94U'), (3, '6eUKZXaKkcviH0Ku9w2n3V'), (35, '2ye2Wgw4gimLv2eAKyk1NB'), (17, '1elUiq4X7pxej6FRlrEzjM'), (40, '0Q8NcsJwoCbZOHHW63su5S'),
-(23, '4q3ewBCX7sLwd24euuV69X'), (46, '3TVXtAsR1Inumwj472S9r4'), (20, '06HL4z0CvFAxyc27GXpf02'), (31, '1Xyo4u8uXC1ZmMpatF05PJ'), (49, '5K4W6rqBFWDnAN6FQUkS6x'),
-(16, '6KImCVD70vtIoJWnq6nGn3'), (34, '7dGJo4pcD2V6oG8kP0tJRR'), (26, '1uNFoZAHBGtllmzznpCI3s'), (12, '1mcTU81TzQhprhouKaTkpq'), (38, '246dkjvS1zLTtiykXe5h60'),
-(43, '4MCBfE4596Uoi2O4DtmEMz'), (2, '5cj0lLjcoR7YOSnhnX0Po5'), (15, '53XhwfbYqKCa1cC15pYq2q'), (50, '2LRoIwlKmHjgvigdNGBHNo'), (7, '6vWDO969PvNqNYHIOW5v0m'),
-(11, '6qqNVTkY8uBg9cP3Jd7DAH'), (21, '66CXWjxzNUsdJxJ2JdwvnR'), (32, '1Cs0zKBU1kc0i8ypK3B9ai'), (44, '1vyhD5VmyZ7KMfW5gqLgo5'), (9, '4gzpq5DPGxSnKTe4SA8HAU'),
-(29, '4VMYDCV2IEDYJArk749S6m'), (47, '790FomKkXshlbRYZFtlgla'), (3, '7bXgB6jMjp9ATFy66eO08Z'), (36, '716NhGYqD1jl2wI1Qkgq36'), (18, '41MozSoPIsD1dJM0CLPjZF'),
-(40, '00FQb4jTyendYWaN8pK0wa'), (22, '0Y5tJX1MQlPlqiwlOH1tJY'), (5, '0du5cEVh5yTK9QJze8zA0C'), (45, '0hCNtLu0JehylgoiP8L4Gh'), (31, '15UsOTVnJzReFVN1VCnxy4'),
-(13, '1URnnhqYAYcrqrcwql10ft'), (24, '4YRxDV8wJFPHPTeXepOstw'), (48, '2R21vXR83lH98kGeO99Y66'), (1, '7ltDVBr6mKbRvohxheJ9h1'), (37, '7iK8PXO48WeuP03g8YR51W'),
-(20, '7CajNmpbOovFoOoasH2HaY'), (14, '52iwsT98xCoGgiGntTiR7K'), (49, '55Aa2cqylxrFIXC767Z865'), (26, '1VPmR4DJC1PlOtd0IADAO0'), (35, '1McMsnEElThX1knmY4oliG'),
-(8, '6l3HvQ5sa6mXTsMTB19rO5'), (33, '3MZsBdqDrRTJihTHQrO6Dq'), (27, '4oUHIQIBe0LHzYfvXNW4QM'), (10, '4AK6F7OLvEQ5QYCBNiQWHq'), (42, '57vWImR43h4CaDao012Ofp'),
-(6, '5Pwc4xIPtQLFEnJriah9YJ'), (39, '77SW9BnxLY8rJ0RciFqkHh'), (23, '7wlFDEWiM5OoIAt8RSli8b'), (50, '7hJcb9fa4alzcOq3EaNPoG'), (4, '1bAftSH8umNcGZ0uyV7LMg'),
-(19, '1HY2Jd0NmPuamShAr6KMms'), (32, '1r4hJ1h58CWwUQe3MxPuau'), (11, '0tmwSHipWxN12fsoLcFU3B'), (25, '2hlmm7s2ICUX0LVIhVFlZQ'), (43, '1wRPtKGflJrBx9BmLsSwlU'),
-(16, '3hcs9uc56yIGFCSy9leWe7'), (34, '329e4yvIujISKGKz1BZZbO'), (1, '3PhoLpVuITZKcymswpck5b'), (21, '3nFkdlSjzX9mRTtwJOzDYB'), (45, '2wY79sveU1sp5g7SokKOiI'),
-(7, '77ziqFxp5gaInVrF2lj4ht'), (30, '7tYKF4w9nC0nq9CsPZTHyP'), (48, '6VuMaDnrHyPL1p4EHjYLi7'), (15, '4LLpKhyESsyAXpc4laK94U'), (2, '3WrFJ7ztbogyGnTHbHJFl2'),
-(49, '64KEffDW9EtZ1y2vBYgq8T'), (18, '6AgTAQt8XS6jRWi4sX7w49'), (37, '5WUlDfRSoLAfcVSX1WnrxN'), (29, '6jJ0s89eD6GaHleKKya26X'), (41, '4zCH9qm4R2DADamUHMCa6O'),
-(12, '1yR65psqiazQpeM79CcGh8'), (33, '2h93pZq0e7k5yf4dywlkpM'), (6, '26VFTg2z8YR0cCuwLzESi2'), (26, '2LIk90788K0zvyj2JJVwkJ'), (44, '0eDvMgVFoNV3TpwtrVCoTj'),
-(20, '0pePYDrJGk8gqMRbXrLJC8'), (5, '0Q8NcsJwoCbZOHHW63su5S'), (38, '0C8ZW7ezQVs4URX5aX7Kqx'), (17, '0L8ExT028jH3ddEcZwqJJ5'), (46, '0QHgL1lAIqAw0HtD7YldmP'),
-(24, '0TnOYISbd1XYRBk9myaseg'), (3, '699OTQXzgjhIYAHMy9RyPD'), (39, '6Xgp2XMz1fhVYe7i6yNAax'), (14, '7n2Ycct7Beij7Dj7meI4X0'), (47, '7Gi6gjaWy3DxyilpF1a8Is'),
-(10, '6XyY86QOPPrYVGvF9ch6wz'), (31, '2ye2Wgw4gimLv2eAKyk1NB'), (13, '3q7HBObVc0L8jNeTe5Gofh'), (27, '3xvaSlT4xsyk6lY1ESOspO'), (43, '4r63FhuTkUYltbVAg5TQnk'),
-(8, '4nDoRrQiYLoBzwC5BhVJzF'), (35, '2kCcBybjl3SAtIcwdWpUe3'), (19, '2tIP7SsRs7vjIcLrU85W8J'), (36, '2o5jDhtHVPhrJdv3cEQ99Z'), (42, '1DxLCyH42yaHKGK3cl5bvG'),
-(25, '137W8MRPWKqSmrBGDBFSop'), (50, '1SupJlEpv7RS2tPNRaHViT'), (23, '181bsRPaVXVlUKXrxwZfHK'), (34, '5C4PDR4LnhZTbVnKWXuDKD'), (16, '5lwmRuXgjX8xIwlnauTZIP'),
-(4, '4SsVbpTthjScTS7U2hmr1X'), (28, '4Uc8Dsxct0oMqx0P6i60ea'), (41, '3EiLUeyEcA6fbRPSHkG5kb'), (2, '3fMbdgg4jU18AjLCKBhRSm'), (49, '3p7PcrEHaaKLJnPUGOtRlT'),
-(15, '6jGMq4yGs7aQzuGsMgVgZR'), (32, '64M6ah0SkkRsnPGtGiRAbb'), (7, '5YGY8feqx7naU7z4HrwZM6'), (21, '0fA0VVWsXO9YnASrzqfmYu'), (45, '07YUOmWljBTXwIseAUd9TW'),
-(11, '0XwVARXT135rw8lyw1EeWP'), (26, '718COspgdWOnwOFpJHRZHS'), (3, '6TIYQ3jFPwQSRmorSezPxX'), (38, '7pbDxGE6nQSZVfiFdq9lOL'), (44, '7c0XG5cIJTrrAgEC3ULPiq'),
-(18, '6S2OmqARrzebs0tKUEyXyp'), (35, '7FNnA9vBm6EKceENgCGRMb'), (6, '7jVv8c5Fj3E9VhNjxT4snq'), (22, '13ubrt8QOOCPljQ2FL1Kca'), (47, '1elUiq4X7pxej6FRlrEzjM'),
-(10, '1dKdetem2xEmjgvyymzytS'), (33, '3wcj11K77LjEY1PkEazffa'), (14, '46SHBwWsqBkxI7EeeBEQG7'), (30, '43ZHCT0cAZBISjO8DG9PnE'), (40, '2nszmSgqreHSdJA3zWPyrW'),
-(29, '2IMZYfNi21MGqxopj9fWx8'), (5, '2RdwBSPQiwcmiDo9kixcl8'), (43, '28gNT5KBp7IjEOQoevXf9N'), (17, '26dSoYclwsYLMAKD3tpOr4'), (1, '4q3ewBCX7sLwd24euuV69X'),
-(46, '3TVXtAsR1Inumwj472S9r4'), (24, '06HL4z0CvFAxyc27GXpf02'), (39, '1Xyo4u8uXC1ZmMpatF05PJ'), (12, '3Nrfpe0tUJi4K4DXYWgMUX'), (50, '5K4W6rqBFWDnAN6FQUkS6x'),
-(31, '6KImCVD70vtIoJWnq6nGn3'), (19, '6eUKZXaKkcviH0Ku9w2n3V'), (36, '7dGJo4pcD2V6oG8kP0tJRR'), (23, '1uNFoZAHBGtllmzznpCI3s'), (42, '1mcTU81TzQhprhouKaTkpq'),
-(34, '246dkjvS1zLTtiykXe5h60'), (16, '4MCBfE4596Uoi2O4DtmEMz'), (4, '5f7VJjfbwm532GiveGC0ZK'), (28, '5cj0lLjcoR7YOSnhnX0Po5'), (48, '53XhwfbYqKCa1cC15pYq2q'),
-(7, '2LRoIwlKmHjgvigdNGBHNo'), (20, '6vWDO969PvNqNYHIOW5v0m'), (45, '6qqNVTkY8uBg9cP3Jd7DAH'), (11, '66CXWjxzNUsdJxJ2JdwvnR'), (25, '6M2wZ9GZgrQXHCFfjv46we'),
-(38, '1Cs0zKBU1kc0i8ypK3B9ai'), (15, '1vyhD5VmyZ7KMfW5gqLgo5'), (3, '1RyvyyTE3xzB2ZywiAwp0i'), (33, '4gzpq5DPGxSnKTe4SA8HAU'), (49, '2YZyLoL8N0Wb9xBt1NhZWg'),
-(2, '4VMYDCV2IEDYJArk749S6m'), (37, '5pKCCKE2ajJHZ9KAiaK11H'), (13, '790FomKkXshlbRYZFtlgla'), (26, '7bXgB6jMjp9ATFy66eO08Z'), (40, '716NhGYqD1jl2wI1Qkgq36'),
-(1, '41MozSoPIsD1dJM0CLPjZF'), (31, '00FQb4jTyendYWaN8pK0wa'), (14, '0Y5tJX1MQlPlqiwlOH1tJY'), (27, '0du5cEVh5yTK9QJze8zA0C'), (41, '0hCNtLu0JehylgoiP8L4Gh'),
-(22, '15UsOTVnJzReFVN1VCnxy4'), (50, '1i8SpTcr7yvPOmcqrbnVXY'), (17, '1URnnhqYAYcrqrcwql10ft'), (35, '4YRxDV8wJFPHPTeXepOstw'), (9, '2R21vXR83lH98kGeO99Y66'),
-(43, '7Ln80lUS6He07XvHI8qqHH'), (25, '7ltDVBr6mKbRvohxheJ9h1'), (12, '7iK8PXO48WeuP03g8YR51W'), (39, '7CajNmpbOovFoOoasH2HaY'), (19, '52iwsT98xCoGgiGntTiR7K'),
-(47, '55Aa2cqylxrFIXC767Z865'), (34, '1VPmR4DJC1PlOtd0IADAO0'), (10, '1McMsnEElThX1knmY4oliG'), (4, '6l3HvQ5sa6mXTsMTB19rO5'), (30, '6LuN9FCkKOj5PcnpouEgny'),
-(24, '37230BxxYs9ksS7OkZw3IU'), (46, '3meJIgRw7YleJrmbpbJK6S'), (18, '3MZsBdqDrRTJihTHQrO6Dq'), (36, '0EmeFodog0BfCgMzAIvKQp'), (8, '04gDigrS5kc9YWfZHwBETP'),
-(42, '4O15NlyKLIASxsJ0PrXPfz'), (21, '4oUHIQIBe0LHzYfvXNW4QM'), (11, '4dpARuHxo51G3z768sgnrY'), (32, '4AK6F7OLvEQ5QYCBNiQWHq'), (44, '57vWImR43h4CaDao012Ofp'),
-(29, '5Pwc4xIPtQLFEnJriah9YJ'), (6, '50co4Is1HCEo8bhOyUWKpn'), (40, '4V8LLVI7PbaPR0K2TGSxFF'), (27, '77SW9BnxLY8rJ0RciFqkHh'), (1, '7wlFDEWiM5OoIAt8RSli8b'),
-(48, '7hJcb9fa4alzcOq3EaNPoG'), (15, '7n2wHs1TKAczGzO7Dd2rGr'), (37, '1bAftSH8umNcGZ0uyV7LMg'), (13, '1HY2Jd0NmPuamShAr6KMms'), (43, '1r4hJ1h58CWwUQe3MxPuau'),
-(23, '1dfeR4HaWDbWqFHLkxsg1d'), (5, '0EFisYRi20PTADoJrifHrz'), (35, '0tmwSHipWxN12fsoLcFU3B'), (17, '2hlmm7s2ICUX0LVIhVFlZQ'), (49, '1wRPtKGflJrBx9BmLsSwlU'),
-(3, '3hcs9uc56yIGFCSy9leWe7'), (31, '329e4yvIujISKGKz1BZZbO'), (12, '3PhoLpVuITZKcymswpck5b'), (46, '3nFkdlSjzX9mRTtwJOzDYB'), (25, '2wY79sveU1sp5g7SokKOiI'),
-(10, '77ziqFxp5gaInVrF2lj4ht'), (34, '7tYKF4w9nC0nq9CsPZTHyP'), (16, '6VuMaDnrHyPL1p4EHjYLi7'), (4, '4LLpKhyESsyAXpc4laK94U'), (22, '3WrFJ7ztbogyGnTHbHJFl2'),
-(42, '64KEffDW9EtZ1y2vBYgq8T'), (39, '6AgTAQt8XS6jRWi4sX7w49'), (20, '5WUlDfRSoLAfcVSX1WnrxN'), (50, '6jJ0s89eD6GaHleKKya26X'), (33, '4zCH9qm4R2DADamUHMCa6O'),
-(11, '1yR65psqiazQpeM79CcGh8'), (28, '2h93pZq0e7k5yf4dywlkpM'), (41, '26VFTg2z8YR0cCuwLzESi2'), (14, '2LIk90788K0zvyj2JJVwkJ'), (47, '0eDvMgVFoNV3TpwtrVCoTj'),
-(2, '0pePYDrJGk8gqMRbXrLJC8'), (29, '0Q8NcsJwoCbZOHHW63su5S'), (18, '0C8ZW7ezQVs4URX5aX7Kqx'), (38, '0L8ExT028jH3ddEcZwqJJ5'), (9, '0QHgL1lAIqAw0HtD7YldmP'),
-(21, '0TnOYISbd1XYRBk9myaseg'), (40, '699OTQXzgjhIYAHMy9RyPD'), (1, '6Xgp2XMz1fhVYe7i6yNAax'), (36, '7n2Ycct7Beij7Dj7meI4X0'), (15, '7Gi6gjaWy3DxyilpF1a8Is'),
-(45, '6XyY86QOPPrYVGvF9ch6wz'), (13, '2ye2Wgw4gimLv2eAKyk1NB'), (32, '3q7HBObVc0L8jNeTe5Gofh'), (24, '3xvaSlT4xsyk6lY1ESOspO'), (49, '4r63FhuTkUYltbVAg5TQnk'),
-(8, '4nDoRrQiYLoBzwC5BhVJzF'), (37, '2kCcBybjl3SAtIcwdWpUe3'), (19, '2tIP7SsRs7vjIcLrU85W8J'), (30, '2o5jDhtHVPhrJdv3cEQ99Z'), (48, '1DxLCyH42yaHKGK3cl5bvG'),
-(5, '137W8MRPWKqSmrBGDBFSop'), (26, '1SupJlEpv7RS2tPNRaHViT'), (44, '181bsRPaVXVlUKXrxwZfHK'), (12, '5C4PDR4LnhZTbVnKWXuDKD'), (35, '5lwmRuXgjX8xIwlnauTZIP'),
-(23, '4SsVbpTthjScTS7U2hmr1X'), (47, '4Uc8Dsxct0oMqx0P6i60ea'), (11, '3EiLUeyEcA6fbRPSHkG5kb'), (33, '3fMbdgg4jU18AjLCKBhRSm'), (22, '3p7PcrEHaaKLJnPUGOtRlT'),
-(4, '6jGMq4yGs7aQzuGsMgVgZR'), (28, '64M6ah0SkkRsnPGtGiRAbb'), (41, '5YGY8feqx7naU7z4HrwZM6'), (2, '0fA0VVWsXO9YnASrzqfmYu'), (39, '07YUOmWljBTXwIseAUd9TW'),
-(16, '0XwVARXT135rw8lyw1EeWP'), (50, '718COspgdWOnwOFpJHRZHS'), (34, '6TIYQ3jFPwQSRmorSezPxX'), (21, '7pbDxGE6nQSZVfiFdq9lOL'), (10, '7c0XG5cIJTrrAgEC3ULPiq'),
-(42, '6S2OmqARrzebs0tKUEyXyp'), (29, '7FNnA9vBm6EKceENgCGRMb'), (18, '7jVv8c5Fj3E9VhNjxT4snq'), (36, '13ubrt8QOOCPljQ2FL1Kca'), (9, '1elUiq4X7pxej6FRlrEzjM'),
-(44, '1dKdetem2xEmjgvyymzytS'), (25, '3wcj11K77LjEY1PkEazffa'), (14, '46SHBwWsqBkxI7EeeBEQG7'), (32, '43ZHCT0cAZBISjO8DG9PnE'), (48, '2nszmSgqreHSdJA3zWPyrW'),
-(7, '2IMZYfNi21MGqxopj9fWx8'), (31, '2RdwBSPQiwcmiDo9kixcl8'), (12, '28gNT5KBp7IjEOQoevXf9N'), (45, '26dSoYclwsYLMAKD3tpOr4'), (1, '4q3ewBCX7sLwd24euuV69X'),
-(40, '3TVXtAsR1Inumwj472S9r4'), (24, '06HL4z0CvFAxyc27GXpf02'), (39, '1Xyo4u8uXC1ZmMpatF05PJ'), (20, '3Nrfpe0tUJi4K4DXYWgMUX'), (50, '5K4W6rqBFWDnAN6FQUkS6x'),
-(31, '6KImCVD70vtIoJWnq6nGn3'), (19, '6eUKZXaKkcviH0Ku9w2n3V'), (36, '7dGJo4pcD2V6oG8kP0tJRR'), (23, '1uNFoZAHBGtllmzznpCI3s'), (42, '1mcTU81TzQhprhouKaTkpq'),
-(34, '246dkjvS1zLTtiykXe5h60'), (16, '4MCBfE4596Uoi2O4DtmEMz'), (4, '5f7VJjfbwm532GiveGC0ZK'), (28, '5cj0lLjcoR7YOSnhnX0Po5'), (48, '53XhwfbYqKCa1cC15pYq2q'),
-(7, '2LRoIwlKmHjgvigdNGBHNo'), (20, '6vWDO969PvNqNYHIOW5v0m'), (45, '6qqNVTkY8uBg9cP3Jd7DAH'), (11, '66CXWjxzNUsdJxJ2JdwvnR'), (25, '6M2wZ9GZgrQXHCFfjv46we'),
-(38, '1Cs0zKBU1kc0i8ypK3B9ai'), (15, '1vyhD5VmyZ7KMfW5gqLgo5'), (3, '1RyvyyTE3xzB2ZywiAwp0i'), (33, '4gzpq5DPGxSnKTe4SA8HAU'), (49, '2YZyLoL8N0Wb9xBt1NhZWg'),
-(2, '4VMYDCV2IEDYJArk749S6m'), (37, '5pKCCKE2ajJHZ9KAiaK11H'), (13, '790FomKkXshlbRYZFtlgla'), (26, '7bXgB6jMjp9ATFy66eO08Z'), (40, '716NhGYqD1jl2wI1Qkgq36'),
-(1, '41MozSoPIsD1dJM0CLPjZF'), (31, '00FQb4jTyendYWaN8pK0wa'), (14, '0Y5tJX1MQlPlqiwlOH1tJY'), (27, '0du5cEVh5yTK9QJze8zA0C'), (41, '0hCNtLu0JehylgoiP8L4Gh'),
-(22, '15UsOTVnJzReFVN1VCnxy4'), (50, '1i8SpTcr7yvPOmcqrbnVXY'), (17, '1URnnhqYAYcrqrcwql10ft'), (35, '4YRxDV8wJFPHPTeXepOstw'), (9, '2R21vXR83lH98kGeO99Y66'),
-(43, '7Ln80lUS6He07XvHI8qqHH'), (25, '7ltDVBr6mKbRvohxheJ9h1'), (12, '7iK8PXO48WeuP03g8YR51W'), (39, '7CajNmpbOovFoOoasH2HaY'), (19, '52iwsT98xCoGgiGntTiR7K'),
-(47, '55Aa2cqylxrFIXC767Z865'), (34, '1VPmR4DJC1PlOtd0IADAO0'), (10, '1McMsnEElThX1knmY4oliG'), (4, '6l3HvQ5sa6mXTsMTB19rO5'), (30, '6LuN9FCkKOj5PcnpouEgny'),
-(24, '37230BxxYs9ksS7OkZw3IU'), (46, '3meJIgRw7YleJrmbpbJK6S'), (18, '3MZsBdqDrRTJihTHQrO6Dq'), (36, '0EmeFodog0BfCgMzAIvKQp'), (8, '04gDigrS5kc9YWfZHwBETP'),
-(42, '4O15NlyKLIASxsJ0PrXPfz'), (21, '4oUHIQIBe0LHzYfvXNW4QM'), (11, '4dpARuHxo51G3z768sgnrY'), (32, '4AK6F7OLvEQ5QYCBNiQWHq'), (44, '57vWImR43h4CaDao012Ofp'),
-(29, '5Pwc4xIPtQLFEnJriah9YJ'), (6, '50co4Is1HCEo8bhOyUWKpn'), (40, '4V8LLVI7PbaPR0K2TGSxFF'), (27, '77SW9BnxLY8rJ0RciFqkHh'), (1, '7wlFDEWiM5OoIAt8RSli8b'),
-(48, '7hJcb9fa4alzcOq3EaNPoG'), (15, '7n2wHs1TKAczGzO7Dd2rGr'), (37, '1bAftSH8umNcGZ0uyV7LMg'), (13, '1HY2Jd0NmPuamShAr6KMms'), (43, '1r4hJ1h58CWwUQe3MxPuau'),
-(23, '1dfeR4HaWDbWqFHLkxsg1d'), (5, '0EFisYRi20PTADoJrifHrz'), (35, '0tmwSHipWxN12fsoLcFU3B'), (17, '2hlmm7s2ICUX0LVIhVFlZQ'), (49, '1wRPtKGflJrBx9BmLsSwlU'),
-(3, '3hcs9uc56yIGFCSy9leWe7'), (31, '329e4yvIujISKGKz1BZZbO'), (12, '3PhoLpVuITZKcymswpck5b'), (46, '3nFkdlSjzX9mRTtwJOzDYB'), (25, '2wY79sveU1sp5g7SokKOiI'),
-(10, '77ziqFxp5gaInVrF2lj4ht'), (34, '7tYKF4w9nC0nq9CsPZTHyP'), (16, '6VuMaDnrHyPL1p4EHjYLi7'), (4, '4LLpKhyESsyAXpc4laK94U'), (22, '3WrFJ7ztbogyGnTHbHJFl2'),
-(42, '64KEffDW9EtZ1y2vBYgq8T'), (39, '6AgTAQt8XS6jRWi4sX7w49'), (20, '5WUlDfRSoLAfcVSX1WnrxN'), (50, '6jJ0s89eD6GaHleKKya26X'), (33, '4zCH9qm4R2DADamUHMCa6O'),
-(11, '1yR65psqiazQpeM79CcGh8'), (28, '2h93pZq0e7k5yf4dywlkpM'), (41, '26VFTg2z8YR0cCuwLzESi2'), (14, '2LIk90788K0zvyj2JJVwkJ'), (47, '0eDvMgVFoNV3TpwtrVCoTj'),
-(2, '0pePYDrJGk8gqMRbXrLJC8'), (29, '0Q8NcsJwoCbZOHHW63su5S'), (18, '0C8ZW7ezQVs4URX5aX7Kqx'), (38, '0L8ExT028jH3ddEcZwqJJ5'), (9, '0QHgL1lAIqAw0HtD7YldmP'),
-(21, '0TnOYISbd1XYRBk9myaseg'), (40, '699OTQXzgjhIYAHMy9RyPD'), (1, '6Xgp2XMz1fhVYe7i6yNAax'), (36, '7n2Ycct7Beij7Dj7meI4X0'), (15, '7Gi6gjaWy3DxyilpF1a8Is'),
-(45, '6XyY86QOPPrYVGvF9ch6wz'), (13, '2ye2Wgw4gimLv2eAKyk1NB'), (32, '3q7HBObVc0L8jNeTe5Gofh'), (24, '3xvaSlT4xsyk6lY1ESOspO'), (49, '4r63FhuTkUYltbVAg5TQnk'),
-(8, '4nDoRrQiYLoBzwC5BhVJzF'), (37, '2kCcBybjl3SAtIcwdWpUe3'), (19, '2tIP7SsRs7vjIcLrU85W8J'), (30, '2o5jDhtHVPhrJdv3cEQ99Z'), (48, '1DxLCyH42yaHKGK3cl5bvG'),
-(5, '137W8MRPWKqSmrBGDBFSop'), (26, '1SupJlEpv7RS2tPNRaHViT'), (44, '181bsRPaVXVlUKXrxwZfHK'), (12, '5C4PDR4LnhZTbVnKWXuDKD'), (35, '5lwmRuXgjX8xIwlnauTZIP'),
-(23, '4SsVbpTthjScTS7U2hmr1X'), (47, '4Uc8Dsxct0oMqx0P6i60ea'), (11, '3EiLUeyEcA6fbRPSHkG5kb'), (33, '3fMbdgg4jU18AjLCKBhRSm'), (22, '3p7PcrEHaaKLJnPUGOtRlT'),
-(4, '6jGMq4yGs7aQzuGsMgVgZR'), (28, '64M6ah0SkkRsnPGtGiRAbb'), (41, '5YGY8feqx7naU7z4HrwZM6'), (2, '0fA0VVWsXO9YnASrzqfmYu'), (39, '07YUOmWljBTXwIseAUd9TW'),
-(16, '0XwVARXT135rw8lyw1EeWP'), (50, '718COspgdWOnwOFpJHRZHS'), (34, '6TIYQ3jFPwQSRmorSezPxX'), (21, '7pbDxGE6nQSZVfiFdq9lOL'), (10, '7c0XG5cIJTrrAgEC3ULPiq'),
-(42, '6S2OmqARrzebs0tKUEyXyp'), (29, '7FNnA9vBm6EKceENgCGRMb'), (18, '7jVv8c5Fj3E9VhNjxT4snq'), (36, '13ubrt8QOOCPljQ2FL1Kca'), (9, '1elUiq4X7pxej6FRlrEzjM'),
-(44, '1dKdetem2xEmjgvyymzytS'), (25, '3wcj11K77LjEY1PkEazffa'), (14, '46SHBwWsqBkxI7EeeBEQG7'), (32, '43ZHCT0cAZBISjO8DG9PnE'), (48, '2nszmSgqreHSdJA3zWPyrW'),
-(7, '2IMZYfNi21MGqxopj9fWx8'), (31, '2RdwBSPQiwcmiDo9kixcl8'), (12, '28gNT5KBp7IjEOQoevXf9N'), (45, '26dSoYclwsYLMAKD3tpOr4');
+INSERT INTO favorite(user_id, id, type) VALUES (3, '2R21vXR83lH98kGeO99Y66', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (32, '6l3HvQ5sa6mXTsMTB19rO5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (26, '1Cs0zKBU1kc0i8ypK3B9ai', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (47, '2LRoIwlKmHjgvigdNGBHNo', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (5, '790FomKkXshlbRYZFtlgla', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (16, '4O15NlyKLIASxsJ0PrXPfz', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (18, '53XhwfbYqKCa1cC15pYq2q', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (17, '1Cs0zKBU1kc0i8ypK3B9ai', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (40, '1RyvyyTE3xzB2ZywiAwp0i', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (44, '4q3ewBCX7sLwd24euuV69X', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (48, '1McMsnEElThX1knmY4oliG', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (35, '3TVXtAsR1Inumwj472S9r4', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (13, '41MozSoPIsD1dJM0CLPjZF', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (5, '6l3HvQ5sa6mXTsMTB19rO5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (19, '6eUKZXaKkcviH0Ku9w2n3V', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (23, '246dkjvS1zLTtiykXe5h60', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (47, '15UsOTVnJzReFVN1VCnxy4', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (8, '5pKCCKE2ajJHZ9KAiaK11H', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (15, '6LuN9FCkKOj5PcnpouEgny', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (22, '790FomKkXshlbRYZFtlgla', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (38, '7dGJo4pcD2V6oG8kP0tJRR', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (24, '53XhwfbYqKCa1cC15pYq2q', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (46, '7Ln80lUS6He07XvHI8qqHH', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (10, '1McMsnEElThX1knmY4oliG', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (28, '4gzpq5DPGxSnKTe4SA8HAU', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (25, '1Xyo4u8uXC1ZmMpatF05PJ', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (4, '4VMYDCV2IEDYJArk749S6m', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (21, '6eUKZXaKkcviH0Ku9w2n3V', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (7, '6l3HvQ5sa6mXTsMTB19rO5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (9, '4YRxDV8wJFPHPTeXepOstw', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (50, '4MCBfE4596Uoi2O4DtmEMz', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (5, '0du5cEVh5yTK9QJze8zA0C', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (15, '1uNFoZAHBGtllmzznpCI3s', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (34, '06HL4z0CvFAxyc27GXpf02', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (4, '6M2wZ9GZgrQXHCFfjv46we', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (44, '2R21vXR83lH98kGeO99Y66', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (22, '6l3HvQ5sa6mXTsMTB19rO5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (29, '1Xyo4u8uXC1ZmMpatF05PJ', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (5, '2YZyLoL8N0Wb9xBt1NhZWg', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (4, '7Ln80lUS6He07XvHI8qqHH', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (32, '66CXWjxzNUsdJxJ2JdwvnR', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (2, '0Y5tJX1MQlPlqiwlOH1tJY', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (47, '6vWDO969PvNqNYHIOW5v0m', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (19, '1mcTU81TzQhprhouKaTkpq', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (25, '6qqNVTkY8uBg9cP3Jd7DAH', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (9, '6l3HvQ5sa6mXTsMTB19rO5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (43, '6LuN9FCkKOj5PcnpouEgny', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (2, '00FQb4jTyendYWaN8pK0wa', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (32, '1RyvyyTE3xzB2ZywiAwp0i', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (21, '0EmeFodog0BfCgMzAIvKQp', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (9, '5f7VJjfbwm532GiveGC0ZK', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (42, '1uNFoZAHBGtllmzznpCI3s', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (28, '1VPmR4DJC1PlOtd0IADAO0', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (42, '1Xyo4u8uXC1ZmMpatF05PJ', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (24, '6l3HvQ5sa6mXTsMTB19rO5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (15, '7dGJo4pcD2V6oG8kP0tJRR', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (21, '1mcTU81TzQhprhouKaTkpq', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (45, '1vyhD5VmyZ7KMfW5gqLgo5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (38, '5pKCCKE2ajJHZ9KAiaK11H', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (6, '0hCNtLu0JehylgoiP8L4Gh', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (19, '00FQb4jTyendYWaN8pK0wa', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (30, '5cj0lLjcoR7YOSnhnX0Po5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (6, '5K4W6rqBFWDnAN6FQUkS6x', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (14, '53XhwfbYqKCa1cC15pYq2q', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (38, '0EmeFodog0BfCgMzAIvKQp', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (47, '1RyvyyTE3xzB2ZywiAwp0i', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (50, '1URnnhqYAYcrqrcwql10ft', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (34, '1uNFoZAHBGtllmzznpCI3s', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (29, '4q3ewBCX7sLwd24euuV69X', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (13, '1Cs0zKBU1kc0i8ypK3B9ai', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (35, '06HL4z0CvFAxyc27GXpf02', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (35, '0du5cEVh5yTK9QJze8zA0C', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (49, '6M2wZ9GZgrQXHCFfjv46we', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (35, '1Cs0zKBU1kc0i8ypK3B9ai', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (40, '7bXgB6jMjp9ATFy66eO08Z', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (18, '66CXWjxzNUsdJxJ2JdwvnR', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (20, '3TVXtAsR1Inumwj472S9r4', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (22, '3Nrfpe0tUJi4K4DXYWgMUX', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (21, '0Y5tJX1MQlPlqiwlOH1tJY', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (1, '6l3HvQ5sa6mXTsMTB19rO5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (31, '3TVXtAsR1Inumwj472S9r4', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (18, '6LuN9FCkKOj5PcnpouEgny', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (34, '2LRoIwlKmHjgvigdNGBHNo', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (14, '4YRxDV8wJFPHPTeXepOstw', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (30, '5K4W6rqBFWDnAN6FQUkS6x', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (18, '3MZsBdqDrRTJihTHQrO6Dq', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (20, '41MozSoPIsD1dJM0CLPjZF', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (5, '0Y5tJX1MQlPlqiwlOH1tJY', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (39, '2YZyLoL8N0Wb9xBt1NhZWg', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (9, '1vyhD5VmyZ7KMfW5gqLgo5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (9, '3MZsBdqDrRTJihTHQrO6Dq', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (20, '1i8SpTcr7yvPOmcqrbnVXY', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (3, '6l3HvQ5sa6mXTsMTB19rO5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (46, '7bXgB6jMjp9ATFy66eO08Z', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (46, '4MCBfE4596Uoi2O4DtmEMz', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (48, '41MozSoPIsD1dJM0CLPjZF', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (39, '4VMYDCV2IEDYJArk749S6m', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (1, '6eUKZXaKkcviH0Ku9w2n3V', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (35, '6LuN9FCkKOj5PcnpouEgny', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (49, '00FQb4jTyendYWaN8pK0wa', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (11, '7Ln80lUS6He07XvHI8qqHH', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (32, '6vWDO969PvNqNYHIOW5v0m', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (16, '6l3HvQ5sa6mXTsMTB19rO5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (44, '6KImCVD70vtIoJWnq6nGn3', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (8, '7bXgB6jMjp9ATFy66eO08Z', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (20, '6l3HvQ5sa6mXTsMTB19rO5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (49, '1Xyo4u8uXC1ZmMpatF05PJ', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (17, '6M2wZ9GZgrQXHCFfjv46we', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (44, '790FomKkXshlbRYZFtlgla', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (9, '2LRoIwlKmHjgvigdNGBHNo', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (30, '7bXgB6jMjp9ATFy66eO08Z', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (1, '3Nrfpe0tUJi4K4DXYWgMUX', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (24, '0Y5tJX1MQlPlqiwlOH1tJY', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (25, '246dkjvS1zLTtiykXe5h60', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (41, '3MZsBdqDrRTJihTHQrO6Dq', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (10, '41MozSoPIsD1dJM0CLPjZF', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (24, '2LRoIwlKmHjgvigdNGBHNo', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (21, '6vWDO969PvNqNYHIOW5v0m', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (17, '1mcTU81TzQhprhouKaTkpq', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (1, '66CXWjxzNUsdJxJ2JdwvnR', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (1, '6LuN9FCkKOj5PcnpouEgny', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (49, '6qqNVTkY8uBg9cP3Jd7DAH', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (4, '2R21vXR83lH98kGeO99Y66', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (10, '53XhwfbYqKCa1cC15pYq2q', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (37, '7ltDVBr6mKbRvohxheJ9h1', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (20, '1Cs0zKBU1kc0i8ypK3B9ai', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (46, '1URnnhqYAYcrqrcwql10ft', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (3, '4gzpq5DPGxSnKTe4SA8HAU', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (10, '1i8SpTcr7yvPOmcqrbnVXY', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (36, '7bXgB6jMjp9ATFy66eO08Z', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (37, '2LRoIwlKmHjgvigdNGBHNo', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (5, '0EmeFodog0BfCgMzAIvKQp', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (14, '66CXWjxzNUsdJxJ2JdwvnR', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (35, '15UsOTVnJzReFVN1VCnxy4', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (26, '0hCNtLu0JehylgoiP8L4Gh', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (14, '1vyhD5VmyZ7KMfW5gqLgo5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (7, '5pKCCKE2ajJHZ9KAiaK11H', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (35, '1i8SpTcr7yvPOmcqrbnVXY', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (15, '5K4W6rqBFWDnAN6FQUkS6x', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (23, '53XhwfbYqKCa1cC15pYq2q', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (38, '4MCBfE4596Uoi2O4DtmEMz', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (5, '7Ln80lUS6He07XvHI8qqHH', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (16, '66CXWjxzNUsdJxJ2JdwvnR', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (3, '1VPmR4DJC1PlOtd0IADAO0', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (31, '3Nrfpe0tUJi4K4DXYWgMUX', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (28, '1Xyo4u8uXC1ZmMpatF05PJ', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (18, '6M2wZ9GZgrQXHCFfjv46we', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (7, '6M2wZ9GZgrQXHCFfjv46we', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (35, '6eUKZXaKkcviH0Ku9w2n3V', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (48, '2YZyLoL8N0Wb9xBt1NhZWg', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (23, '790FomKkXshlbRYZFtlgla', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (18, '1mcTU81TzQhprhouKaTkpq', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (38, '716NhGYqD1jl2wI1Qkgq36', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (45, '00FQb4jTyendYWaN8pK0wa', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (27, '4YRxDV8wJFPHPTeXepOstw', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (33, '3Nrfpe0tUJi4K4DXYWgMUX', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (15, '1McMsnEElThX1knmY4oliG', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (22, '4O15NlyKLIASxsJ0PrXPfz', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (5, '00FQb4jTyendYWaN8pK0wa', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (9, '6M2wZ9GZgrQXHCFfjv46we', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (16, '1i8SpTcr7yvPOmcqrbnVXY', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (36, '1URnnhqYAYcrqrcwql10ft', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (44, '66CXWjxzNUsdJxJ2JdwvnR', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (46, '3TVXtAsR1Inumwj472S9r4', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (2, '41MozSoPIsD1dJM0CLPjZF', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (24, '6M2wZ9GZgrQXHCFfjv46we', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (40, '790FomKkXshlbRYZFtlgla', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (34, '5K4W6rqBFWDnAN6FQUkS6x', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (29, '790FomKkXshlbRYZFtlgla', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (45, '246dkjvS1zLTtiykXe5h60', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (20, '0Y5tJX1MQlPlqiwlOH1tJY', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (7, '0Y5tJX1MQlPlqiwlOH1tJY', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (48, '3MZsBdqDrRTJihTHQrO6Dq', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (9, '1RyvyyTE3xzB2ZywiAwp0i', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (17, '6vWDO969PvNqNYHIOW5v0m', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (7, '00FQb4jTyendYWaN8pK0wa', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (27, '5f7VJjfbwm532GiveGC0ZK', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (35, '4O15NlyKLIASxsJ0PrXPfz', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (25, '5f7VJjfbwm532GiveGC0ZK', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (15, '716NhGYqD1jl2wI1Qkgq36', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (4, '3TVXtAsR1Inumwj472S9r4', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (23, '0du5cEVh5yTK9QJze8zA0C', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (23, '06HL4z0CvFAxyc27GXpf02', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (22, '00FQb4jTyendYWaN8pK0wa', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (33, '1i8SpTcr7yvPOmcqrbnVXY', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (37, '6M2wZ9GZgrQXHCFfjv46we', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (23, '2YZyLoL8N0Wb9xBt1NhZWg', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (33, '7ltDVBr6mKbRvohxheJ9h1', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (40, '5f7VJjfbwm532GiveGC0ZK', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (10, '3Nrfpe0tUJi4K4DXYWgMUX', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (19, '3TVXtAsR1Inumwj472S9r4', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (31, '1Xyo4u8uXC1ZmMpatF05PJ', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (50, '1vyhD5VmyZ7KMfW5gqLgo5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (1, '0EmeFodog0BfCgMzAIvKQp', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (9, '00FQb4jTyendYWaN8pK0wa', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (32, '4MCBfE4596Uoi2O4DtmEMz', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (37, '7Ln80lUS6He07XvHI8qqHH', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (14, '6vWDO969PvNqNYHIOW5v0m', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (1, '4VMYDCV2IEDYJArk749S6m', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (34, '1McMsnEElThX1knmY4oliG', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (6, '4YRxDV8wJFPHPTeXepOstw', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (30, '53XhwfbYqKCa1cC15pYq2q', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (40, '1Cs0zKBU1kc0i8ypK3B9ai', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (12, '3Nrfpe0tUJi4K4DXYWgMUX', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (9, '1Xyo4u8uXC1ZmMpatF05PJ', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (39, '00FQb4jTyendYWaN8pK0wa', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (39, '1URnnhqYAYcrqrcwql10ft', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (40, '2YZyLoL8N0Wb9xBt1NhZWg', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (35, '0hCNtLu0JehylgoiP8L4Gh', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (23, '66CXWjxzNUsdJxJ2JdwvnR', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (47, '3TVXtAsR1Inumwj472S9r4', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (16, '5pKCCKE2ajJHZ9KAiaK11H', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (14, '6M2wZ9GZgrQXHCFfjv46we', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (19, '790FomKkXshlbRYZFtlgla', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (39, '0hCNtLu0JehylgoiP8L4Gh', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (42, '1Cs0zKBU1kc0i8ypK3B9ai', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (4, '6l3HvQ5sa6mXTsMTB19rO5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (41, '00FQb4jTyendYWaN8pK0wa', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (39, '5K4W6rqBFWDnAN6FQUkS6x', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (42, '2YZyLoL8N0Wb9xBt1NhZWg', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (38, '3TVXtAsR1Inumwj472S9r4', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (40, '3Nrfpe0tUJi4K4DXYWgMUX', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (38, '41MozSoPIsD1dJM0CLPjZF', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (36, '1i8SpTcr7yvPOmcqrbnVXY', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (23, '1i8SpTcr7yvPOmcqrbnVXY', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (18, '4MCBfE4596Uoi2O4DtmEMz', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (31, '0EmeFodog0BfCgMzAIvKQp', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (47, '1i8SpTcr7yvPOmcqrbnVXY', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (19, '5f7VJjfbwm532GiveGC0ZK', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (6, '0du5cEVh5yTK9QJze8zA0C', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (7, '7bXgB6jMjp9ATFy66eO08Z', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (13, '6qqNVTkY8uBg9cP3Jd7DAH', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (29, '1vyhD5VmyZ7KMfW5gqLgo5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (12, '2LRoIwlKmHjgvigdNGBHNo', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (41, '5K4W6rqBFWDnAN6FQUkS6x', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (4, '1Cs0zKBU1kc0i8ypK3B9ai', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (16, '1RyvyyTE3xzB2ZywiAwp0i', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (7, '716NhGYqD1jl2wI1Qkgq36', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (13, '1McMsnEElThX1knmY4oliG', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (35, '1McMsnEElThX1knmY4oliG', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (18, '4O15NlyKLIASxsJ0PrXPfz', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (21, '6l3HvQ5sa6mXTsMTB19rO5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (20, '4O15NlyKLIASxsJ0PrXPfz', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (19, '1Cs0zKBU1kc0i8ypK3B9ai', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (34, '1URnnhqYAYcrqrcwql10ft', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (8, '1Cs0zKBU1kc0i8ypK3B9ai', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (30, '1Cs0zKBU1kc0i8ypK3B9ai', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (36, '6l3HvQ5sa6mXTsMTB19rO5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (29, '1i8SpTcr7yvPOmcqrbnVXY', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (50, '6eUKZXaKkcviH0Ku9w2n3V', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (30, '2YZyLoL8N0Wb9xBt1NhZWg', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (29, '7ltDVBr6mKbRvohxheJ9h1', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (2, '66CXWjxzNUsdJxJ2JdwvnR', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (46, '66CXWjxzNUsdJxJ2JdwvnR', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (29, '0Y5tJX1MQlPlqiwlOH1tJY', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (44, '4VMYDCV2IEDYJArk749S6m', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (9, '4O15NlyKLIASxsJ0PrXPfz', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (3, '5K4W6rqBFWDnAN6FQUkS6x', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (3, '246dkjvS1zLTtiykXe5h60', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (33, '7Ln80lUS6He07XvHI8qqHH', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (42, '53XhwfbYqKCa1cC15pYq2q', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (20, '00FQb4jTyendYWaN8pK0wa', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (18, '1URnnhqYAYcrqrcwql10ft', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (15, '53XhwfbYqKCa1cC15pYq2q', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (28, '3TVXtAsR1Inumwj472S9r4', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (4, '3MZsBdqDrRTJihTHQrO6Dq', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (8, '4gzpq5DPGxSnKTe4SA8HAU', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (26, '6KImCVD70vtIoJWnq6nGn3', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (30, '4gzpq5DPGxSnKTe4SA8HAU', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (24, '2R21vXR83lH98kGeO99Y66', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (11, '790FomKkXshlbRYZFtlgla', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (17, '4MCBfE4596Uoi2O4DtmEMz', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (23, '5pKCCKE2ajJHZ9KAiaK11H', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (7, '5K4W6rqBFWDnAN6FQUkS6x', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (42, '7dGJo4pcD2V6oG8kP0tJRR', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (27, '6vWDO969PvNqNYHIOW5v0m', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (35, '1URnnhqYAYcrqrcwql10ft', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (30, '1uNFoZAHBGtllmzznpCI3s', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (30, '1VPmR4DJC1PlOtd0IADAO0', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (19, '1VPmR4DJC1PlOtd0IADAO0', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (31, '6qqNVTkY8uBg9cP3Jd7DAH', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (15, '6l3HvQ5sa6mXTsMTB19rO5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (3, '4q3ewBCX7sLwd24euuV69X', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (8, '7ltDVBr6mKbRvohxheJ9h1', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (28, '4YRxDV8wJFPHPTeXepOstw', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (30, '7ltDVBr6mKbRvohxheJ9h1', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (44, '5K4W6rqBFWDnAN6FQUkS6x', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (15, '5f7VJjfbwm532GiveGC0ZK', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (33, '246dkjvS1zLTtiykXe5h60', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (36, '3MZsBdqDrRTJihTHQrO6Dq', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (25, '0EmeFodog0BfCgMzAIvKQp', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (37, '1URnnhqYAYcrqrcwql10ft', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (11, '1Cs0zKBU1kc0i8ypK3B9ai', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (11, '06HL4z0CvFAxyc27GXpf02', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (33, '6qqNVTkY8uBg9cP3Jd7DAH', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (28, '6l3HvQ5sa6mXTsMTB19rO5', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (27, '4O15NlyKLIASxsJ0PrXPfz', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (19, '7dGJo4pcD2V6oG8kP0tJRR', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (41, '1URnnhqYAYcrqrcwql10ft', 'artist');
+INSERT INTO favorite(user_id, id, type) VALUES (15, '0du5cEVh5yTK9QJze8zA0C', 'artist');

@@ -144,7 +144,6 @@ def recommend_artists(
     # ── Load case-based ──
     cursor.execute("SELECT * FROM case_based;")
     raw_cases = cursor.fetchall()
-
     conn.commit()
     cursor.close()
     conn.close()
@@ -261,6 +260,14 @@ def recommend(
     - **weight_case**: trọng số cho case-based score (default 0.7)
     - **weight_user**: trọng số cho collaborative score (default 0.3)
     """
+    # recs = recommend_artists(
+    #     uid=uid,
+    #     top_k_users=top_k_users,
+    #     top_k_cases=top_k_cases,
+    #     weight_case=weight_case,
+    #     weight_user=weight_user,
+    # )
+    # return RecommendResponse(uid=uid, recommendations=[ArtistRecommend(**r) for r in recs])
     try:
         recs = recommend_artists(
             uid=uid,
@@ -276,7 +283,7 @@ def recommend(
         raise HTTPException(status_code=500, detail=f"Internal error: {e}")
 
 
-# ── Entry point ───────────────────────────────────────────────────────────────
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("main1:app", host="0.0.0.0", port=8000, reload=True)
+# # ── Entry point ───────────────────────────────────────────────────────────────
+# if __name__ == "__main__":
+#     import uvicorn
+#     uvicorn.run("main1:app", host="0.0.0.0", port=8000, reload=True)

@@ -1,5 +1,5 @@
-import { useContext, useMemo, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useMemo, useState, useEffect,US } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import AppHeader from "../appheader/Header";
 import Sidebar from "../appsidebar/Sidebar";
 import { usePersonalize } from "../context/PersonalizeContext";
@@ -21,6 +21,7 @@ export default function AskUser() {
     toggleSong,
   } = usePersonalize();
   const { currentUser, setcurrentUser } = useContext(AuthContext);
+  const navigate=useNavigate()
   // if (currentUser){
   // console.log("danh tính người dùng",currentUser)
   // }
@@ -65,8 +66,9 @@ export default function AskUser() {
     }
   }
   const submitA = () => {
-    // console.log("------------------",dataUFA)
-    dataUFA.forEach(it => {
+    //console.log("------------------",dataUFA)
+    if (dataUFA){
+        dataUFA.forEach(it => {
       const data = {
         'user_id': currentUser.user_id,
         'id': it["id"],
@@ -74,7 +76,9 @@ export default function AskUser() {
       }
       delFavourite(data)
     })
-    dataUFT.forEach(it=>{
+    }
+    if(dataUFT){
+        dataUFT.forEach(it=>{
       const data = {
         'user_id': currentUser.user_id,
         'id': it["id"],
@@ -82,6 +86,8 @@ export default function AskUser() {
       }
       delFavourite(data)
     })
+    }
+    
     // console.log("aaaaaaa", selectedArtists)
     selectedArtists.forEach(it => {
       // console.log(it)
@@ -95,7 +101,7 @@ export default function AskUser() {
     });
   }
   const submitT = () => {
-    // console.log("aaaaaaa", selectedArtists)
+    //console.log("aaaaaaa", selectedArtists)
     selectedSongs.forEach(it => {
       // console.log(it)
       const data = {
@@ -124,7 +130,7 @@ export default function AskUser() {
       // console.log(response)
       // setcurrentUser(result);
       if (response.ok) {
-        // alert(`Save successfull`);
+         //alert(`Save successfull`);
       }
       // else
       //   alert(`Sever responses with status: ${response.status}`)
@@ -274,6 +280,11 @@ const mergedArtists = useMemo(() => {
 
   return result;
 }, [dataArtistHomeTrend, dataUFA]);
+    useEffect(() => {
+        if (!currentUser) {
+            navigate('/login')
+        }
+    })
   useEffect(() => {
     const fetchDataGenre = async () => {
       try {
@@ -557,9 +568,10 @@ const mergedArtists = useMemo(() => {
                   'user_password': '',
                   'favorite_genre': [...selectedGenres].join(', ')
                 }
-                // submit(data)
+                submit(data)
                 submitA()
                 submitT()
+                navigate('/')
                 // console.log("aaaaaaaaaaaaaaaaaaa", data)
                 // Chỗ này có thể gọi API/đẩy user tới trang tiếp theo.
                 // Hiện tại chỉ cần đảm bảo UI cho phép chọn/tắt và bật Save đúng điều kiện.
