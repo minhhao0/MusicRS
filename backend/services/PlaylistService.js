@@ -60,6 +60,7 @@ const addTrackToPlayList= async(data)=>{
         conn.release();
         return res;
     }).catch((err)=>{
+        console.log(err)
         console.log("Can't add track to playlist. Please try again.")
     })
     return result;
@@ -82,7 +83,7 @@ const getTrackByPlayList= async(data)=>{
     const {playlistid} = data;
     const query= `select track.trackid,track.track_name,track.image from track,trackinplaylist,playlist
                   where track.trackid=trackinplaylist.trackid
-                  and playlist.playlistid= ?`
+                  and playlist.playlistid= ? and playlist.playlistid=trackinplaylist.playlistid`
     const result=await connection.getConnection()
     .then((conn)=>{
         const res=conn.query(query,[playlistid]);

@@ -33,7 +33,7 @@ const getTrack= async()=>
 const getTrackHomeTrend = async(limit) =>{
   console.log("limit", limit)
   const query=`
-SELECT 
+ SELECT 
     t.trackid, t.track_name, t.image, t.popularity,
     GROUP_CONCAT(DISTINCT a.artist_name ORDER BY a.artist_name SEPARATOR ', ') AS artist
 FROM (

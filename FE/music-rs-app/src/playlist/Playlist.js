@@ -67,7 +67,9 @@ export default function PlayList() {
         if(response.ok){
           console.log("Get tracks for this playlist successfully!");
         }
+        
         const result=await response.json()
+        console.log(result)
         setTracks(result)
 
       } catch(error){

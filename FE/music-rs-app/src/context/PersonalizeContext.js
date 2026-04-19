@@ -17,13 +17,16 @@ function toggleInSet(set, key) {
 
 export function PersonalizeProvider({ children }) {
   const [selectedGenres, setSelectedGenres] = useState(
-    () => new Set(["all", "hip_hop"])
+    () => new Set([])
+    // new Set(["all", "hip_hop"])
   );
   const [selectedArtists, setSelectedArtists] = useState(
-    () => new Set(["billie-eilish", "taylor-swift"])
+    () => new Set([])
+    // new Set(["billie-eilish", "taylor-swift"])
   );
   const [selectedSongs, setSelectedSongs] = useState(
-    () => new Set(["midnight-city"])
+    () => new Set([])
+    // new Set(["midnight-city"])
   );
 
   const toggleGenre = useCallback((key) => {

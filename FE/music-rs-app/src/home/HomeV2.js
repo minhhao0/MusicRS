@@ -53,18 +53,19 @@ export default function HomeV2() {
         };
         const fetchDataAHR = async () => {
             try {
-                const response = await fetch('http://localhost:8080/artist/artist-home-trend/5');
+                const response = await fetch(`http://localhost:8000/recommend/${currentUser.user_id}?top_k_users=20&top_k_cases=20&weight_case=0.7&weight_user=0.3`);
                 const result = await response.json();
-                setDataAHR(result);
+                // console.log("-----------------------",result["recommendations"])
+                setDataAHR(result["recommendations"].slice(0,5));
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
         const fetchDataAR = async () => {
             try {
-                const response = await fetch('http://localhost:8080/album/album-home/5');
+                const response = await fetch('http://localhost:8080/api/recommend/home?limit=5&maxPerArtist=3');
                 const result = await response.json();
-                setDataAR(result);
+                setDataAR(result['data']);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -81,7 +82,9 @@ export default function HomeV2() {
         fetchData();
         fetchDataAHT();
         fetchDataTHR();
-        fetchDataAHR();
+        if(currentUser){
+            fetchDataAHR();
+        }
         fetchDataAR();
         fetchDataPLR();
     }, []);
