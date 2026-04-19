@@ -44,13 +44,19 @@ const createUser= async (data)=>{
 }
 const updateUser= async (data)=>{
   const {user_id,user_name,user_password,favorite_genre}=data;
-  const query= `UPDATE User set username = ?, password = ?, favorite_genre ?
-                WHERE userid= ?`
+  console.log(data)
+  // const query= `UPDATE User set username = ?, password = ?, favorite_genre ?
+  //               WHERE userid= ?`
+  const query= `UPDATE User set username = COALESCE(NULLIF(?, ''), username)
+  , password = COALESCE(NULLIF(?, ''), password)
+  , favorite_genre = COALESCE(NULLIF(?, ''), favorite_genre)
+                WHERE userid= ?`          
   const result= await connection.getConnection().then((conn)=>{
     const res=conn.query(query,[user_name,user_password,favorite_genre,user_id]);
     conn.release();
     return res;
   }).catch((err)=>{
+    console.log("err", err)
     console.log("Can't update user. Please check again");
   })
   return result;
@@ -79,23 +85,41 @@ const getUserHistory=async(data)=>{
   })
   return result[0];
 }
-const getUserFavorite= async(data)=>{
+const getUserFavoriteArtist= async(data)=>{
   const {user_id}=data;
-  const query=`SELECT * FROM favorite where user_id = ?`
+  const query=`SELECT f.user_id, f.type, f.id, a.images, a.artist_name
+FROM favorite f
+JOIN artist a ON f.id = a.artistid 
+WHERE f.user_id = ?;`
   const result= await connection.getConnection().then((conn)=>{
     const res=conn.query(query,[user_id]);
     conn.release();
     return res;
   }).catch((err)=>{
-    console.log("Can't get user favorite. Please check again.");
+    console.log("Can't get user favorite artist. Please check again.");
+  })
+  return result[0];
+}
+const getUserFavoriteTrack= async(data)=>{
+  const {user_id}=data;
+  const query=`SELECT f.user_id, f.type, f.id, t.image, t.track_name
+FROM favorite f
+JOIN track t ON f.id = t.trackid
+WHERE f.user_id = ?;`
+  const result= await connection.getConnection().then((conn)=>{
+    const res=conn.query(query,[user_id]);
+    conn.release();
+    return res;
+  }).catch((err)=>{
+    console.log("Can't get user favorite track. Please check again.");
   })
   return result[0];
 }
 const addFavoriteArtist = async(data)=>{
-  const {user_id,artist_id}=data;
-  const query=`INSERT INTO favorite(user_id,artist_id) values(?,?)`;
+  const {user_id,id,type}=data;
+  const query=`INSERT INTO favorite(user_id,id,type) values(?,?,?)`;
   const result= await connection.getConnection().then((conn)=>{
-    const res=conn.query(query,[user_id,artist_id]);
+    const res=conn.query(query,[user_id,id,type]);
     conn.release();
     return res;
   }).catch((err)=>{
@@ -104,10 +128,10 @@ const addFavoriteArtist = async(data)=>{
   return result;
 }
 const addFavoriteTrack= async(data)=>{
-  const {user_id,track_id}=data;
-  const query=`INSERT INTO favorite(user_id,track_id) values(?,?)`;
+  const {user_id,id,type}=data;
+  const query=`INSERT INTO favorite(user_id,id,type) values(?,?,?)`;
   const result=await connection.getConnection().then((conn)=>{
-    const res=conn.query(query,[user_id,track_id]);
+    const res=conn.query(query,[user_id,id,type]);
     conn.release();
     return res;
   }).catch((err)=>{
@@ -115,11 +139,25 @@ const addFavoriteTrack= async(data)=>{
   })
   return result;
 }
-const addFavoriteAlbum= async(data)=>{
-  const {user_id,album_id}=data;
-  const query=`INSERT INTO favorite(user_id,album_id) values(?,?)`;
+const delFavorite= async(data)=>{
+  console.log(data)
+  const {user_id,id,type}=data;
+  const query=`delete from favorite where user_id = ? and id = ? and type = ?;`;
   const result=await connection.getConnection().then((conn)=>{
-    const res=conn.query(query,[user_id,album_id]);
+    const res=conn.query(query,[user_id,id,type]);
+    conn.release();
+    return res;
+  }).catch((err)=>{
+    console.log("Can't delete favorite. Please check again.");
+  })
+  return result;
+}
+
+const addFavoriteAlbum= async(data)=>{
+  const {user_id,id,type}=data;
+  const query=`INSERT INTO favorite(user_id,id,type) values(?,?,?)`;
+  const result=await connection.getConnection().then((conn)=>{
+    const res=conn.query(query,[user_id,id,type]);
     conn.release();
     return res;
   }).catch((err)=>{
@@ -127,6 +165,23 @@ const addFavoriteAlbum= async(data)=>{
   })
   return result;
 }
+
+
+const getUserFavouriteGenre = async (uid) =>{
+  console.log(uid)
+  const query = `select favorite_genre from user where userid = ?;`;
+  const result = await connection.getConnection().then((conn)=>{
+    const res=conn.query(query,[parseInt(uid)]);
+    conn.release();
+    return res;
+  }).catch((err)=>{
+    console.log("err", err);
+  })
+  return result[0];
+}
+// const r = await getUserFavouriteGenre(2)
+// console.log(r)
+
 // const data={
 //     'user_name':'hao',
 //     'password':'234'
@@ -137,7 +192,7 @@ const addFavoriteAlbum= async(data)=>{
 export {
   getTotalUser,getUser,
   updateUser,createUser,
-  getUserFavorite,getUserHistory,
-  addFavoriteAlbum,addFavoriteArtist,
-  addFavoriteTrack,updateUserHistory
+  getUserFavoriteArtist, getUserFavoriteTrack,getUserHistory,
+  addFavoriteAlbum,addFavoriteArtist,delFavorite,
+  addFavoriteTrack, getUserFavouriteGenre,updateUserHistory
 }

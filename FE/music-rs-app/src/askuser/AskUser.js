@@ -11,22 +11,269 @@ import AuthContext from "../AuthProvider";
 export default function AskUser() {
   const {
     selectedGenres,
+    setSelectedGenres,
     selectedArtists,
+    setSelectedArtists,
     selectedSongs,
+    setSelectedSong,
     toggleGenre,
     toggleArtist,
     toggleSong,
   } = usePersonalize();
   const { currentUser, setcurrentUser } = useContext(AuthContext);
-  
+  // if (currentUser){
+  // console.log("danh tính người dùng",currentUser)
+  // }
+
   const canSave = useMemo(() => {
+    // console.log("bài hát chọn", selectedSongs)
+    // console.log("thể loại nhạc chọn", selectedGenres)
+    // console.log("nghệ sĩ chọn", selectedArtists)
     return selectedGenres.size >= 2 && selectedArtists.size >= 2 && selectedSongs.size >= 2;
   }, [selectedGenres, selectedArtists, selectedSongs]);
 
   const [dataTrackHomeTrend, setDataTHT] = useState([]);
   const [dataGenre, setDataGenre] = useState();
   const [dataArtistHomeTrend, setDataAHT] = useState([]);
+  const [dataUFG, setDataUFG] = useState();
+  const [dataUFA, setDataUFA] = useState();
+  const [dataUFT, setDataUFT] = useState();
 
+  const submit = async (data) => {
+    const userData = JSON.stringify(data);
+    const fetchOption = {
+      "method": 'post',
+      "headers": {
+        "Accept": 'application/json',
+        'Content-Type': 'application/json',
+      },
+      "body": userData,
+    }
+    try {
+      const response = await fetch('http://localhost:8080/user/update-user', fetchOption);
+      // const result= await response.json();
+      // console.log(response)
+      // setcurrentUser(result);
+      if (response.ok) {
+        alert(`Save successfull`);
+      }
+      else
+        alert(`Sever responses with status: ${response.status}`)
+    } catch (error) {
+      console.error("Error ", error);
+      alert("Error when save profile user. Liên hệ đạt đẹp trai để nhờ fix bug =)))");
+    }
+  }
+  const submitA = () => {
+    // console.log("------------------",dataUFA)
+    dataUFA.forEach(it => {
+      const data = {
+        'user_id': currentUser.user_id,
+        'id': it["id"],
+        'type': 'artist'
+      }
+      delFavourite(data)
+    })
+    dataUFT.forEach(it=>{
+      const data = {
+        'user_id': currentUser.user_id,
+        'id': it["id"],
+        'type': 'track'
+      }
+      delFavourite(data)
+    })
+    // console.log("aaaaaaa", selectedArtists)
+    selectedArtists.forEach(it => {
+      // console.log(it)
+      const data = {
+        'user_id': currentUser.user_id,
+        'id': it,
+        'type': 'artist'
+      }
+      // console.log("nghệ sĩ", data)
+      submitArtist(data)
+    });
+  }
+  const submitT = () => {
+    // console.log("aaaaaaa", selectedArtists)
+    selectedSongs.forEach(it => {
+      // console.log(it)
+      const data = {
+        'user_id': currentUser.user_id,
+        'id': it,
+        'type': 'track'
+      }
+      // console.log("nghệ sĩ", data)
+      submitTrack(data)
+    });
+  }
+
+  const delFavourite = async(data) => {
+    const content = JSON.stringify(data);
+    const fetchOption = {
+      "method": 'post',
+      "headers": {
+        "Accept": 'application/json',
+        'Content-Type': 'application/json',
+      },
+      "body": content,
+    }
+    try {
+      const response = await fetch('http://localhost:8080/user/del-favorite', fetchOption);
+      // const result= await response.json();
+      // console.log(response)
+      // setcurrentUser(result);
+      if (response.ok) {
+        // alert(`Save successfull`);
+      }
+      // else
+      //   alert(`Sever responses with status: ${response.status}`)
+    } catch (error) {
+      console.error("Error ", error);
+      alert("Error when save profile user. Liên hệ đạt đẹp trai để nhờ fix bug =)))");
+    }
+  }
+
+  const submitArtist = async (data) => {
+    const ArtistData = JSON.stringify(data);
+    const fetchOption = {
+      "method": 'post',
+      "headers": {
+        "Accept": 'application/json',
+        'Content-Type': 'application/json',
+      },
+      "body": ArtistData,
+    }
+
+    try {
+      const response = await fetch('http://localhost:8080/user/favorite/artist', fetchOption);
+      // const result= await response.json();
+      // console.log(response)
+      // setcurrentUser(result);
+      if (response.ok) {
+        // alert(`Save successfull`);
+      }
+      // else
+      //   alert(`Sever responses with status: ${response.status}`)
+    } catch (error) {
+      console.error("Error ", error);
+      alert("Error when save profile user. Liên hệ đạt đẹp trai để nhờ fix bug =)))");
+    }
+  }
+
+  const submitTrack = async (data) => {
+    const TrackData = JSON.stringify(data);
+    const fetchOption = {
+      "method": 'post',
+      "headers": {
+        "Accept": 'application/json',
+        'Content-Type': 'application/json',
+      },
+      "body": TrackData,
+    }
+    try {
+      const response = await fetch('http://localhost:8080/user/favorite/track', fetchOption);
+      // const result= await response.json();
+      // console.log(response)
+      // setcurrentUser(result);
+      if (response.ok) {
+        // alert(`Save successfull`);
+      }
+      // else
+      //   alert(`Sever responses with status: ${response.status}`)
+    } catch (error) {
+      console.error("Error ", error);
+      alert("Error when save profile user. Liên hệ đạt đẹp trai để nhờ fix bug =)))");
+    }
+  }
+
+  const dataTF = useMemo(() => {
+  const listA = dataTrackHomeTrend ?? [];
+  const listB = dataUFT ?? [];
+
+  const mapA = new Map(
+    listA.map(item => [item.trackid, item])
+  );
+
+  const result = [];
+
+  for (const item of listB) {
+    const found = mapA.get(item.id);
+
+    result.push({
+      user_id: item.user_id || '',
+      type: item.type || '',
+      trackid: item.id || '',
+      image: item.image || '',
+      track_name: item.track_name || '',
+      popularity: found?.popularity || '',
+      artist: found?.artist || ''
+    });
+
+    mapA.delete(item.id);
+  }
+
+  for (const item of mapA.values()) {
+    result.push({
+      user_id: '',
+      type: '',
+      trackid: item.trackid || '',
+      image: item.image || '',
+      track_name: item.track_name || '',
+      popularity: item.popularity || '',
+      artist: item.artist || ''
+    });
+  }
+
+  return result;
+}, [dataUFT, dataTrackHomeTrend]);
+
+const mergedArtists = useMemo(() => {
+  const listA = dataArtistHomeTrend ?? []; // mảng lớn
+  const listB = dataUFA ?? []; // user favorite artist
+
+  const mapA = new Map(
+    listA.map(item => [item.artistid, item])
+  );
+
+  const result = [];
+
+  // 1. Ưu tiên listB
+  for (const item of listB) {
+    const found = mapA.get(item.id);
+
+    result.push({
+      user_id: item.user_id || '',
+      type: item.type || '',
+      artistid: item.id || '',
+      artist_name: item.artist_name || '',
+      images: item.images || '',
+      artist_genre: found?.artist_genre || '',
+      followers: found?.followers || '',
+      popularity: found?.popularity || '',
+      country: found?.country || ''
+    });
+
+    mapA.delete(item.id); // tránh duplicate
+  }
+
+  // 2. Phần còn lại của listA
+  for (const item of mapA.values()) {
+    result.push({
+      user_id: '',
+      type: '',
+      artistid: item.artistid || '',
+      artist_name: item.artist_name || '',
+      images: item.images || '',
+      artist_genre: item.artist_genre || '',
+      followers: item.followers || '',
+      popularity: item.popularity || '',
+      country: item.country || ''
+    });
+  }
+
+  return result;
+}, [dataArtistHomeTrend, dataUFA]);
   useEffect(() => {
     const fetchDataGenre = async () => {
       try {
@@ -37,29 +284,96 @@ export default function AskUser() {
         console.error('Error fetching data:', error);
       }
     };
-            const fetchDataAHT = async () => {
-            try {
-                const response = await fetch('http://localhost:8080/artist/artist-home-trend/5');
-                const result = await response.json();
-                setDataAHT(result);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-             const fetchData = async () => {
-            try {
-                const response = await fetch('http://localhost:8080/track/track-home-trend/5');
-                const result = await response.json();
-                setDataTHT(result);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-                fetchData();
-      fetchDataAHT()
+    const fetchUFG = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/user/favourite-genres/${currentUser.user_id}`);
+        // console.log("API là ", `http://localhost:8080/user/favourite-genres/${currentUser.user_id}`)
+        const result = await response.json();
+        setDataUFG(result);
+        if (result && result.length > 0) {
+          // console.log("API trả về:", result);
+
+          const arr = result[0].favorite_genre.split(',').map(s => s.trim());
+          // console.log("array là ",arr)
+          // convert → Set
+          const newSet = new Set(arr);
+          // console.log(newSet)
+          setSelectedGenres(newSet);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    const fetchDataAHT = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/artist/artist-home-trend/5');
+        const result = await response.json();
+        setDataAHT(result);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/track/track-home-trend/5');
+        const result = await response.json();
+        setDataTHT(result);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    const fetchUF = async () => {
+      const Data = JSON.stringify({ "user_id": currentUser.user_id });
+      const fetchOption = {
+        "method": 'post',
+        "headers": {
+          "Accept": 'application/json',
+          'Content-Type': 'application/json',
+        },
+        "body": Data,
+      }
+      try {
+        const response = await fetch('http://localhost:8080/user/favorite-artist', fetchOption);
+        const response1 = await fetch('http://localhost:8080/user/favorite-track', fetchOption);
+        const result = await response.json();
+        const result1 = await response1.json();
+        // setDataTHT(result);
+        // console.log("oooooooooooooooooooooooooooo",result)
+        if (result && result.length > 0 && result1 && result1.length > 0) {
+          // console.log("API trả về:", result);
+          // convert  → Set
+          const newSet = new Set(result
+            .filter(item => item.type === 'artist')
+            .map(item => item.id));
+          setSelectedArtists(newSet);
+          setDataUFA(result)
+          setDataUFT(result1)
+          const newSet1 = new Set(result1
+            .filter(item => item.type === 'track')
+            .map(item => item.id));
+          setSelectedSong(newSet1);
+          //  console.log("aaaaaaaaaaaaaaa", newSet)
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+    fetchDataAHT()
     fetchDataGenre();
+    if (currentUser) {
+      // console.log("user_id", currentUser.user_id)
+      fetchUFG();
+      fetchUF();
+      // console.log("xxxxxxxxxxxxxxxxxxxxxxx", selectedGenres)
+    }
     // console.log(dataGenre)
   }, []);
+
+  // console.log("dataUFA", dataUFA)
+  // console.log("dataUFT", dataUFT)
 
   const genreOptions = useMemo(
     () =>
@@ -113,10 +427,11 @@ export default function AskUser() {
                 <Link to="/show_all?section=personalize_genres" className="text-primary text-sm font-semibold hover:underline">Show all</Link>
               </div>
               <div className="flex flex-wrap gap-3">
-                {dataGenre && dataGenre.map((it)=>{
+                {dataGenre && dataUFG && dataGenre.map((it) => {
+                  // console.log("đã chọn genre", selectedGenres)
                   const isSelected = selectedGenres.has(it.genre);
                   return (
-                      <button
+                    <button
                       key={it.genre}
                       type="button"
                       onClick={() => toggleGenre(it.genre)}
@@ -129,7 +444,7 @@ export default function AskUser() {
                       {isSelected && <span className="material-symbols-outlined text-sm font-bold">check</span>}
                       {it.genre}
                     </button>)
-                  })}
+                })}
               </div>
             </section>
             {/* <!-- 2. Favorite Artists --> */}
@@ -139,13 +454,13 @@ export default function AskUser() {
                 <Link to="/show_all?section=personalize_artists" className="text-primary text-sm font-semibold hover:underline">Show all</Link>
               </div>
               <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 sm:gap-6">
-                {dataArtistHomeTrend && dataArtistHomeTrend.map((opt) => {
-                  const isSelected = selectedArtists.has(opt.artist_name);
+                {mergedArtists.map((opt) => {
+                  const isSelected = selectedArtists.has(opt.artistid);
                   return (
                     <button
-                      key={opt.artist_name}
+                      key={opt.artistid}
                       type="button"
-                      onClick={() => toggleArtist(opt.artist_name)}
+                      onClick={() => toggleArtist(opt.artistid)}
                       className="group flex flex-col items-center gap-2"
                     >
                       <div
@@ -189,7 +504,8 @@ export default function AskUser() {
                 <Link to="/show_all?section=personalize_songs" className="text-primary text-sm font-semibold hover:underline">Show all</Link>
               </div>
               <div className="space-y-2">
-                {dataTrackHomeTrend.map((opt) => {
+                {dataTF.map((opt) => {
+                  console.log(selectedSongs)
                   const isSelected = selectedSongs.has(opt.trackid);
                   return (
                     <button
@@ -210,7 +526,7 @@ export default function AskUser() {
                           <p className={isSelected ? "font-bold text-primary" : "font-bold group-hover:text-primary transition-colors"}>
                             {opt.track_name}
                           </p>
-                          <p className="text-xs text-slate-500">{opt.artist}</p>
+                          {/* <p className="text-xs text-slate-500">{opt.artist}</p> */}
                         </div>
                       </div>
 
@@ -235,14 +551,24 @@ export default function AskUser() {
               disabled={!canSave}
               onClick={() => {
                 if (!canSave) return;
+                const data = {
+                  'user_id': currentUser.user_id,
+                  'user_name': '',
+                  'user_password': '',
+                  'favorite_genre': [...selectedGenres].join(', ')
+                }
+                // submit(data)
+                submitA()
+                submitT()
+                // console.log("aaaaaaaaaaaaaaaaaaa", data)
                 // Chỗ này có thể gọi API/đẩy user tới trang tiếp theo.
                 // Hiện tại chỉ cần đảm bảo UI cho phép chọn/tắt và bật Save đúng điều kiện.
                 // eslint-disable-next-line no-console
-                console.log({
-                  genres: Array.from(selectedGenres),
-                  artists: Array.from(selectedArtists),
-                  songs: Array.from(selectedSongs),
-                });
+                // console.log({
+                //   genres: Array.from(selectedGenres),
+                //   artists: Array.from(selectedArtists),
+                //   songs: Array.from(selectedSongs),
+                // });
               }}
               className={
                 canSave
