@@ -1,11 +1,7 @@
 import express from "express"
-<<<<<<< HEAD
-import { add_favorite_album, add_favorite_artist, add_favorite_track, get_user_favorite, get_user_history, login_method, signup_method, update_user_history_method, update_user_method} from "../controllers/UserController.js"
-=======
 import { add_favorite_album, add_favorite_artist, add_favorite_track, get_user_favorite_artist,get_user_favorite_track
     , get_user_history, login_method, signup_method, del_favourite,
-     update_user_method, get_u_favourite_genres} from "../controllers/UserController.js"
->>>>>>> dat
+     update_user_method, get_u_favourite_genres,update_user_history_method} from "../controllers/UserController.js"
 const userRouter=express.Router()
 userRouter.post('/login',login_method);
 userRouter.post('/signup',signup_method);

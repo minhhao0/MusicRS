@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-import { getTotalUser,getUser,createUser,updateUser, getUserHistory, getUserFavorite, addFavoriteArtist, addFavoriteTrack, addFavoriteAlbum, updateUserHistory } from "../services/UserService.js";
-=======
 import { getTotalUser,getUser,createUser,updateUser, getUserHistory, getUserFavoriteArtist, getUserFavoriteTrack
     , addFavoriteArtist, addFavoriteTrack, delFavorite,
-    addFavoriteAlbum, getUserFavouriteGenre } from "../services/UserService.js";
->>>>>>> dat
+    addFavoriteAlbum, getUserFavouriteGenre ,updateUserHistory} from "../services/UserService.js";
 
 const login_method = async (req,res) => {
     try{
