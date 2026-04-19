@@ -7,6 +7,7 @@ import Playing from "./SongPlay";
 import { useNavigate } from "react-router-dom";
 import CreatePlaylistModal from "../components/CreatePlaylistModal";
 import AuthContext from "../AuthProvider";
+import PlaySongContext from "../context/PlaySongContext";
 
 export default function PlayList() {
   const params=useParams()
@@ -16,6 +17,7 @@ export default function PlayList() {
   const [createOpen, setCreateOpen] = useState(false);
   const {currentUser,setcurrentUser}=useContext(AuthContext);
   const [tracks,setTracks]=useState([]);
+  const {playSong,setplaySong}=useContext(PlaySongContext);
   const id=params.id
   useEffect(()=>{
     if(!currentUser){
@@ -69,6 +71,7 @@ export default function PlayList() {
         }
         
         const result=await response.json()
+        setplaySong(result[0])
         console.log(result)
         setTracks(result)
 
@@ -227,6 +230,9 @@ export default function PlayList() {
                                 data-nav-type="song"
                                 data-id={it.trackid}
                                 aria-label="Play song"
+                                onClick={(e)=>{
+                                  setplaySong(it)
+                                }}
                               >
                                 <span className="material-symbols-outlined fill-1 text-lg">
                                   play_arrow
@@ -257,10 +263,10 @@ export default function PlayList() {
                               </div>
                             </td>
                             <td className="px-4 py-3 text-sm text-slate-500 dark:text-slate-400">
-                              {it.track_name}
+                              {it.t_name}
                             </td>
                             <td className="px-4 py-3 text-sm text-slate-500 text-right pr-12">
-                              —
+                             {Math.round(it.duration_ms/60000)}:{('0'+Math.round(((it.duration_ms)%60000)/1000)).slice(-2)}
                             </td>
                           </tr>
                         );
@@ -282,7 +288,7 @@ export default function PlayList() {
           )}
         </div>
       </main>
-      <Playing />
+      <Playing track={playSong}/>
       <CreatePlaylistModal
         open={createOpen}
         onClose={() => setCreateOpen(false)}

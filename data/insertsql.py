@@ -20,7 +20,6 @@ file_list=[
           {'name':'artist_1_.csv','type':'artist'},
            {'name':'album.csv','type':'album'},
            {'name':'artistalbum.csv','type':'artistalbum'},
-
            {'name':'trackinalbum.csv','type':'trackinalbum'}]
 for file in tqdm(file_list):
   df=pd.read_csv(file['name'])

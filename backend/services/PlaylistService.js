@@ -81,9 +81,14 @@ const removeTrackFromPlayList= async(data)=>{
 }
 const getTrackByPlayList= async(data)=>{
     const {playlistid} = data;
-    const query= `select track.trackid,track.track_name,track.image from track,trackinplaylist,playlist
-                  where track.trackid=trackinplaylist.trackid
-                  and playlist.playlistid= ? and playlist.playlistid=trackinplaylist.playlistid`
+    const query= `select track.trackid,track.track_name,track.image,track.duration_ms,A.t_name
+from track join 
+(select trackinplaylist.trackid,group_concat(distinct artist.artist_name order by artist.artist_name separator ', ') as t_name
+ from trackinplaylist join artisttrack on artisttrack.trackid=trackinplaylist.trackid
+ join artist on artist.artistid=artisttrack.artistid
+ where trackinplaylist.playlistid= ? 
+ group by trackinplaylist.trackid) as A on 
+ track.trackid=A.trackid `
     const result=await connection.getConnection()
     .then((conn)=>{
         const res=conn.query(query,[playlistid]);
@@ -108,6 +113,13 @@ and user_playlist.playlistid=playlist.playlistid`
         console.log("Can't get playlist by user id");
     })
     return result[0];
+}
+const getAllPlaylist =async(data)=>{
+    const {limit}=data;
+    const query=`select * from playlist,user_playlist
+where playlist.playlistid=user_playlist.playlistid and user_playlist.user_id=10
+limit ?;
+    `
 }
 export{
     getPlaylistHome,addPlayList,

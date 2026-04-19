@@ -53,8 +53,6 @@ const track_home_recommend_method = async (res) => {
         res.status(501).send('Server error')
     }
 };
-
-
 export {
     track_home_trend_method, track_home_recommend_method, get_genre_method, get_limit_genre_method
 }

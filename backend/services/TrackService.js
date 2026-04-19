@@ -34,10 +34,10 @@ const getTrackHomeTrend = async(limit) =>{
   console.log("limit", limit)
   const query=`
  SELECT 
-    t.trackid, t.track_name, t.image, t.popularity,
+    t.trackid, t.track_name, t.image, t.popularity,t.duration_ms,
     GROUP_CONCAT(DISTINCT a.artist_name ORDER BY a.artist_name SEPARATOR ', ') AS artist
 FROM (
-    SELECT trackid, track_name, image, popularity 
+    SELECT trackid, track_name, image, popularity,duration_ms
     FROM track 
     ORDER BY popularity DESC 
     LIMIT ?
@@ -63,7 +63,7 @@ GROUP BY t.trackid;`
 const getTrackHomeRecommend = async(limit) =>{
   const query=`
   SELECT 
-    t.trackid, t.track_name, t.image, t.popularity, 
+    t.trackid, t.track_name, t.image, t.popularity,t.duration_ms,
     GROUP_CONCAT(DISTINCT a.artist_name ORDER BY a.artist_name SEPARATOR ', ') AS artist
 FROM track AS t
 INNER JOIN artisttrack AS a_t ON t.trackid = a_t.trackid

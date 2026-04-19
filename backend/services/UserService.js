@@ -17,9 +17,9 @@ const getTotalUser = async()=>{
 }
 const getUser =async (data)=>{
     const {email,password}=data;
-    const query=`SELECT * from user where email = ? and password= ?`
+    const query=`SELECT * from user where email = ? or username = ? and password= ?`
     const result= await connection.getConnection().then((conn)=>{
-        const res=conn.query(query,[email,password]);
+        const res=conn.query(query,[email,email,password]);
         conn.release();
         return res;
     }).catch((err)=>{
@@ -52,6 +52,18 @@ const updateUser= async (data)=>{
     return res;
   }).catch((err)=>{
     console.log("Can't update user. Please check again");
+  })
+  return result;
+}
+const updateUserHistory=async (data)=>{
+  const {user_id,item_id,type,time}=data;
+  const query= `INSERT INTO history(user_id,item_id,type,time) values(?,?,?,?)`
+  const result=await connection.getConnection().then((conn)=>{
+    const res=conn.query(query,[user_id,item_id,type,time]);
+    conn.release();
+    return res;
+  }).catch((err)=>{
+    console.log("Can't update user history. Please check again");
   })
   return result;
 }
@@ -127,5 +139,5 @@ export {
   updateUser,createUser,
   getUserFavorite,getUserHistory,
   addFavoriteAlbum,addFavoriteArtist,
-  addFavoriteTrack
+  addFavoriteTrack,updateUserHistory
 }

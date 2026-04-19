@@ -5,6 +5,8 @@ import AuthContext from "../AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import AddSongButton from "../components/AddSongButton";
 import AddSongsToPlaylistModal from "../components/AddSongsToPlaylistModal";
+import SelectedPlayItemContext from "../context/SelectedPlayItemContext";
+import PlaySongContext from "../context/PlaySongContext";
 
 
 export default function HomeV2() {
@@ -15,6 +17,8 @@ export default function HomeV2() {
     const [dataAlbumRecommend, setDataAR] = useState([]);
     const [dataPlaylistRecommend, setDataPLR] = useState([]);
     const { currentUser, setcurrentUser } = useContext(AuthContext);
+    const {selectedPlayItem,setSelectedPlayItem}=useContext(SelectedPlayItemContext)
+    const {playSong,setplaySong}=useContext(PlaySongContext)
     const [isOpen,setisOpen]=useState(false)
     const [song,setSong]=useState()
     const navigate = useNavigate();
@@ -70,8 +74,21 @@ export default function HomeV2() {
             }
         };
         const fetchDataPLR = async () => {
+             const data={
+                            "user_id": currentUser.user_id,
+                              "top_k": 10,
+                            "interval": 10
+                               }
+            const fetchOption={
+                    method:'post',
+                    headers:{
+                          'Accept':'application/json',
+                          'Content-Type':'application/json',
+                           }, 
+                    body:JSON.stringify(data),
+                }
             try {
-                const response = await fetch('http://localhost:8080/playlist/playlist-home');
+                const response = await fetch('http://127.0.0.1:8000/recommend/playlist',fetchOption);
                 const result = await response.json();
                 setDataPLR(result);
             } catch (error) {
@@ -108,12 +125,16 @@ export default function HomeV2() {
                                     <div className="relative aspect-square mb-4 shadow-xl">
                                         <img className="rounded-lg w-full h-full object-cover"
                                             data-alt="Abstract album cover art for Midnight City"
-                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCw4oZwtGKxRHRrk99OCvAZIqla4Bb5yLqxsQTmbF2nlocrXKrmwzVpUXo_8csF-rVF6i2mpOx3RwtPCV5Bu_eY9W_limRvRhPR1HCcmqB-rzsx2WVuSyabrRjfMRnB10-xZ3UbnEhYYMcpHfjJeBF6kqu_VOqxvb20ZcCXJ0POYaL9Jyknst97GtIe6ztd8dBl2C5cGYOouN7YeVjyFwoem9YSVDvoBwR4aLo6s8bBGYC8Qxn6Hli5TAwO5USQshkq3cu4y1_mZJo" />
+                                            src={it.image} />
                                         <button
                                             className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center"
                                             data-nav-type="song"
                                             data-id="midnight-city"
-                                            aria-label="Play song">
+                                            aria-label="Play song"
+                                            onClick={(e)=>{
+                                               setplaySong(it)
+                                               navigate('/play')
+                                            }}>
                                             <span className="material-symbols-outlined fill-1" >play_arrow</span>
                                         </button>
                                         <button className="absolute top-2 left-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="song" data-id="midnight-city" aria-label="Play song">
@@ -139,7 +160,19 @@ export default function HomeV2() {
                                 <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer text-center">
                                     <div className="relative aspect-square mb-4 shadow-xl mx-auto w-full">
                                         <img className="rounded-full w-full h-full object-cover" data-alt="Portrait of Billie Eilish artist" src={it.images} />
-                                        <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="artist" data-id="billie-eilish" aria-label="Open artist">
+                                        <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" 
+                                        data-nav-type="artist" 
+                                        data-id="billie-eilish" 
+                                        aria-label="Open artist"
+                                        onClick={(e)=>{
+                                            const data={
+                                                'item':it,
+                                                'type':'artist',
+                                            }
+                                            setSelectedPlayItem(data)
+                                            navigate("/play")
+                                        }}
+                                        >
                                             <span className="material-symbols-outlined fill-1">play_arrow</span>
                                         </button>
                                     </div>
@@ -159,7 +192,7 @@ export default function HomeV2() {
                             {dataTrackHomeRecommend.map((it) => (
                                 <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
                                     <div className="relative aspect-square mb-4 shadow-xl">
-                                        <img className="rounded-lg w-full h-full object-cover" data-alt="Album cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPBD59iOFxQoqwRYOeRh1KY7eX9vFqB_S3DhYFL1OVly8qRp3ltZI3pSQOKsqmpFbmzdbpiJewl77IggEGqdqD6TSoPKY_dpqsIvFd22HhsuO1HSAtdOvOdJAkFzkF0TRey42W1NWsiwnyNB6b6CRflwbiQk4uQAo8M_6pEfNUJE1hpR8ZyTvNBgLYbEvG72m4v__T_rOE2zVZv4SRVYq6WUYyIbGGJdXIKCC6igCaDEvdya-Z4WL4TAGFc3FhD4AYfmanJW6MJSM" />
+                                        <img className="rounded-lg w-full h-full object-cover" data-alt="Album cover" src={it.image} />
                                         <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="song" data-id="save-your-tears" aria-label="Play song">
                                             <span className="material-symbols-outlined fill-1">play_arrow</span>
                                         </button>
@@ -203,7 +236,7 @@ export default function HomeV2() {
                             {dataAlbumRecommend.map((it) => (
                                 <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
                                     <div className="relative aspect-square mb-4 shadow-xl">
-                                        <img className="rounded-lg w-full h-full object-cover" data-alt="Album cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJGfkb4-IzZX5_o22Ki9ZkYcD25P3BvsB84O20Pe8gn3CuyQPO84eH5t_sLSdNfUNNInNprst8rYfPs5N-ZvGkM3HlipCA4EB2nAs0SgRjzryuCZu9Zf7nFXpbRpBkyZO4CR98pjwXXG_VgmrOGI1auWD8ZVH_6WcRXqT4UJwBL2Zoa05M7qNjVVUJ2PagKlEdr62Gni1x-sk7wHU2aAzpfxPOCA74omFTtFXBWavgijXgS8uIZotVO86yKaIC1190pfaSdqvzUxk" />
+                                        <img className="rounded-lg w-full h-full object-cover" data-alt="Album cover" src={it.images} />
                                         <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="album" data-id="after-hours" aria-label="Open album">
                                             <span className="material-symbols-outlined fill-1">play_arrow</span>
                                         </button>

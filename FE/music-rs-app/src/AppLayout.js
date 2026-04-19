@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
-import Home from "./home/Home";
 import HomeV2 from "./home/HomeV2";
 import Login from "./login/Login";
 import PlayList from "./playlist/Playlist";
@@ -10,42 +9,17 @@ import AskUser from "./askuser/AskUser";
 import CreateAccount from "./createaccount/CreateAccount";
 import AuthContext from "./AuthProvider";
 import ShowAll from "./showall/ShowAll";
-function EntityNavigation() {
-  const navigate = useNavigate();
-  
-  useEffect(() => {
-    const handler = (e) => {
-      const target = e.target;
-      if (!(target instanceof Element)) return;
-
-      const el = target.closest("[data-nav-type][data-id]");
-      if (!el) return;
-
-      const type = el.getAttribute("data-nav-type");
-      const id = el.getAttribute("data-id");
-      if (!type || !id) return;
-
-      let nextPath = null;
-      if (type === "song") nextPath = "/play";
-      if (type === "album") nextPath = "/playlist";
-      if (type === "artist") nextPath = "/user";
-      if (!nextPath) return;
-
-      // Keep query param so destination page can display which item was clicked.
-      navigate(`${nextPath}?id=${encodeURIComponent(id)}`);
-    };
-
-    document.addEventListener("click", handler);
-    return () => document.removeEventListener("click", handler);
-  }, [navigate]);
-
-  return null;
-}
+import PlaySongContext from "./context/PlaySongContext";
+import SelectedPlayItemContext from "./context/SelectedPlayItemContext";
 
 export default function AppLayout() {
   const [currentUser,setcurrentUser]=useState();
+  const [playSong,setplaySong]=useState();
+  const [selectedPlayItem,setSelectedPlayItem]=useState();
   return (
     <AuthContext.Provider value={{currentUser,setcurrentUser}}>
+      <PlaySongContext.Provider value={{playSong,setplaySong}}>
+        <SelectedPlayItemContext.Provider value={{selectedPlayItem,setSelectedPlayItem}}>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomeV2 />} />
@@ -59,6 +33,8 @@ export default function AppLayout() {
         <Route path="/show_all" element={<ShowAll/>}/>
       </Routes>
     </BrowserRouter>
+    </SelectedPlayItemContext.Provider>
+    </PlaySongContext.Provider>
     </AuthContext.Provider>
   );
 }

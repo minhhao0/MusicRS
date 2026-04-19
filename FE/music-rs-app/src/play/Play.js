@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import AuthContext from "../AuthProvider";
 import AddSongButton from "../components/AddSongButton";
 import { usePlaylist } from "../context/PlaylistContext";
+import PlaySongContext from "../context/PlaySongContext";
 
 export default function Play(){
     const location = useLocation();
@@ -12,6 +13,7 @@ export default function Play(){
     const id = new URLSearchParams(location.search).get("id");
     const displayId = id ? id.replace(/-/g, " ") : null;
     const {currentUser,setcurrentUser}=useContext(AuthContext);
+    const {playSong,setPlaySong}=useContext(PlaySongContext);
     const navigate=useNavigate();
     useEffect(()=>{
         if(!currentUser){
@@ -91,8 +93,8 @@ export default function Play(){
 <div className="flex items-center gap-3 w-1/4">
 <img alt="Mini Art" className="size-10 rounded object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNZNtmqrTwWcdGCggCCAkCrzV7LeofIYJ0AIvLiMNHsaWochZNsY51WhRGzWS-Rz4CwGLh2Tshu0bhBqzhXF_dq67dbU5CubC5mkjMubPBy05MZIWP7T0h7QkB5xPOI0mjGqVcMCH_3pI3Y4MHt7c0BlBF4anbA1EB37MLU-eU1AZqpyKw-YPrlwAW1XXO2EaybQjNGG0RiUza4dqlR5eiFotjMgYR9_-j6drDtpfZjclJcLqtsDDLhLROksnmEhqdYyNVw9VnrHA"/>
 <div className="flex flex-col overflow-hidden">
-<span className="text-sm font-bold text-white truncate">Midnight City Echoes</span>
-<span className="text-xs text-slate-400 truncate">Neon Synthesis</span>
+<span className="text-sm font-bold text-white truncate">{playSong && playSong.track_name}</span>
+<span className="text-xs text-slate-400 truncate">{playSong && playSong.artist}</span>
 </div>
 </div>
 <div className="flex-1 flex items-center justify-center gap-6">

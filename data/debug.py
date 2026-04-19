@@ -60,18 +60,22 @@ mycursor = mydb.cursor()
 # where artistalbum.albumid=album.albumid and album.images not like 'https%'
 # and artistalbum.artistid=artist.artistid order by artist.popularity desc
 # '''
+# sql='''
+# select * from trackinalbum
+# '''
 sql='''
-select * from trackinalbum
+update track set image= %s where trackid = %s 
 '''
+
 mycursor.execute(sql)
 result=mycursor.fetchall()
 trackids=[]
 albumids=[]
 
 for it in tqdm(result):
-    trackids.append(it[0])
+    #trackids.append(it[0])
     albumids.append(it[1])
 pd.DataFrame({
-    'track_id':trackids,
+    # 'track_id':trackids,
     'album_id':albumids
-}).to_csv('trackinalbum_.csv',index=False)
+}).to_csv('album_.csv',index=False)
