@@ -45,11 +45,3 @@ def recommend_home(limit: int = 20):
             break
 
     return final
-
-
-# =========================
-# 🎵 RECOMMEND BY TRACK
-# =========================
-@app.get("/recommend")
-def recommend(track_id: str):
-    return model.recommend(track_id)
