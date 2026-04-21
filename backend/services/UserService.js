@@ -69,6 +69,7 @@ const updateUserHistory=async (data)=>{
     conn.release();
     return res;
   }).catch((err)=>{
+    console.log(err)
     console.log("Can't update user history. Please check again");
   })
   return result;

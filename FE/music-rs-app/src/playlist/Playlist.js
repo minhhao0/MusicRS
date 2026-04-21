@@ -72,7 +72,6 @@ export default function PlayList() {
         
         const result=await response.json()
         setplaySong(result[0])
-        console.log(result)
         setTracks(result)
 
       } catch(error){

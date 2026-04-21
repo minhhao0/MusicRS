@@ -1,131 +1,25 @@
-from fastapi import FastAPI,File,UploadFile
+from fastapi import FastAPI,HTTPException
 from fastapi.middleware.cors import  CORSMiddleware
 from pydantic import BaseModel
-import os
-from dotenv import  load_dotenv
-import mysql.connector
-import numpy as np
-from tqdm import tqdm
-load_dotenv()
-host=os.getenv('host')
-user=os.getenv('user')
-password=os.getenv('password')
-database=os.getenv('database')
-mydb = mysql.connector.connect(
-  host=host,
-  user=user,
-  password=password,
-  database=database
-)
+from sessionbase.sessionbase_recommender import get_recommend
+from collaborative_knowlege.script import recommend_artists
+from typing import List
 origins = [
     "http://localhost:3000",
 ]
-mycursor = mydb.cursor()
-def get_user_current_data(user_id,interval=10):
-   current_genre=[]
-   query='''select track.trackid,track.track_name,track.popularity,track.year,track.genre
-from track,history
-where track.trackid=history.item_id and type='track' and history.user_id= %s and datediff(now(),history.time)<= %s'''
-   val=(user_id,interval)
-   mycursor.execute(query, val)
-   tracks=mycursor.fetchall()
-   current_year=[]
-   current_artist=[]
-   current_artist_country=[]
-   for track in tracks:
-       val=(track[0],)
-       artist_query='''
-       select artist.artistid,artist.artist_name,artist.country,artist.popularity from track,artist,artisttrack where track.trackid= %s
-       and track.trackid=artisttrack.trackid and artist.artistid=artisttrack.artistid;
-       '''
-       mycursor.execute(artist_query,val)
-       artists=mycursor.fetchall()
-       for at in artists:
-         if at[1] not in current_artist:
-           current_artist.append(at[1])
-         if at[2] not in current_artist_country:
-           current_artist_country.append(at[2])
-       genre=track[4]
-       if genre not in current_genre:
-         current_genre.append(genre)
-       year=track[3]
-       if year not in current_year:
-         current_year.append(year)
-   return current_genre,current_year,current_artist,current_artist_country
-def get_playlist_detail(playlist_id):
-   playlist_genre=[]
-   playlist_artist=[]
-   playlist_artist_country=[]
-   playlist_year=[]
-   query='''
-   select track.trackid,track.track_name,track.popularity,track.year,track.genre,name from playlist,trackinplaylist,track
-where playlist.playlistid=trackinplaylist.playlistid and trackinplaylist.trackid=track.trackid and playlist.playlistid= %s;
-   '''
-   val=(playlist_id,)
-   mycursor.execute(query, val)
-   tracks = mycursor.fetchall()
-   for track in tracks:
-       val=(track[0],)
-       artist_query='''
-       select artist.artistid,artist.artist_name,artist.country,artist.popularity from track,artist,artisttrack where track.trackid= %s
-       and track.trackid=artisttrack.trackid and artist.artistid=artisttrack.artistid;
-       '''
-       mycursor.execute(artist_query,val)
-       artists=mycursor.fetchall()
-       for at in artists:
-         if at[1] not in playlist_artist:
-           playlist_artist.append(at[1])
-         if at[2] not in playlist_artist_country:
-           playlist_artist_country.append(at[2])
-       genre=track[4]
-       if genre not in playlist_genre:
-         playlist_genre.append(genre)
-       year=track[3]
-       if year not in playlist_year:
-         playlist_year.append(year)
-   return playlist_genre,playlist_year,playlist_artist,playlist_artist_country
-def cnt(i,d):
-  count=0
-  for item in i:
-    if item in d:
-      count+=1
-  return count/len(d)
-def calculate_playlist_score(current_genre, current_year, current_artist, current_artist_country,id):
-  playlist_genre, playlist_year, playlist_artist, playlist_artist_country = get_playlist_detail(id)
-  vec=[]
-  #genre score
-  vec.append(cnt(playlist_genre,current_genre))
-  #year score
-  vec.append(cnt(playlist_year,current_year))
-  #artist score
-  vec.append(cnt(playlist_artist,current_artist))
-  #country score
-  vec.append(cnt(playlist_artist_country,current_artist_country))
-  return np.linalg.norm(vec)
-def get_recommend(top_k,uid,interval):
-  playlist_ids=[i for i in range(16,1016)]
-  current_genre, current_year, current_artist, current_artist_country=get_user_current_data(uid,interval=interval)
-  scores=[]
-  for id in tqdm(playlist_ids):
-    score=calculate_playlist_score(current_genre, current_year, current_artist, current_artist_country,id)
-    scores.append({'id':id,'score':score})
-  score_sorted=sorted(scores,key=lambda x:x['score'],reverse=True)
-  score_sorted=score_sorted[:top_k]
-  ids=[i['id'] for i in score_sorted]
-  txt=', '.join(['%s'] * len(ids))
-  query=f'''
-  select * from playlist where playlistid in ({txt})
-  '''
-  mycursor.execute(query,ids)
-  result=mycursor.fetchall()
-  result=[{'id':it[0],'name':it[3],'total_track':it[4]} for it in result]
-  return result
-
 
 class UploadItem(BaseModel):
     user_id:int
     top_k : int
     interval:int
+class ArtistRecommend(BaseModel):
+    artist_id: str
+    artist_name: str | None = None
+    images: str | None = None
+    score: float
+class RecommendResponse(BaseModel):
+    uid: int
+    recommendations: List[ArtistRecommend]
 app=FastAPI()
 app.add_middleware(
     CORSMiddleware,
@@ -138,4 +32,46 @@ app.add_middleware(
 async def create_upload_file(item: UploadItem):
     response = get_recommend(item.top_k,item.user_id,item.interval)
     return response
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
+
+
+@app.get("/recommend/{uid}", response_model=RecommendResponse)
+def recommend(
+    uid: int,
+    top_k_users: int = 20,
+    top_k_cases: int = 20,
+    weight_case: float = 0.7,
+    weight_user: float = 0.3,
+):
+    """
+    Trả về danh sách artist được gợi ý cho user `uid`.
+
+    - **top_k_users**: số lượng user tương tự dùng để tính điểm (default 20)
+    - **top_k_cases**: số lượng case-based record dùng để tính điểm (default 20)
+    - **weight_case**: trọng số cho case-based score (default 0.7)
+    - **weight_user**: trọng số cho collaborative score (default 0.3)
+    """
+    # recs = recommend_artists(
+    #     uid=uid,
+    #     top_k_users=top_k_users,
+    #     top_k_cases=top_k_cases,
+    #     weight_case=weight_case,
+    #     weight_user=weight_user,
+    # )
+    # return RecommendResponse(uid=uid, recommendations=[ArtistRecommend(**r) for r in recs])
+    try:
+        recs = recommend_artists(
+            uid=uid,
+            top_k_users=top_k_users,
+            top_k_cases=top_k_cases,
+            weight_case=weight_case,
+            weight_user=weight_user,
+        )
+        return RecommendResponse(uid=uid, recommendations=[ArtistRecommend(**r) for r in recs])
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Internal error: {e}")
 

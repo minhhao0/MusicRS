@@ -160,9 +160,10 @@ const del_favourite = async (req, res)=>{
 const update_user_history_method=async (req,res)=>{
     try{
         const data=req.body;
+        console.log(data)
         const result=await updateUserHistory(data);
         if(result){
-            res.status(200).send("update user history successfully.");
+            res.status(200).send({"msg":"update user history successfully."});
         } else{
             res.status(400).send("An error occur")
         }
@@ -174,5 +175,6 @@ export {
     login_method,signup_method,
     get_user_history,get_user_favorite_artist,get_user_favorite_track,
     add_favorite_album,add_favorite_artist, del_favourite,
-    add_favorite_track, update_user_method, get_u_favourite_genres,update_user_history_method
+    add_favorite_track, update_user_method, get_u_favourite_genres
+    ,update_user_history_method
 }

@@ -15,7 +15,7 @@ mydb = mysql.connector.connect(
   database=database
 )
 mycursor = mydb.cursor()
-def get_user_current_data(user_id,interval=3):
+def get_user_current_data(user_id,interval=10):
    current_genre=[]
    query='''select track.trackid,track.track_name,track.popularity,track.year,track.genre
 from track,history
@@ -96,9 +96,9 @@ def calculate_playlist_score(current_genre, current_year, current_artist, curren
   #country score
   vec.append(cnt(playlist_artist_country,current_artist_country))
   return np.linalg.norm(vec)
-def get_recommend(top_k,uid):
+def get_recommend(top_k,uid,interval):
   playlist_ids=[i for i in range(16,1016)]
-  current_genre, current_year, current_artist, current_artist_country=get_user_current_data(uid)
+  current_genre, current_year, current_artist, current_artist_country=get_user_current_data(uid,interval=interval)
   scores=[]
   for id in tqdm(playlist_ids):
     score=calculate_playlist_score(current_genre, current_year, current_artist, current_artist_country,id)
