@@ -19,7 +19,7 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 def update_track_image():
     sql='''update track set image= %s where trackid = %s '''
-    track_images=pd.read_csv('track_image_.csv')
+    track_images=pd.read_csv('track_image(1).csv')
     track_images=track_images.dropna()
     for index,row in tqdm(track_images.iterrows()):
         val=(row['image'],row['id'])
