@@ -1,4 +1,4 @@
-import {getTotalTrack,getTrack,getTrackHomeRecommend,getTrackHomeTrend, getTotalGenre, getGenre} from "../services/TrackService.js";
+import {getTotalTrack,getTrack,getTrackHomeRecommend,getTrackHomeTrend, getTotalGenre, getGenre, getTrackByArtist, getTrackByAlbum, getTrackByPlayList} from "../services/TrackService.js";
 
 const get_genre_method= async(req,res)=>{
     try{
@@ -53,6 +53,48 @@ const track_home_recommend_method = async (res) => {
         res.status(501).send('Server error')
     }
 };
+const get_track_by_artist_method=async (req,res)=>{
+    try{
+        const data=req.body;
+        const tracks=await getTrackByArtist(data);
+        if(tracks){
+            res.status(200).send(tracks)
+        } else{
+            res.status(404).send("Not Found")
+        }
+    } catch(err){
+        res.status(501).send('Server error')
+    }
+}
+const get_track_by_album_method=async (req,res)=>{
+    try{
+        const data=req.body;
+        const tracks=await getTrackByAlbum(data);
+        if (tracks){
+            res.status(200).send(tracks);
+        } else{
+            res.status(404).send('Not Found');
+        }
+    }catch(err){
+        res.status(501).send("Server Error");
+    }
+}
+const get_track_by_playlist_method=async (req,res)=>{
+    try{
+        const data=req.body;
+        const tracks=await getTrackByPlayList(data);
+         if (tracks){
+            res.status(200).send(tracks);
+        } else{
+            res.status(404).send('Not Found');
+        }
+    }catch(err){
+        res.status(501).send("Server Error");
+    }
+}
 export {
-    track_home_trend_method, track_home_recommend_method, get_genre_method, get_limit_genre_method
+    track_home_trend_method, track_home_recommend_method,
+     get_genre_method, get_limit_genre_method,
+     get_track_by_album_method,get_track_by_artist_method,
+     get_track_by_playlist_method
 }

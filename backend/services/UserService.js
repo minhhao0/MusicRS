@@ -26,7 +26,7 @@ const getUser =async (data)=>{
       console.log("An error occur when connect to mysql server"+ err);
     })
     const tmp=result[0][0];
-    const user= new User(tmp['userid'],tmp['username'],tmp['email'],tmp['password']);
+    const user= new User(tmp['userid'],tmp['username'],tmp['favorite_genre'],tmp['email'],tmp['password']);
     return user;
 }
 const createUser= async (data)=>{

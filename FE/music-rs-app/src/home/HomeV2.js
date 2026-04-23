@@ -49,7 +49,7 @@ export default function HomeV2() {
         };
         const fetchDataTHR = async () => {
             try {
-                const response = await fetch('http://localhost:8080/track/track-home-trend/5');
+                const response = await fetch('http://127.0.0.1:8000/recommend-content-base/home');
                 const result = await response.json();
                 setDataTHR(result);
             } catch (error) {
@@ -172,7 +172,6 @@ export default function HomeV2() {
                                                }
                                                update_User_history(data)
                                                setplaySong(it)
-
                                                navigate('/play')
                                             }}>
                                             <span className="material-symbols-outlined fill-1" >play_arrow</span>
@@ -229,11 +228,27 @@ export default function HomeV2() {
                             <Link className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" to="/show_all?section=for_you">Show all</Link>
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                            {dataTrackHomeRecommend && dataTrackHomeRecommend.map((it) => (
+                            {dataTrackHomeRecommend && dataTrackHomeRecommend.slice(0,5).map((it) => (
                                 <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
                                     <div className="relative aspect-square mb-4 shadow-xl">
-                                        <img className="rounded-lg w-full h-full object-cover" data-alt="Album cover" src={it.image ? it.image : default_image} />
-                                        <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="song" data-id="save-your-tears" aria-label="Play song">
+                                        <img className="rounded-lg w-full h-full object-cover" 
+                                        data-alt="Album cover" src={it.image ? it.image : default_image} />
+                                        <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" 
+                                        data-nav-type="song" 
+                                        data-id="save-your-tears"
+                                         aria-label="Play song"
+                                          onClick={(e)=>{
+                                               const data={
+                                               "user_id":currentUser.user_id,
+                                                "item_id":it.trackid,
+                                                "type":'track',
+                                                "time":`${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`
+                                               }
+                                               update_User_history(data)
+                                               setplaySong(it)
+                                               navigate('/play')
+                                            }}
+                                         >
                                             <span className="material-symbols-outlined fill-1">play_arrow</span>
                                         </button>
                                         <AddSongButton song={it} setSong={setSong} setisOpen={setisOpen} />
@@ -255,7 +270,19 @@ export default function HomeV2() {
                                 <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer text-center">
                                     <div className="relative aspect-square mb-4 shadow-xl mx-auto w-full">
                                         <img className="rounded-full w-full h-full object-cover" data-alt="Artist portrait" src={it.images} />
-                                        <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="artist" data-id="justin-bieber" aria-label="Open artist">
+                                        <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" 
+                                        data-nav-type="artist" 
+                                        data-id="justin-bieber" 
+                                        aria-label="Open artist"
+                                        onClick={(e)=>{
+                                            const data={
+                                                'item':it,
+                                                'type':'artist',
+                                            }
+                                            setSelectedPlayItem(data)
+                                            navigate("/play")
+                                        }}
+                                        >
                                             <span className="material-symbols-outlined fill-1">play_arrow</span>
                                         </button>
                                     </div>
@@ -277,7 +304,19 @@ export default function HomeV2() {
                                 <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
                                     <div className="relative aspect-square mb-4 shadow-xl">
                                         <img className="rounded-lg w-full h-full object-cover" data-alt="Album cover" src={it.images ? it.images : default_image} />
-                                        <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="album" data-id="after-hours" aria-label="Open album">
+                                        <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" 
+                                        data-nav-type="album" 
+                                        data-id="after-hours" 
+                                        aria-label="Open album"
+                                        onClick={(e)=>{
+                                            const data={
+                                                'item':it,
+                                                'type':'album',
+                                            }
+                                            setSelectedPlayItem(data)
+                                            navigate("/play")
+                                        }}
+                                        >
                                             <span className="material-symbols-outlined fill-1">play_arrow</span>
                                         </button>
                                     </div>
@@ -298,12 +337,22 @@ export default function HomeV2() {
                                 <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
                                     <div className="relative aspect-square mb-4 shadow-xl">
                                         <img className="rounded-lg w-full h-full object-cover" data-alt="Recommendation cover" src={default_image} />
-                                        <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" data-nav-type="album" data-id="chill-vibes" aria-label="Open playlist">
+                                        <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" 
+                                        data-nav-type="album" data-id="chill-vibes" aria-label="Open playlist"
+                                        onClick={(e)=>{
+                                            const data={
+                                                'item':it,
+                                                'type':'playlist',
+                                            }
+                                            setSelectedPlayItem(data)
+                                            navigate("/play")
+                                        }}
+                                        >
                                             <span className="material-symbols-outlined fill-1" >play_arrow</span>
                                         </button>
                                         <AddSongButton songId="chill-vibes" />
                                     </div>
-                                    <h3 className="font-bold truncate">Chill Vibes</h3>
+                                    <h3 className="font-bold truncate">{it.name}</h3>
                                     <p className="text-sm text-slate-500 dark:text-slate-400 truncate">Playlist</p>
                                 </div>
                             ))}

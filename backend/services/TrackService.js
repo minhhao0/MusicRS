@@ -117,7 +117,78 @@ ORDER BY genre ASC limit 10;`
   })
   return result[0]
 }
-
+const getTrackByArtist=async(data)=>{
+  const {artist_id}=data;
+  const query=`
+  select track.trackid,track.track_name,track.image,track.duration_ms,A.t_name
+from track join 
+(select artisttrack.trackid,group_concat(distinct artist.artist_name order by artist.artist_name separator ', ') as t_name
+ from artist join artisttrack on artisttrack.artistid=artist.artistid
+ where artist.artistid= ?
+ group by artisttrack.trackid) as A on 
+ track.trackid=A.trackid
+ order by popularity desc;
+  `
+  const result=await connection.getConnection()
+  .then((conn)=>{
+    const res=conn.query(query,[artist_id]);
+    conn.release();
+    return res;
+  }).catch((err)=>{
+    console.log("An error occur when connect to my sql",err)
+  })
+  return result[0]
+}
+const getTrackByAlbum=async(data)=>{
+  const {album_id}=data;
+  const query=`
+   SELECT 
+    t.trackid,
+    t.track_name,
+    t.image,
+    t.duration_ms,
+    GROUP_CONCAT(DISTINCT ar.artist_name ORDER BY ar.artist_name SEPARATOR ', ') AS t_name
+FROM track t
+INNER JOIN trackinalbum ta ON t.trackid = ta.trackid
+INNER JOIN artisttrack at ON t.trackid = at.trackid
+INNER JOIN artist ar ON at.artistid = ar.artistid
+WHERE ta.albumid = ?
+GROUP BY t.trackid
+ORDER BY t.popularity DESC;
+  `
+  const result=await connection.getConnection().then((conn)=>{
+    const res=conn.query(query,[album_id]);
+    conn.release();
+    return res;
+  }).catch((err)=>{
+    console.log("An error occur when connect to mysql server",err);
+  })
+  return result[0];
+}
+const getTrackByPlayList= async(data)=>{
+  const {playlist_id}=data;
+  const query=`
+  select t.trackid,t.track_name,t.image,t.duration_ms, GROUP_CONCAT(DISTINCT ar.artist_name ORDER BY ar.artist_name SEPARATOR ', ') AS t_name
+from track t 
+inner join trackinplaylist tp on tp.trackid=t.trackid
+inner join artisttrack at on at.trackid=t.trackid
+inner join artist ar on ar.artistid=at.artistid
+where tp.playlistid= ?
+group by t.trackid
+order by t.popularity
+desc
+  `
+  const result=await connection.getConnection().then((conn)=>{
+    const res=conn.query(query,[playlist_id]);
+    conn.release();
+    return res;
+  }).catch((err)=>{
+    console.log("An error occur when connect to mysql server",error)
+  })
+  return result[0]
+}
 export {
-  getTotalTrack,getTrack, getTrackHomeTrend, getTrackHomeRecommend, getTotalGenre, getGenre
+  getTotalTrack,getTrack, getTrackHomeTrend,
+   getTrackHomeRecommend, getTotalGenre, 
+   getGenre,getTrackByArtist,getTrackByAlbum,getTrackByPlayList
 }

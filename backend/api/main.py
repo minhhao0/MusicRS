@@ -1,9 +1,10 @@
 from fastapi import FastAPI,HTTPException
 from fastapi.middleware.cors import  CORSMiddleware
 from pydantic import BaseModel
-from sessionbase.sessionbase_recommender import get_recommend
+from sessionbase.sessionbase_recommender import get_recommend,buil_all_playlist
 from collaborative_knowlege.script import recommend_artists
 from typing import List
+from content_base.recommender import Recommender
 origins = [
     "http://localhost:3000",
 ]
@@ -28,9 +29,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+print("⏳ Loading model...")
+model = Recommender()
+print("Load Playlist")
+playlist_ids = [i for i in range(16, 1016)]
+all_playlist=buil_all_playlist(playlist_ids)
+print("✅ Model ready!")
 @app.post('/recommend/playlist')
 async def create_upload_file(item: UploadItem):
-    response = get_recommend(item.top_k,item.user_id,item.interval)
+    response = get_recommend(item.top_k,item.user_id,all_playlist,item.interval)
     return response
 @app.get("/health")
 def health_check():
@@ -75,3 +82,31 @@ def recommend(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal error: {e}")
 
+
+# =========================
+# 🎵 HOME RECOMMEND
+# =========================
+@app.get("/recommend-content-base/home")
+def recommend_home(limit: int = 20):
+    # if model.uh_df is not None:
+    #     seeds=model.uh_df['track_id'].tolist()
+    seeds = model.df.sample(3)["track_id"].tolist()
+
+    results = []
+
+    for seed in seeds:
+        results.extend(model.recommend(seed, top_k=10))
+
+    # remove duplicate
+    seen = set()
+    final = []
+
+    for item in results:
+        if item["track_id"] not in seen:
+            seen.add(item["track_id"])
+            final.append(item)
+
+        if len(final) >= limit:
+            break
+
+    return final

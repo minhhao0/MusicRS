@@ -32,7 +32,12 @@ export default function Login() {
             setcurrentUser(result);
             if(response.ok) {
                  alert(`Welcomeback ${result.user_name}`);
-                navigate('/');
+                if(result.favorite_genre)
+                    {
+                        navigate('/');
+                    } else {
+                        navigate('/ask_user')
+                    }
             }  
             else
                 alert(`Sever responses with status: ${response.status}`)

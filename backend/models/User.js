@@ -1,9 +1,9 @@
 class User{
-    constructor(user_id,user_name,user_email,user_password){
+    constructor(user_id,user_name,favorite_genre,user_email,user_password){
         this.user_id=user_id;
         this.user_name=user_name;
         this.user_password=user_password;
-        this.favorite_genre='';
+        this.favorite_genre=favorite_genre;
         this.user_email=user_email;
     }
     get_user_name(){
