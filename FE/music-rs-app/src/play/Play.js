@@ -26,7 +26,7 @@ export default function Play() {
         }
         const fetchArtistSong = async () => {
             const data = {
-                'artist_id': selectedPlayItem.item.artistid
+                'artist_id': selectedPlayItem.item.artistid ? selectedPlayItem.item.artistid : selectedPlayItem.item.artist_id
             }
             const fetchOption = {
                 method: 'post',
@@ -75,12 +75,10 @@ export default function Play() {
             } catch (error) {
                 console.error('Error fetching data', error);
             }
-
-
         }
         const fetchPlaylistSong = async () => {
             const data = {
-                'playlist_id': selectedPlayItem.item.playlistid
+                'playlist_id': selectedPlayItem.item.id
             }
             const fetchOption = {
                 method: 'post',
@@ -173,7 +171,7 @@ export default function Play() {
                                             {tracks && tracks.slice(current_index, current_index + 2).map((it) => (
 
                                                 <div className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 transition-colors group">
-                                                    <img alt="Queue Art" className="size-12 rounded object-cover" src={it.image} />
+                                                    <img alt="Queue Art" className="size-12 rounded object-cover" src={it.image ? it.image :defaultImage} />
                                                     <div className="flex-1 min-w-0">
                                                         <p className="text-sm font-semibold truncate text-slate-100">{it.track_name}</p>
                                                         <p className="text-xs text-slate-400 truncate">{it.t_name}</p>

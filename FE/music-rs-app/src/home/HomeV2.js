@@ -49,7 +49,7 @@ export default function HomeV2() {
         };
         const fetchDataTHR = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:8000/recommend-content-base/home');
+                const response = await fetch('http://127.0.0.1:8000/recommend-content-base/home?limit=20&user_id=6');
                 const result = await response.json();
                 setDataTHR(result);
             } catch (error) {
@@ -344,7 +344,7 @@ export default function HomeV2() {
                                                 'item':it,
                                                 'type':'playlist',
                                             }
-                                            setSelectedPlayItem(data)
+                                            setSelectedPlayItem(data);
                                             navigate("/play")
                                         }}
                                         >

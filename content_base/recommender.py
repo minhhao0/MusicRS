@@ -44,20 +44,19 @@ SELECT
     t.valence,
     t.tempo,
     t.duration_ms,
-    t.year
+    t.year,t.image
 
 FROM Track t
 LEFT JOIN artisttrack at ON t.trackid = at.trackid
 LEFT JOIN artist ar ON at.artistid = ar.artistid
 """
-
         self.df = pd.read_sql(query, self.engine)
-
         print("Loaded:", len(self.df), "tracks")
 
         # =========================
         # CLEAN DATA
         # =========================
+
         self.df = self.df.drop_duplicates(subset=["track_id"]).copy()
 
         self.df["artist_name"] = self.df["artist_name"].fillna("Unknown")
@@ -115,7 +114,9 @@ LEFT JOIN artist ar ON at.artistid = ar.artistid
             results.append({
                 "track_id": row["track_id"],
                 "track_name": row["track_name"],
-                "artist_name": row["artist_name"]
+                'duration_ms':row['duration_ms'],
+                "t_name": row["artist_name"],
+                "image":row['image']
             })
 
             if len(results) >= top_k:

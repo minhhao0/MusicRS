@@ -19,7 +19,7 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 def update_track_image():
     sql='''update track set image= %s where trackid = %s '''
-    track_images=pd.read_csv('track_image(1).csv')
+    track_images=pd.read_csv('track_image__.csv')
     track_images=track_images.dropna()
     for index,row in tqdm(track_images.iterrows()):
         val=(row['image'],row['id'])
@@ -62,4 +62,6 @@ def update_album_image():
                         print(f'err: {data['id']}')
                         continue
 if __name__=="__main__":
-    update_track_image()
+    #update_track_image()
+    #print(len(os.listdir('D:\\albums\\content\\data')))
+    update_album_image()

@@ -23,7 +23,7 @@ print("✅ Model ready!")
 # =========================
 # 🎵 HOME RECOMMEND
 # =========================
-@app.get("/recommend/home")
+@app.get("/recommend-content-base/home")
 def recommend_home(limit: int = 20):
     seeds = model.df.sample(3)["track_id"].tolist()
 

@@ -4,6 +4,10 @@ from pydantic import BaseModel
 from sessionbase.sessionbase_recommender import get_recommend,buil_all_playlist
 from collaborative_knowlege.script import recommend_artists
 from typing import List
+from sqlalchemy import create_engine
+from dotenv import load_dotenv
+import os
+import pandas as pd
 from content_base.recommender import Recommender
 origins = [
     "http://localhost:3000",
@@ -29,6 +33,13 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+load_dotenv()
+DB_HOST = os.getenv("host")
+DB_USER = os.getenv("user")
+DB_PASS = os.getenv("password")
+DB_NAME = os.getenv("database")
+engine = create_engine(
+    f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:3306/{DB_NAME}")
 print("⏳ Loading model...")
 model = Recommender()
 print("Load Playlist")
@@ -87,9 +98,34 @@ def recommend(
 # 🎵 HOME RECOMMEND
 # =========================
 @app.get("/recommend-content-base/home")
-def recommend_home(limit: int = 20):
-    # if model.uh_df is not None:
-    #     seeds=model.uh_df['track_id'].tolist()
+def recommend_home(limit: int = 20,user_id:int=None):
+    uh_query = f'''
+            SELECT
+        t.trackid AS track_id,
+        t.track_name,
+        ar.artist_name,
+        t.genre,
+
+        t.danceability,
+        t.energy,
+        t.loudness,
+        t.speechiness,
+        t.acousticness,
+        t.instrumentalness,
+        t.liveness,
+        t.valence,
+        t.tempo,
+        t.duration_ms,
+        t.year,t.image
+    FROM Track t
+    LEFT JOIN artisttrack at ON t.trackid = at.trackid
+    LEFT JOIN artist ar ON at.artistid = ar.artistid
+    INNER JOIN
+    (select * from history where user_id={user_id} )  A on A.item_id=t.trackid
+    order by datediff(now(),A.time) asc;
+    '''
+    uh_df=pd.read_sql(uh_query, engine)
+    uh_df = uh_df.drop_duplicates(subset=["track_id"]).copy()
     seeds = model.df.sample(3)["track_id"].tolist()
 
     results = []
