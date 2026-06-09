@@ -557,7 +557,7 @@ const mergedArtists = useMemo(() => {
                   'user_password': '',
                   'favorite_genre': [...selectedGenres].join(', ')
                 }
-                // submit(data)
+                submit(data)
                 submitA()
                 submitT()
                 // console.log("aaaaaaaaaaaaaaaaaaa", data)
