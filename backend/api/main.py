@@ -2,6 +2,7 @@ from fastapi import FastAPI,HTTPException
 from fastapi.middleware.cors import  CORSMiddleware
 from pydantic import BaseModel
 from sessionbase.sessionbase_recommender import get_recommend,buil_all_playlist
+from content_base.latentspacerecommender import LatentSpaceRecommender
 from collaborative_knowlege.script import recommend_artists
 from typing import List
 from sqlalchemy import create_engine
@@ -43,6 +44,7 @@ engine = create_engine(
 print("⏳ Loading model...")
 model = Recommender()
 print("Load Playlist")
+lt_model=LatentSpaceRecommender('../../data/tracks.csv')
 playlist_ids = [i for i in range(16, 1016)]
 all_playlist=buil_all_playlist(playlist_ids)
 print("✅ Model ready!")
@@ -133,6 +135,51 @@ def recommend_home(limit: int = 20,user_id:int=None):
     for seed in seeds:
         results.extend(model.recommend(seed, top_k=10))
 
+    # remove duplicate
+    seen = set()
+    final = []
+
+    for item in results:
+        if item["track_id"] not in seen:
+            seen.add(item["track_id"])
+            final.append(item)
+
+        if len(final) >= limit:
+            break
+
+    return final
+@app.get("/recommend-content-base/home")
+def recommend_home(limit: int = 20,user_id:int=None):
+    uh_query = f'''
+            SELECT
+        t.trackid AS track_id,
+        t.track_name,
+        ar.artist_name,
+        t.genre,
+        t.danceability,
+        t.energy,
+        t.loudness,
+        t.speechiness,
+        t.acousticness,
+        t.instrumentalness,
+        t.liveness,
+        t.valence,
+        t.tempo,
+        t.duration_ms,
+        t.year,t.image
+    FROM Track t
+    LEFT JOIN artisttrack at ON t.trackid = at.trackid
+    LEFT JOIN artist ar ON at.artistid = ar.artistid
+    INNER JOIN
+    (select * from history where user_id={user_id} )  A on A.item_id=t.trackid
+    order by datediff(now(),A.time) asc;
+    '''
+    uh_df=pd.read_sql(uh_query, engine)
+    uh_df = uh_df.drop_duplicates(subset=["track_id"]).copy()
+    seeds =list(uh_df['track_id'])
+    results = []
+    for seed in seeds:
+        results.extend(model.recommend(seed, top_k=10))
     # remove duplicate
     seen = set()
     final = []
