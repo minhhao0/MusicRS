@@ -1,15 +1,20 @@
-from fastapi import FastAPI,HTTPException
-from fastapi.middleware.cors import  CORSMiddleware
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sessionbase.sessionbase_recommender import get_recommend,buil_all_playlist
 from content_base.latentspacerecommender import LatentSpaceRecommender
+from sessionbase.sessionbase_recommender import get_recommend, buil_all_playlist
 from collaborative_knowlege.script import recommend_artists
 from typing import List
 from sqlalchemy import create_engine
+from sqlalchemy.engine import URL
 from dotenv import load_dotenv
 import os
 import pandas as pd
 from content_base.recommender import Recommender
+
+# Session-based recommendation (SASRec)
+from session_base.sasrec.router import router as sasrec_router
 origins = [
     "http://localhost:3000",
 ]
@@ -26,7 +31,11 @@ class ArtistRecommend(BaseModel):
 class RecommendResponse(BaseModel):
     uid: int
     recommendations: List[ArtistRecommend]
-app=FastAPI()
+app = FastAPI(
+    title="MusicRS API",
+    description="Music Recommendation System API",
+    version="1.0.0",
+)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -34,13 +43,22 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include SASRec session-based router
+app.include_router(sasrec_router)
 load_dotenv()
 DB_HOST = os.getenv("host")
 DB_USER = os.getenv("user")
 DB_PASS = os.getenv("password")
 DB_NAME = os.getenv("database")
-engine = create_engine(
-    f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:3306/{DB_NAME}")
+engine = create_engine(URL.create(
+    drivername="mysql+pymysql",
+    username=DB_USER,
+    password=DB_PASS,
+    host=DB_HOST,
+    port=3306,
+    database=DB_NAME,
+))
 print("⏳ Loading model...")
 model = Recommender()
 print("Load Playlist")
