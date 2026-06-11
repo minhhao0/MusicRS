@@ -128,7 +128,7 @@ def recommend_home(limit: int = 20,user_id:int=None):
     '''
     uh_df=pd.read_sql(uh_query, engine)
     uh_df = uh_df.drop_duplicates(subset=["track_id"]).copy()
-    seeds = model.df.sample(3)["track_id"].tolist()
+    seeds = uh_df["track_id"].tolist()
 
     results = []
 

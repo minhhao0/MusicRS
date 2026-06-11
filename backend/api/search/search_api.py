@@ -21,17 +21,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Cấu hình Database MySQL của bạn
-DB_CONFIG = {
-    "host": "localhost",
-    "user": "root",
-    "password": "01022004",
-    "database": "musicsystem",
-    "port": 3306, 
-    "charset": "utf8mb4",
-    "cursorclass": pymysql.cursors.DictCursor
-}
-
 # Link ảnh giả lập đĩa nhạc đĩa than (Vinyl) cực nghệ thuật để thay thế khi DB thiếu ảnh
 DEFAULT_MOCK_IMAGE = "https://images.unsplash.com/photo-1539628399213-d6aa89c93074?w=150&auto=format&fit=crop&q=60"
 
