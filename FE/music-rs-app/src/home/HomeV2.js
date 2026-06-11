@@ -20,6 +20,7 @@ export default function HomeV2() {
     const {selectedPlayItem,setSelectedPlayItem}=useContext(SelectedPlayItemContext)
     const {playSong,setplaySong}=useContext(PlaySongContext)
     const [isOpen,setisOpen]=useState(false)
+    const [loading, setLoading] = useState(false);
     const [song,setSong]=useState()
     const navigate = useNavigate();
     const default_image="https://lh3.googleusercontent.com/aida-public/AB6AXuCw4oZwtGKxRHRrk99OCvAZIqla4Bb5yLqxsQTmbF2nlocrXKrmwzVpUXo_8csF-rVF6i2mpOx3RwtPCV5Bu_eY9W_limRvRhPR1HCcmqB-rzsx2WVuSyabrRjfMRnB10-xZ3UbnEhYYMcpHfjJeBF6kqu_VOqxvb20ZcCXJ0POYaL9Jyknst97GtIe6ztd8dBl2C5cGYOouN7YeVjyFwoem9YSVDvoBwR4aLo6s8bBGYC8Qxn6Hli5TAwO5USQshkq3cu4y1_mZJo";
@@ -56,14 +57,52 @@ export default function HomeV2() {
                 console.error('Error fetching data:', error);
             }
         };
+
+        const requestData = {
+            "history_track_ids": [
+                "7EwrZIIzEEsht1Sb8K38fm",
+                "4hcQI4HMvJmlMbpFOi0Wtv"
+            ],
+            "top_k": 10
+        };
+
+        // const fetchDataAHR = async () => {
+        //     try {
+        //         const response = await fetch(`http://127.0.0.1:8000/recommend/${currentUser.user_id}?top_k_users=20&top_k_cases=20&weight_case=0.7&weight_user=0.3`);
+        //         const result = await response.json();
+        //         // console.log("-----------------------",result["recommendations"])
+        //         setDataAHR(result["recommendations"].slice(0,5));
+        //     } catch (error) {
+        //         console.error('Error fetching data:', error);
+        //     }
+        // };
         const fetchDataAHR = async () => {
+            setLoading(true);
             try {
-                const response = await fetch(`http://127.0.0.1:8000/recommend/${currentUser.user_id}?top_k_users=20&top_k_cases=20&weight_case=0.7&weight_user=0.3`);
+                // Thay đổi URL và PORT chính xác với nơi bạn chạy uvicorn (mặc định là localhost:8000)
+                const response = await fetch('http://localhost:8000/recommend', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
                 const result = await response.json();
-                // console.log("-----------------------",result["recommendations"])
-                setDataAHR(result["recommendations"].slice(0,5));
+                
+                // Theo cấu trúc RecommendResponse: kết quả trả về nằm trong key 'recommendations'
+                if (result.status === "success") {
+                    console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                    setDataAHR(result['recommendations'].slice(0,5));
+                }
             } catch (error) {
                 console.error('Error fetching data:', error);
+            } finally {
+                setLoading(false);
             }
         };
         const fetchDataAR = async () => {
@@ -222,7 +261,7 @@ export default function HomeV2() {
                         </div>
                     </section>
                     {/* Bài hát bạn có thể thích */}
-                    <section>
+                    {/* <section>
                         <div className="flex items-center justify-between mb-6">
                             <h2 className="text-2xl font-bold tracking-tight">Bài hát bạn có thể thích</h2>
                             <Link className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" to="/show_all?section=for_you">Show all</Link>
@@ -258,11 +297,11 @@ export default function HomeV2() {
                                 </div>
                             ))}
                         </div>
-                    </section>
+                    </section> */}
                     {/* Nghệ sĩ bạn có thể thích */}
                     <section>
                         <div className="flex items-center justify-between mb-6">
-                            <h2 className="text-2xl font-bold tracking-tight">Nghệ sỹ bạn có thể thích</h2>
+                            <h2 className="text-2xl font-bold tracking-tight">Gợi ý bài hát bằng two-tower</h2>
                             <Link className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" to="/show_all?section=artists_suggested">Show all</Link>
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
@@ -286,7 +325,7 @@ export default function HomeV2() {
                                             <span className="material-symbols-outlined fill-1">play_arrow</span>
                                         </button>
                                     </div>
-                                    <h3 className="font-bold truncate">{it.artist_name}</h3>
+                                    <h3 className="font-bold truncate">{it.track_title}</h3>
                                     <p className="text-sm text-slate-500 dark:text-slate-400">Artist</p>
                                 </div>
                             ))}
