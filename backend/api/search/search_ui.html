@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Hybrid Search</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #181818;
+            --card-hover: #282828;
+            --text-main: #FFFFFF;
+            --text-muted: #B3B3B3;
+            --spotify-green: #1DB954;
+            --input-bg: #2A2A2A;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--spotify-green);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Vùng chứa các tab bộ lọc */
+        .tabs-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .tab-btn {
+            background-color: #232323;
+            color: var(--text-main);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            background-color: #333333;
+        }
+
+        .tab-btn.active {
+            background-color: var(--spotify-green);
+            color: #000000;
+        }
+
+        /* THANH TÌM KIẾM CÓ NÚT BẤM (SEARCH BOX NÂNG CẤP) */
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background-color: var(--input-bg);
+            border-radius: 30px;
+            padding: 5px 5px 5px 20px;
+            margin-bottom: 15px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .search-wrapper:focus-within {
+            border-color: var(--spotify-green);
+            background-color: #333333;
+        }
+
+        .search-input {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            padding: 10px 0;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: #757575;
+        }
+
+        /* Nút bấm tìm kiếm phong cách Spotify Premium */
+        .search-submit-btn {
+            background-color: var(--spotify-green);
+            color: #000000;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-submit-btn:hover {
+            background-color: #1ed760;
+            transform: scale(1.03);
+        }
+
+        .search-submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Trạng thái Log hệ thống thông minh */
+        .status-message {
+            text-align: center;
+            font-style: italic;
+            color: var(--spotify-green);
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            min-height: 20px;
+            display: none;
+        }
+
+        /* Vùng danh sách kết quả */
+        .results-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .song-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: background-color 0.3s ease;
+        }
+
+        .song-card:hover {
+            background-color: var(--card-hover);
+        }
+
+        .song-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .song-cover {
+            width: 55px;
+            height: 55px;
+            border-radius: 4px;
+            object-fit: cover;
+            background-color: #282828;
+        }
+
+        .song-info {
+            flex: 1;
+        }
+
+        .song-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .song-artist {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .song-duration {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Đoạn trích dẫn Lyric Snippet */
+        .lyric-snippet-box {
+            background-color: #1f1f1f;
+            border-left: 4px solid var(--spotify-green);
+            padding: 12px 15px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #e0e0e0;
+        }
+
+        .lyric-tag {
+            font-weight: 700;
+            color: var(--spotify-green);
+            margin-right: 5px;
+        }
+
+        .no-result {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 40px;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Music Hybrid Search</h1>
+            <p>Information Retrieval| Kiến trúc Lai: Từ khóa & Học sâu Ngữ nghĩa Transformer</p>
+        </div>
+
+        <div class="tabs-container">
+            <button class="tab-btn active" data-type="all">
+                <i class="fa-solid fa-layer-group"></i> Tìm tất cả
+            </button>
+            <button class="tab-btn" data-type="name">
+                <i class="fa-solid fa-music"></i> Tìm theo tên bài / Ca sĩ
+            </button>
+            <button class="tab-btn" data-type="lyric">
+                <i class="fa-solid fa-file-lines"></i> Tìm theo lời bài hát
+            </button>
+        </div>
+
+        <div class="search-wrapper">
+            <input type="text" id="searchInput" class="search-input" placeholder="Nhập tên bài hát, nghệ sĩ hoặc câu lời nhạc bạn nhớ được...">
+            <button id="searchBtn" class="search-submit-btn">
+                <i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm
+            </button>
+        </div>
+
+        <div id="statusMessage" class="status-message"></div>
+
+        <div id="resultsList" class="results-list"></div>
+    </div>
+
+    <script>
+        let currentSearchType = "all";
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const resultsList = document.getElementById('resultsList');
+        const statusMessage = document.getElementById('statusMessage');
+        const tabButtons = document.querySelectorAll('.tab-btn');
+
+        // 1. Logic xử lý đổi Tab bộ lọc nhanh
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                currentSearchType = button.getAttribute('data-type');
+                
+                // Nếu đang có chữ trong khung tìm kiếm, nhấn đổi tab sẽ tự thực hiện tìm kiếm lại luôn cho tiện
+                if (searchInput.value.trim() !== "") {
+                    executeSearch();
+                }
+            });
+        });
+
+        // 2. Kích hoạt tìm kiếm khi click chuột vào NÚT BẤM TÌM KIẾM
+        searchBtn.addEventListener('click', () => {
+            executeSearch();
+        });
+
+        // 3. Kích hoạt tìm kiếm khi nhấn phím ENTER ngay trong ô nhập liệu
+        searchInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                executeSearch();
+            }
+        });
+
+        // Hàm lõi xử lý gọi API sang Backend FastAPI
+        async function executeSearch() {
+            const queryText = searchInput.value.trim();
+            if (!queryText) {
+                resultsList.innerHTML = "";
+                statusMessage.style.display = "none";
+                return;
+            }
+
+            // Hiển thị thông báo động thông minh chuẩn hóa bản chất thuật toán
+            statusMessage.style.display = "block";
+            if (currentSearchType === "name") {
+                statusMessage.innerText = "⚡ Hệ thống đang tìm kiếm...";
+            } else if (currentSearchType === "lyric") {
+                statusMessage.innerText = "🧠 Hệ thống đang trích xuất mô hình Vector ngữ nghĩa Deep Learning Transformer...";
+            } else {
+                statusMessage.innerText = "🧩 Hệ thống đang áp dụng thuật toán Lai (Hybrid Scoring): So khớp chuỗi & Vector AI...";
+            }
+
+            resultsList.innerHTML = ""; 
+
+            try {
+                // Gọi API sang server FastAPI local (cổng 8000)
+                const response = await fetch(`http://127.0.0.1:8000/backend/api/search?query=${encodeURIComponent(queryText)}&search_type=${currentSearchType}`);
+                const songs = await response.json();
+
+                statusMessage.style.display = "none"; // Ẩn log khi đã nạp xong dữ liệu
+
+                if (songs.length === 0) {
+                    resultsList.innerHTML = `<div class="no-result">Không tìm thấy bài hát nào phù hợp với từ khóa của bạn.</div>`;
+                    return;
+                }
+
+                // Render dữ liệu bài hát động lên giao diện
+                songs.forEach(song => {
+                    const card = document.createElement('div');
+                    card.className = 'song-card';
+                    card.innerHTML = `
+                        <div class="song-header">
+                            <img class="song-cover" src="${song.track_image}" alt="Cover" onerror="this.src='https://via.placeholder.com/150'">
+                            <div class="song-info">
+                                <div class="song-title">${song.track_name}</div>
+                                <div class="song-artist">${song.artist_name}</div>
+                            </div>
+                            <div class="song-duration">${song.duration}</div>
+                        </div>
+                        <div class="lyric-snippet-box">
+                            <span class="lyric-tag">Gợi ý từ hệ thống:</span>${song.matched_lyric_snippet}
+                        </div>
+                    `;
+                    resultsList.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error("Lỗi kết nối Backend:", error);
+                statusMessage.innerText = "❌ Không thể kết nối tới Backend server FastAPI. Vui lòng bật lại terminal chạy file .py!";
+                statusMessage.style.color = "#ff4444";
+            }
+        }
+    </script>
+</body>
+</html>
