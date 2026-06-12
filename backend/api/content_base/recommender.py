@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine
+from sqlalchemy.engine import URL
 from dotenv import load_dotenv
 import os
 
@@ -20,9 +21,14 @@ class Recommender:
         # =========================
         #  CONFIG MYSQL
         # =========================
-        self.engine = create_engine(
-    f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:3306/{DB_NAME}"
-)
+        self.engine = create_engine(URL.create(
+            drivername="mysql+pymysql",
+            username=DB_USER,
+            password=DB_PASS,
+            host=DB_HOST,
+            port=3306,
+            database=DB_NAME,
+        ))
 
         # =========================
         #  LOAD DATA

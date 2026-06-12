@@ -13,6 +13,7 @@ export default function HomeV2() {
     const [dataTrackHomeTrend, setDataTHT] = useState([]);
     const [dataArtistHomeTrend, setDataAHT] = useState([]);
     const [dataTrackHomeRecommend, setDataTHR] = useState([]);
+    const [dataTrackHomeRecommendAE, setDataTHRAE] = useState([]);
     const [dataArtistHomeRecommend, setDataAHR] = useState([]);
     const [dataAlbumRecommend, setDataAR] = useState([]);
     const [dataPlaylistRecommend, setDataPLR] = useState([]);
@@ -57,6 +58,16 @@ export default function HomeV2() {
                 console.error('Error fetching data:', error);
             }
         };
+        const fetchDataTHRAE = async () => {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/recommend-content-base-vae/home?limit=20&user_id=6');
+                const result = await response.json();
+                setDataTHRAE(result);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
 
         const requestData = {
             "history_track_ids": [
@@ -147,6 +158,7 @@ export default function HomeV2() {
         fetchData();
         fetchDataAHT();
         fetchDataTHR();
+        fetchDataTHRAE();
         fetchDataAR();
         fetchDataPLR();
         }
@@ -261,9 +273,9 @@ export default function HomeV2() {
                         </div>
                     </section>
                     {/* Bài hát bạn có thể thích */}
-                    {/* <section>
+                    <section>
                         <div className="flex items-center justify-between mb-6">
-                            <h2 className="text-2xl font-bold tracking-tight">Bài hát bạn có thể thích</h2>
+                            <h2 className="text-2xl font-bold tracking-tight">Bài hát bạn có thể thích (Content-Base)</h2>
                             <Link className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" to="/show_all?section=for_you">Show all</Link>
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
@@ -297,7 +309,45 @@ export default function HomeV2() {
                                 </div>
                             ))}
                         </div>
-                    </section> */}
+                    </section>
+                     {/* Bài hát bạn có thể thích  content-base-ae*/}
+                    <section>
+                        <div className="flex items-center justify-between mb-6">
+                            <h2 className="text-2xl font-bold tracking-tight">Bài hát bạn có thể thích (Content-Base-Autoencoder)</h2>
+                            <Link className="text-sm font-bold text-slate-500 hover:underline dark:text-slate-400" to="/show_all?section=for_you">Show all</Link>
+                        </div>
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                            {dataTrackHomeRecommendAE && dataTrackHomeRecommendAE.slice(0,5).map((it) => (
+                                <div className="bg-slate-200/50 dark:bg-white/5 p-4 rounded-xl hover:bg-slate-300/50 dark:hover:bg-white/10 transition-all group cursor-pointer">
+                                    <div className="relative aspect-square mb-4 shadow-xl">
+                                        <img className="rounded-lg w-full h-full object-cover" 
+                                        data-alt="Album cover" src={it.image ? it.image : default_image} />
+                                        <button className="absolute bottom-2 right-2 bg-primary text-black rounded-full p-3 shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center" 
+                                        data-nav-type="song" 
+                                        data-id="save-your-tears"
+                                         aria-label="Play song"
+                                          onClick={(e)=>{
+                                               const data={
+                                               "user_id":currentUser.user_id,
+                                                "item_id":it.track_id,
+                                                "type":'track',
+                                                "time":`${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`
+                                               }
+                                               update_User_history(data)
+                                               setplaySong(it)
+                                               navigate('/play')
+                                            }}
+                                         >
+                                            <span className="material-symbols-outlined fill-1">play_arrow</span>
+                                        </button>
+                                        <AddSongButton song={it} setSong={setSong} setisOpen={setisOpen} />
+                                    </div>
+                                    <h3 className="font-bold truncate" >{it.track_name}</h3>
+                                    <p className="text-sm text-slate-500 dark:text-slate-400 truncate">{it.artist_name}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
                     {/* Nghệ sĩ bạn có thể thích */}
                     <section>
                         <div className="flex items-center justify-between mb-6">

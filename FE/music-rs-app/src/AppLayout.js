@@ -11,6 +11,7 @@ import AuthContext from "./AuthProvider";
 import ShowAll from "./showall/ShowAll";
 import PlaySongContext from "./context/PlaySongContext";
 import SelectedPlayItemContext from "./context/SelectedPlayItemContext";
+import SearchPage from "./searchpage/SearchPage";
 
 export default function AppLayout() {
   const [currentUser,setcurrentUser]=useState();
@@ -31,6 +32,7 @@ export default function AppLayout() {
         <Route path="/create_account" element={<CreateAccount />} />
         <Route path="/creataccount" element={<CreateAccount />} />
         <Route path="/show_all" element={<ShowAll/>}/>
+        <Route path="/search" element={<SearchPage/>}></Route>
       </Routes>
     </BrowserRouter>
     </SelectedPlayItemContext.Provider>
