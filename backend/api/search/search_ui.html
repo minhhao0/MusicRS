@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Hybrid Search</title>
+    <title>Music 51K Pure RAM Search</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -234,16 +234,13 @@
 
     <div class="container">
         <div class="header">
-            <h1>Music Hybrid Search</h1>
-            <p>Information Retrieval| Kiến trúc Lai: Từ khóa & Học sâu Ngữ nghĩa Transformer</p>
+            <h1>Music Search</h1>
+            <p>Truy xuất thông tin | Mạng nơ-ron Transformer </p>
         </div>
 
         <div class="tabs-container">
-            <button class="tab-btn active" data-type="all">
-                <i class="fa-solid fa-layer-group"></i> Tìm tất cả
-            </button>
-            <button class="tab-btn" data-type="name">
-                <i class="fa-solid fa-music"></i> Tìm theo tên bài / Ca sĩ
+            <button class="tab-btn active" data-type="name">
+                <i class="fa-solid fa-music"></i> Tìm theo tên bài / Nghệ sĩ
             </button>
             <button class="tab-btn" data-type="lyric">
                 <i class="fa-solid fa-file-lines"></i> Tìm theo lời bài hát
@@ -251,7 +248,7 @@
         </div>
 
         <div class="search-wrapper">
-            <input type="text" id="searchInput" class="search-input" placeholder="Nhập tên bài hát, nghệ sĩ hoặc câu lời nhạc bạn nhớ được...">
+            <input type="text" id="searchInput" class="search-input" placeholder="Nhập từ khóa tìm kiếm của bạn...">
             <button id="searchBtn" class="search-submit-btn">
                 <i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm
             </button>
@@ -262,7 +259,7 @@
     </div>
 
     <script>
-        let currentSearchType = "all";
+        let currentSearchType = "name";
         const searchInput = document.getElementById('searchInput');
         const searchBtn = document.getElementById('searchBtn');
         const resultsList = document.getElementById('resultsList');
@@ -296,11 +293,9 @@
 
             statusMessage.style.display = "block";
             if (currentSearchType === "name") {
-                statusMessage.innerText = "⚡ Hệ thống đang tìm kiếm...";
-            } else if (currentSearchType === "lyric") {
-                statusMessage.innerText = "🧠 Hệ thống đang trích xuất mô hình Vector ngữ nghĩa Deep Learning Transformer...";
+                statusMessage.innerText = "⚡ Hệ thống đang quét chuỗi từ khóa trên bộ nhớ đệm RAM Cache 51K bài...";
             } else {
-                statusMessage.innerText = "🧩 Hệ thống đang áp dụng thuật toán Lai (Hybrid Scoring): So khớp chuỗi & Vector AI...";
+                statusMessage.innerText = "🧠 Hệ thống đang trích xuất mô hình Vector ngữ nghĩa Deep Learning Transformer & FAISS Reranking...";
             }
 
             resultsList.innerHTML = ""; 
@@ -312,7 +307,7 @@
                 statusMessage.style.display = "none"; 
 
                 if (songs.length === 0) {
-                    resultsList.innerHTML = `<div class="no-result">Không tìm thấy bài hát nào phù hợp với từ khóa của bạn.</div>`;
+                    resultsList.innerHTML = `<div class="no-result">Không tìm thấy bài hát nào phù hợp trong kho 51K bài.</div>`;
                     return;
                 }
 
@@ -322,7 +317,7 @@
                     
                     let cardHTML = `
                         <div class="song-header">
-                            <img class="song-cover" src="${song.track_image}" alt="Cover" onerror="this.src='https://via.placeholder.com/150'">
+                            <img class="song-cover" src="${song.track_image}" alt="Cover" onerror="this.src='https://images.unsplash.com/photo-1539628399213-d6aa89c93074?w=150&auto=format&fit=crop&q=60'">
                             <div class="song-info">
                                 <div class="song-title">${song.track_name}</div>
                                 <div class="song-artist">${song.artist_name}</div>
@@ -331,11 +326,11 @@
                         </div>
                     `;
 
-                    // ĐÃ SỬA: Không render hộp thoại Snippet nếu đang chọn tab tìm theo tên
-                    if (currentSearchType !== "name") {
+                    if (currentSearchType === "lyric") {
                         cardHTML += `
                             <div class="lyric-snippet-box">
-                                <span class="lyric-tag">Gợi ý từ hệ thống:</span>${song.matched_lyric_snippet}
+                                <span class="fa-solid fa-brain" style="color: #1DB954; margin-right: 5px;"></span>
+                                <span class="lyric-tag">Gợi ý ngữ nghĩa:</span>${song.matched_lyric_snippet}
                             </div>
                         `;
                     }
@@ -345,8 +340,8 @@
                 });
 
             } catch (error) {
-                console.error("Lỗi kết nối Backend:", error);
-                statusMessage.innerText = "❌ Không thể kết nối tới Backend server FastAPI. Vui lòng bật lại terminal chạy file .py!";
+                console.error("Lỗi hệ thống:", error);
+                statusMessage.innerText = "❌ Không thể kết nối tới máy chủ API. Vui lòng bật lại Terminal chạy file search_api.py!";
                 statusMessage.style.color = "#ff4444";
             }
         }
