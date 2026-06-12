@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../AuthProvider";
+import Search from "../searchpage/Search";
 
 export default function AppHeader(){
     const {currentUser,setcurrentUser}=useContext(AuthContext);
@@ -10,12 +11,7 @@ export default function AppHeader(){
 
       <div className="flex items-center gap-4">
         <div className="relative group">
-          <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
-          <input
-            className="bg-slate-200 dark:bg-white/10 border-none rounded-full pl-10 pr-4 py-2 text-sm w-64 focus:ring-2 focus:ring-primary focus:outline-none placeholder:text-slate-500"
-            placeholder="Search for songs, artists..."
-            type="text"
-          />
+          <Search/>
         </div>
 
         <button className="bg-slate-200 dark:bg-white/10 rounded-full p-2 hover:bg-slate-300 dark:hover:bg-white/20 transition-colors relative" type="button">
